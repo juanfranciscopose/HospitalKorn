@@ -6,7 +6,7 @@
 		<h1 class="page-header">Gestión de Pacientes</h1>
 	</div>
     <div class="col-sm-12">
-        <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#create">Nuevo Paciente</a>
+        <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#create" data-backdrop="static" data-keyboard="false">Nuevo Paciente</a>
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>

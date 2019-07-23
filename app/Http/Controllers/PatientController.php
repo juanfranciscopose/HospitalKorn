@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+//use Illuminate\Support\Facades\DB;
 use App\Patient;
+use App\Attention;
 use App\Http\Requests\PatientRequest;
 
 class PatientController extends Controller
@@ -25,9 +26,10 @@ class PatientController extends Controller
     public function delete (Request $request)
     {
         $this->validate($request, [
-            'clinical_history_number' => 'required'
+            'id' => 'required'
         ]);
-        Patient::where('clinical_history_number', '=', $request->clinical_history_number)->delete();
+        Attention::where('patient_id', '=', $request->id)->delete();
+        Patient::where('id', '=', $request->id)->delete();
         return response()->json('se ha borrado exitosamente', 200);
     }
 

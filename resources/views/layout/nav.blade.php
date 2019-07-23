@@ -26,7 +26,7 @@
               <a class="nav-link text-white" href="{{ route('show-patients') }}">Pacientes</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Atención</a>
+              <a class="nav-link text-white" href="{{ route('show-attentions') }}">Atención</a>
             </li>
             <li class="nav-item">
               <a class="nav-link text-white" href="#">Internación</a>

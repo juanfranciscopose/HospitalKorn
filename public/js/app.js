@@ -49527,6 +49527,47 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 /***/ }),
 
+/***/ "./resources/js/attention.js":
+/*!***********************************!*\
+  !*** ./resources/js/attention.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+new Vue({
+  el: '#attention-crud',
+  data: {
+    attentions: [],
+    date: '',
+    diagnostic: '',
+    patient_id: '',
+    patient_chn: '',
+    patient_surname: '',
+    attentionEdit: {
+      'date': '',
+      'patient_surname': '',
+      'patient_chn': '',
+      'patient_id': '',
+      'diagnostic': ''
+    }
+  },
+  created: function created() {
+    this.getAttentions();
+  },
+  methods: {
+    getAttentions: function getAttentions() {
+      var _this = this;
+
+      axios.get('/attentions/all').then(function (response) {
+        _this.attentions = response.data;
+        console.log(response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -49658,7 +49699,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
 
 
- //login code
+ //patient code
 
 new Vue({
   //element DOM (id)
@@ -49730,7 +49771,7 @@ new Vue({
 
       //console.log(p.clinical_history_number);
       axios.post('/patients/delete', {
-        'clinical_history_number': p.clinical_history_number
+        'id': p.id
       }).then(function (response) {
         _this3.getPatients();
 
@@ -49781,15 +49822,16 @@ new Vue({
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ***!
-  \*************************************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ***!
+  \*****************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/juan/hospitalKorn/hospitalKorn/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /home/juan/hospitalKorn/hospitalKorn/resources/js/login.js */"./resources/js/login.js");
-module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/hospitalKorn/resources/js/patient.js */"./resources/js/patient.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/login.js */"./resources/js/login.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patient.js */"./resources/js/patient.js");
+module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attention.js */"./resources/js/attention.js");
 
 
 /***/ })

@@ -3,7 +3,7 @@ import toastr from "toastr";
 import swal from "sweetalert";
 
 
-//login code
+//patient code
 new Vue({
     //element DOM (id)
     el: '#patient-crud',
@@ -69,7 +69,7 @@ new Vue({
         deletePatient: function(p){
             //console.log(p.clinical_history_number);
             axios.post('/patients/delete', {
-                'clinical_history_number' : p.clinical_history_number,
+                'id': p.id
             })
             .then(response =>{
                 this.getPatients();
