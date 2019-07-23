@@ -23,8 +23,15 @@ new Vue({
             axios.get('/attentions/all')
             .then(response => {
                 this.attentions = response.data;
-                console.log(response.data);
+                //console.log(response.data);
             });
         },
+        getPatientData: function(){
+            axios.get('/patients/patient/'+this.patient_id)
+            .then(response => {
+                console.log(response.data);
+                $('#patientData').html(response.data.surname);
+            });
+        }
     }
 });

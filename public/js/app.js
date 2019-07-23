@@ -49559,8 +49559,13 @@ new Vue({
       var _this = this;
 
       axios.get('/attentions/all').then(function (response) {
-        _this.attentions = response.data;
+        _this.attentions = response.data; //console.log(response.data);
+      });
+    },
+    getPatientData: function getPatientData() {
+      axios.get('/patients/patient/' + this.patient_id).then(function (response) {
         console.log(response.data);
+        $('#patientData').html(response.data.surname);
       });
     }
   }

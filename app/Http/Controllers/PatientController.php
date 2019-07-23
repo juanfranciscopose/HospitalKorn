@@ -10,6 +10,22 @@ use App\Http\Requests\PatientRequest;
 
 class PatientController extends Controller
 {
+    public function getPatient($idPatient)
+    {  
+        if (isset($idPatient)){
+            $p = Patient::where('id', '=', $idPatient)->count();
+            if ($p == 0){
+                $result = 'no hay paciente con ese numero de id';
+            }else{
+                $p = Patient::where('id', '=', $idPatient)->get();
+                $result = $p[0];
+            }
+            return response()->json($result, 200);
+        }else{
+            return response()->json(422);
+        }
+        
+    }
     public function show()
     {
         //refactoring -> getConfig()
