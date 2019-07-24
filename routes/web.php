@@ -14,7 +14,7 @@ Route::get('/patients/all', 'PatientController@getAll')->name('all-patients')->m
 Route::post('/patients/delete', 'PatientController@delete')->name('delete-patient')->middleware('checklogin');
 Route::post('/patients/create', 'PatientController@store')->name('create-patient')->middleware('checklogin');
 Route::put('/patients/update', 'PatientController@update')->name('update-patient')->middleware('checklogin');
-Route::get('/patients/patient/{idPatient}', 'PatientController@getPatient')->name('get-patient')->middleware('checklogin');
+Route::get('/patients/patient/{patient_id}', 'PatientController@getPatient')->name('get-patient')->middleware('checklogin');
 
 //--patient attentions--
 Route::get('/attentions', 'AttentionController@show')->name('show-attentions')->middleware('checklogin');

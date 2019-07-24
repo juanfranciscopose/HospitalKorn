@@ -1,3 +1,7 @@
+import swal from "sweetalert";
+import Axios from "axios";
+import toastr from "toastr";
+
 new Vue({
     el: '#attention-crud',
     data: {
@@ -6,10 +10,8 @@ new Vue({
         diagnostic: '',
         patient_id: '',
         patient_chn: '',
-        patient_surname: '',
         attentionEdit: {
             'date': '',
-            'patient_surname': '',
             'patient_chn': '',
             'patient_id': '',
             'diagnostic': ''
@@ -27,10 +29,53 @@ new Vue({
             });
         },
         getPatientData: function(){
-            axios.get('/patients/patient/'+this.patient_id)
-            .then(response => {
-                console.log(response.data);
-                $('#patientData').html(response.data.surname);
+            if (this.patient_id != ''){
+                axios.get('/patients/patient/'+this.patient_id)
+                .then(response => {
+                    //console.log(response.data);
+                    if(response.data == 'No hay paciente con ese ID'){
+                        $('#patientData').html(response.data);
+                    }else{
+                        $('#patientData').html(response.data.name +' '+response.data.surname);
+                    }
+                });
+            }else{
+                $('#patientData').html('');
+            }
+        },
+        createAttention: function(){
+            axios.post('/attentions/create', {
+                diagnostic : this.diagnostic,
+                date: this.date,
+                patient_id: this.patient_id
+            }).then(response =>{
+                //console.log(response.data);
+                this.getAttentions();
+                this.diagnostic =  '';
+                this.date = '';
+                this.patient_id = ''; 
+                $('#patientData').html('');
+                $('#create').modal('hide');
+                toastr.success('Creado correctamente');
+            }).catch(error => {
+                let err = error.response.data.errors;
+                let message = 'error no identificado';
+                
+                if(err.hasOwnProperty('patient_id')){
+                    message = err.patient_id[0];
+                }else if (err.hasOwnProperty('date')){
+                    message = err.date[0];
+                }else if(err.hasOwnProperty('diagnostic')){
+                    message = err.diagnostic[0];
+                }else if(err.hasOwnProperty('store')){
+                    message = err.store[0];
+                }
+                swal({
+                    title: 'Error',
+                    text: message,
+                    icono: 'error',
+                    closeOnClickOutside: false
+                });
             });
         }
     }

@@ -49531,8 +49531,19 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 /*!***********************************!*\
   !*** ./resources/js/attention.js ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 new Vue({
   el: '#attention-crud',
@@ -49542,10 +49553,8 @@ new Vue({
     diagnostic: '',
     patient_id: '',
     patient_chn: '',
-    patient_surname: '',
     attentionEdit: {
       'date': '',
-      'patient_surname': '',
       'patient_chn': '',
       'patient_id': '',
       'diagnostic': ''
@@ -49563,9 +49572,56 @@ new Vue({
       });
     },
     getPatientData: function getPatientData() {
-      axios.get('/patients/patient/' + this.patient_id).then(function (response) {
-        console.log(response.data);
-        $('#patientData').html(response.data.surname);
+      if (this.patient_id != '') {
+        axios.get('/patients/patient/' + this.patient_id).then(function (response) {
+          //console.log(response.data);
+          if (response.data == 'No hay paciente con ese ID') {
+            $('#patientData').html(response.data);
+          } else {
+            $('#patientData').html(response.data.name + ' ' + response.data.surname);
+          }
+        });
+      } else {
+        $('#patientData').html('');
+      }
+    },
+    createAttention: function createAttention() {
+      var _this2 = this;
+
+      axios.post('/attentions/create', {
+        diagnostic: this.diagnostic,
+        date: this.date,
+        patient_id: this.patient_id
+      }).then(function (response) {
+        //console.log(response.data);
+        _this2.getAttentions();
+
+        _this2.diagnostic = '';
+        _this2.date = '';
+        _this2.patient_id = '';
+        $('#patientData').html('');
+        $('#create').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Creado correctamente');
+      })["catch"](function (error) {
+        var err = error.response.data.errors;
+        var message = 'error no identificado';
+
+        if (err.hasOwnProperty('patient_id')) {
+          message = err.patient_id[0];
+        } else if (err.hasOwnProperty('date')) {
+          message = err.date[0];
+        } else if (err.hasOwnProperty('diagnostic')) {
+          message = err.diagnostic[0];
+        } else if (err.hasOwnProperty('store')) {
+          message = err.store[0];
+        }
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+          title: 'Error',
+          text: message,
+          icono: 'error',
+          closeOnClickOutside: false
+        });
       });
     }
   }

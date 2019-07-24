@@ -10,22 +10,22 @@ use App\Http\Requests\PatientRequest;
 
 class PatientController extends Controller
 {
-    public function getPatient($idPatient)
+    public function getPatient($patient_id)
     {  
-        if (isset($idPatient)){
-            $p = Patient::where('id', '=', $idPatient)->count();
+        if (isset($patient_id)){
+            $p = Patient::where('id', '=', $patient_id)->count();
             if ($p == 0){
-                $result = 'no hay paciente con ese numero de id';
+                $result = 'No hay paciente con ese ID';
             }else{
-                $p = Patient::where('id', '=', $idPatient)->get();
+                $p = Patient::where('id', '=', $patient_id)->get();
                 $result = $p[0];
             }
             return response()->json($result, 200);
         }else{
-            return response()->json(422);
+            return response()->json('error en id paciente', 422);
         }
-        
-    }
+       
+    }        
     public function show()
     {
         //refactoring -> getConfig()
