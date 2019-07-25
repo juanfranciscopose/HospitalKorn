@@ -49558,6 +49558,13 @@ new Vue({
       'date': '',
       'patient_id': '',
       'diagnostic': ''
+    },
+    attentionShow: {
+      'id': '',
+      'date': '',
+      'patient_id': '',
+      'name_surname_patient': '',
+      'diagnostic': ''
     }
   },
   created: function created() {
@@ -49603,6 +49610,7 @@ new Vue({
         $('#create').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Creado correctamente');
       })["catch"](function (error) {
+        //refactoring
         var err = error.response.data.errors;
         var message = 'error no identificado';
 
@@ -49624,23 +49632,23 @@ new Vue({
         });
       });
     },
-    deleteAttention: function deleteAttention(a) {
+    deleteAttention: function deleteAttention(attention) {
       var _this3 = this;
 
       axios.post('/attentions/delete', {
-        'id': a.id
+        'id': attention.id
       }).then(function (response) {
         _this3.getAttentions();
 
         toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
       });
     },
-    editAttention: function editAttention(a) {
+    editAttention: function editAttention(attention) {
       //show
-      this.attentionEdit.id = a.id;
-      this.attentionEdit.date = a.date;
-      this.attentionEdit.diagnostic = a.diagnostic;
-      this.attentionEdit.patient_id = a.patient_id;
+      this.attentionEdit.id = attention.id;
+      this.attentionEdit.date = attention.date;
+      this.attentionEdit.diagnostic = attention.diagnostic;
+      this.attentionEdit.patient_id = attention.patient_id;
       $('#edit').modal('show');
     },
     updateAttention: function updateAttention() {
@@ -49680,6 +49688,18 @@ new Vue({
           closeOnClickOutside: false
         });
       });
+    },
+    detailsAttention: function detailsAttention(attention) {
+      var _this5 = this;
+
+      axios.get('/patients/patient/' + attention.patient_id).then(function (response) {
+        _this5.attentionShow.name_surname_patient = response.data.name + ' ' + response.data.surname;
+      });
+      this.attentionShow.id = attention.id;
+      this.attentionShow.diagnostic = attention.diagnostic;
+      this.attentionShow.date = attention.date;
+      this.attentionShow.patient_id = attention.patient_id;
+      $('#details').modal('show');
     }
   }
 });
@@ -49832,6 +49852,11 @@ new Vue({
       'clinical_history_number': '',
       'name': '',
       'surname': ''
+    },
+    patientShow: {
+      'clinical_history_number': '',
+      'name': '',
+      'surname': ''
     }
   },
   created: function created() {
@@ -49845,11 +49870,11 @@ new Vue({
         _this.patients = response.data; //console.log(response.data);
       });
     },
-    editPatient: function editPatient(p) {
+    editPatient: function editPatient(patient) {
       //show
-      this.patientEdit.clinical_history_number = p.clinical_history_number;
-      this.patientEdit.name = p.name;
-      this.patientEdit.surname = p.surname;
+      this.patientEdit.clinical_history_number = patient.clinical_history_number;
+      this.patientEdit.name = patient.name;
+      this.patientEdit.surname = patient.surname;
       $('#edit').modal('show');
     },
     updatePatient: function updatePatient() {
@@ -49884,12 +49909,12 @@ new Vue({
         });
       });
     },
-    deletePatient: function deletePatient(p) {
+    deletePatient: function deletePatient(patient) {
       var _this3 = this;
 
       //console.log(p.clinical_history_number);
       axios.post('/patients/delete', {
-        'id': p.id
+        'id': patient.id
       }).then(function (response) {
         _this3.getPatients();
 
@@ -49913,6 +49938,7 @@ new Vue({
         $('#create').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Creado correctamente');
       })["catch"](function (error) {
+        //refactoring
         var err = error.response.data.errors;
         var message = 'error no identificado';
 
@@ -49933,6 +49959,12 @@ new Vue({
           closeOnClickOutside: false
         });
       });
+    },
+    detailsPatient: function detailsPatient(patient) {
+      this.patientShow.name = patient.name;
+      this.patientShow.surname = patient.surname;
+      this.patientShow.clinical_history_number = patient.clinical_history_number;
+      $('#details').modal('show');
     }
   }
 });

@@ -21,6 +21,9 @@
                     <td class="text-center">@{{ p.name }}</td>
                     <td class="text-center">@{{ p.surname }}</td>
                     <td width="10px">
+                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsPatient(p)">Detalles</a>
+                    </td>
+                    <td width="10px">
                         <a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editPatient(p)">Editar</a>
                     </td>
                     <td width="10px">
@@ -32,5 +35,6 @@
     </div>
     @include('guardTeamUser.patient.create')
     @include('guardTeamUser.patient.edit')
+    @include('guardTeamUser.patient.details')
 </div>
 @endsection

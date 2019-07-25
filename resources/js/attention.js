@@ -15,6 +15,13 @@ new Vue({
             'date': '',
             'patient_id': '',
             'diagnostic': ''
+        },
+        attentionShow: {
+            'id': '',
+            'date': '',
+            'patient_id': '',
+            'name_surname_patient': '',
+            'diagnostic': ''
         }
     },
     created: function() {
@@ -79,21 +86,21 @@ new Vue({
                 });
             });
         },
-        deleteAttention: function(a){
+        deleteAttention: function(attention){
             axios.post('/attentions/delete', {
-                'id': a.id
+                'id': attention.id
             })
             .then(response =>{
                 this.getAttentions();
                 toastr.success('Eliminado correctamente');
             });
         },
-        editAttention: function(a){
+        editAttention: function(attention){
             //show
-            this.attentionEdit.id = a.id;
-            this.attentionEdit.date = a.date;
-            this.attentionEdit.diagnostic = a.diagnostic;
-            this.attentionEdit.patient_id = a.patient_id;
+            this.attentionEdit.id = attention.id;
+            this.attentionEdit.date = attention.date;
+            this.attentionEdit.diagnostic = attention.diagnostic;
+            this.attentionEdit.patient_id = attention.patient_id;
             $('#edit').modal('show');
         },
         updateAttention: function(){
@@ -129,6 +136,17 @@ new Vue({
                     closeOnClickOutside: false
                 });
             });
+        },
+        detailsAttention: function(attention){
+            axios.get('/patients/patient/'+attention.patient_id)
+            .then(response => {               
+                this.attentionShow.name_surname_patient = response.data.name +' '+response.data.surname;
+            });
+            this.attentionShow.id = attention.id;
+            this.attentionShow.diagnostic = attention.diagnostic;
+            this.attentionShow.date = attention.date;
+            this.attentionShow.patient_id = attention.patient_id;
+            $('#details').modal('show');
         }
     }
 });

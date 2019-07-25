@@ -23,6 +23,9 @@
                     <td class="text-center">@{{ a.diagnostic }}</td>
                     <td class="text-center">@{{ a.date }}</td>
                     <td width="10px">
+                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsAttention(a)">Detalles</a>
+                    </td>
+                    <td width="10px">
                         <a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editAttention(a)">Editar</a>
                     </td>
                     <td width="10px">
@@ -34,5 +37,6 @@
     </div>
     @include('guardTeamUser.attention.create')
     @include('guardTeamUser.attention.edit')
+    @include('guardTeamUser.attention.details')
 </div>
 @endsection

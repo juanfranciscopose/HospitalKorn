@@ -17,6 +17,11 @@ new Vue({
             'clinical_history_number': '',
             'name': '',
             'surname': ''
+        },
+        patientShow: {
+            'clinical_history_number': '',
+            'name': '',
+            'surname': ''
         }
     },
     created: function() {
@@ -30,11 +35,11 @@ new Vue({
                 //console.log(response.data);
             });
         },
-        editPatient: function(p){
+        editPatient: function(patient){
             //show
-            this.patientEdit.clinical_history_number = p.clinical_history_number;
-            this.patientEdit.name = p.name;
-            this.patientEdit.surname = p.surname;
+            this.patientEdit.clinical_history_number = patient.clinical_history_number;
+            this.patientEdit.name = patient.name;
+            this.patientEdit.surname = patient.surname;
             $('#edit').modal('show');
         },
         updatePatient: function(){
@@ -66,10 +71,10 @@ new Vue({
                 });
             });
         },
-        deletePatient: function(p){
+        deletePatient: function(patient){
             //console.log(p.clinical_history_number);
             axios.post('/patients/delete', {
-                'id': p.id
+                'id': patient.id
             })
             .then(response =>{
                 this.getPatients();
@@ -110,6 +115,12 @@ new Vue({
                     closeOnClickOutside: false
                 });
             });
+        },
+        detailsPatient: function(patient){
+            this.patientShow.name = patient.name;
+            this.patientShow.surname = patient.surname;
+            this.patientShow.clinical_history_number = patient.clinical_history_number;
+            $('#details').modal('show');
         }
     }
 });
