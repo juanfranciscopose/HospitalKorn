@@ -33,4 +33,20 @@ class AttentionController extends Controller
             return response()->json(['errors'=>['store'=>['Error en el ID de paciente']]], 422);
         }
     }
+
+    public function delete (Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required'
+        ]);
+        Attention::where('id', '=', $request->id)->delete();
+        return response()->json('se ha borrado exitosamente', 200);
+    }
+
+    public function update(AttentionRequest $request)
+    {
+        Attention::where('id', '=', $request->id)->update($request->all());
+        return response()->json('se ha actualizado exitosamente', 200);
+    }
+
 }

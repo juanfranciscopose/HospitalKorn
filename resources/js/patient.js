@@ -90,6 +90,7 @@ new Vue({
                 $('#create').modal('hide');
                 toastr.success('Creado correctamente');
             }).catch(error => {
+                //refactoring
                 let err = error.response.data.errors;
                 let message = 'error no identificado';
                 

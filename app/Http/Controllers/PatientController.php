@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-//use Illuminate\Support\Facades\DB;
 use App\Patient;
 use App\Attention;
 use App\Http\Requests\PatientRequest;
@@ -62,7 +61,7 @@ class PatientController extends Controller
     
     public function update(PatientRequest $request)
     {
-        $p = Patient::where('clinical_history_number', '=', $request->clinical_history_number)->update($request->all());
+        Patient::where('clinical_history_number', '=', $request->clinical_history_number)->update($request->all());
         return response()->json('se ha actualizado exitosamente', 200);
     }
 

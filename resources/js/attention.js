@@ -11,8 +11,8 @@ new Vue({
         patient_id: '',
         patient_chn: '',
         attentionEdit: {
+            'id': '',
             'date': '',
-            'patient_chn': '',
             'patient_id': '',
             'diagnostic': ''
         }
@@ -58,6 +58,7 @@ new Vue({
                 $('#create').modal('hide');
                 toastr.success('Creado correctamente');
             }).catch(error => {
+                //refactoring
                 let err = error.response.data.errors;
                 let message = 'error no identificado';
                 
@@ -69,6 +70,57 @@ new Vue({
                     message = err.diagnostic[0];
                 }else if(err.hasOwnProperty('store')){
                     message = err.store[0];
+                }
+                swal({
+                    title: 'Error',
+                    text: message,
+                    icono: 'error',
+                    closeOnClickOutside: false
+                });
+            });
+        },
+        deleteAttention: function(a){
+            axios.post('/attentions/delete', {
+                'id': a.id
+            })
+            .then(response =>{
+                this.getAttentions();
+                toastr.success('Eliminado correctamente');
+            });
+        },
+        editAttention: function(a){
+            //show
+            this.attentionEdit.id = a.id;
+            this.attentionEdit.date = a.date;
+            this.attentionEdit.diagnostic = a.diagnostic;
+            this.attentionEdit.patient_id = a.patient_id;
+            $('#edit').modal('show');
+        },
+        updateAttention: function(){
+            axios.put('/attentions/update', this.attentionEdit)
+            .then(response => {
+                console.log(response.data);
+                this.getAttentions();
+                this.attentionEdit = {
+                    'id': '',
+                    'date': '',
+                    'diagnostic': '',
+                    'patient_id': ''
+                };
+                $('#edit').modal('hide');
+                toastr.success('Actualizado correctamente');
+            }).catch(error => {
+                let err = error.response.data.errors;
+                let message = 'error no identificado';
+                
+                if (err.hasOwnProperty('date')){
+                    message = err.date[0];
+                }else if(err.hasOwnProperty('diagnostic')){
+                    message = err.diagnostic[0];
+                }else if(err.hasOwnProperty('id')){
+                    message = err.id[0];
+                }else if(err.hasOwnProperty('patient_id')){
+                    message = err.patient_id[0];
                 }
                 swal({
                     title: 'Error',

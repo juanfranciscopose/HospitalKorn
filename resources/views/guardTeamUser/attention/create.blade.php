@@ -11,7 +11,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="idPatient">ID paciente</label>
-                            <input type="number" name="idPatient" id= "idPatient" class="form-control" v-model="patient_id" v-on:keyup.prevent="getPatientData()" required>
+                            <input type="number" name="idPatient" id= "idPatient" class="form-control" v-model="patient_id" v-on:change.prevent="getPatientData()" required>
                             <div class="container">
                                 <label for="p">Nombre del paciente</label>
                                 <b><div class="container panel" id="patientData"></div></b>

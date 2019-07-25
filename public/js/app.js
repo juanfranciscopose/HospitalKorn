@@ -49554,8 +49554,8 @@ new Vue({
     patient_id: '',
     patient_chn: '',
     attentionEdit: {
+      'id': '',
       'date': '',
-      'patient_chn': '',
       'patient_id': '',
       'diagnostic': ''
     }
@@ -49614,6 +49614,63 @@ new Vue({
           message = err.diagnostic[0];
         } else if (err.hasOwnProperty('store')) {
           message = err.store[0];
+        }
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+          title: 'Error',
+          text: message,
+          icono: 'error',
+          closeOnClickOutside: false
+        });
+      });
+    },
+    deleteAttention: function deleteAttention(a) {
+      var _this3 = this;
+
+      axios.post('/attentions/delete', {
+        'id': a.id
+      }).then(function (response) {
+        _this3.getAttentions();
+
+        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
+      });
+    },
+    editAttention: function editAttention(a) {
+      //show
+      this.attentionEdit.id = a.id;
+      this.attentionEdit.date = a.date;
+      this.attentionEdit.diagnostic = a.diagnostic;
+      this.attentionEdit.patient_id = a.patient_id;
+      $('#edit').modal('show');
+    },
+    updateAttention: function updateAttention() {
+      var _this4 = this;
+
+      axios.put('/attentions/update', this.attentionEdit).then(function (response) {
+        console.log(response.data);
+
+        _this4.getAttentions();
+
+        _this4.attentionEdit = {
+          'id': '',
+          'date': '',
+          'diagnostic': '',
+          'patient_id': ''
+        };
+        $('#edit').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Actualizado correctamente');
+      })["catch"](function (error) {
+        var err = error.response.data.errors;
+        var message = 'error no identificado';
+
+        if (err.hasOwnProperty('date')) {
+          message = err.date[0];
+        } else if (err.hasOwnProperty('diagnostic')) {
+          message = err.diagnostic[0];
+        } else if (err.hasOwnProperty('id')) {
+          message = err.id[0];
+        } else if (err.hasOwnProperty('patient_id')) {
+          message = err.patient_id[0];
         }
 
         sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
