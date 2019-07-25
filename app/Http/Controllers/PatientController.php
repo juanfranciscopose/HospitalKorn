@@ -23,7 +23,6 @@ class PatientController extends Controller
         }else{
             return response()->json('error en id paciente', 422);
         }
-       
     }        
     public function show()
     {

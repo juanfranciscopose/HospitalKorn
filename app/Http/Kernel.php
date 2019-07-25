@@ -36,6 +36,10 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+        'active-login' =>[
+            \App\Http\Middleware\CheckLogin::class,
+            \App\Http\Middleware\CheckActive::class
+        ],
 
         'api' => [
             'throttle:60,1',
@@ -60,7 +64,8 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'checklogin' => \App\Http\Middleware\CheckLogin::class
+        'checklogin' => \App\Http\Middleware\CheckLogin::class,
+        'checkactive' => \App\Http\Middleware\CheckActive::class
     ];
 
     /**
