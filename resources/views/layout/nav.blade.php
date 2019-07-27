@@ -32,7 +32,7 @@
           @endcan
           @can('user_index')
             <li class="nav-item">
-              <a class="nav-link text-white" href="#">Usuarios</a>
+              <a class="nav-link text-white" href="{{ route('show-users') }}">Usuarios</a>
             </li>
           @endcan
           @hasrole('Admin')

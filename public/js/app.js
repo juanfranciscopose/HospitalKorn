@@ -49971,17 +49971,52 @@ new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/user.js":
+/*!******************************!*\
+  !*** ./resources/js/user.js ***!
+  \******************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+new Vue({
+  el: '#user-crud',
+  //form model data
+  data: {
+    users: []
+  },
+  created: function created() {
+    this.getUsers();
+  },
+  methods: {
+    getUsers: function getUsers() {
+      var _this = this;
+
+      axios.get('/admin/users/all').then(function (response) {
+        _this.users = response.data; //console.log(response.data);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ 0:
-/*!*****************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ***!
-  \*****************************************************************************************************************/
+/*!****************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ***!
+  \****************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/app.js */"./resources/js/app.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/login.js */"./resources/js/login.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patient.js */"./resources/js/patient.js");
-module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attention.js */"./resources/js/attention.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attention.js */"./resources/js/attention.js");
+module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/user.js */"./resources/js/user.js");
 
 
 /***/ })
