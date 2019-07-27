@@ -49,13 +49,13 @@ class TablesPermissionSeeder extends Seeder
         $role->givePermissionTo(Permission::findByName('attention_update'));
         $role->givePermissionTo(Permission::findByName('attention_new'));
 
-        $user = User::find(1);
+        $user = User::find(1);//jhondoe
         $user->assignRole('Admin');
         
-        $user = User::find(2);
+        $user = User::find(2);//asd
         $user->assignRole('GuardTeam');
 
-        $user = User::find(3);
+        $user = User::find(3);//asdd
         $user->assignRole('GuardTeam');
     }
 }
