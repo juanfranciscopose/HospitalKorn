@@ -3,12 +3,12 @@
 Route::get('/disable', 'InactiveUserController@show')->name('inactive-user')->middleware('checklogin');
 
 //--login--
-Route::get('/', 'LoginController@show')->name('show-login');//siempre q no haya otra sesion iniciada
-Route::post('/login', 'LoginController@login')->name('login');//siempre q no haya otra sesion iniciada
+Route::get('/', 'LoginController@show')->name('show-login')->middleware('checknotlogin');
+Route::post('/login', 'LoginController@login')->name('login')->middleware('checknotlogin');
 Route::get('/logout', 'LoginController@logout')->name('logout')->middleware('checklogin');
 
 //--articles--
-Route::get('/articles', 'ArticlesController@show')->name('show-articles');
+Route::get('/articles', 'ArticlesController@show')->name('show-index');
 
 //--patients--
 Route::get('/patients', 'PatientController@show')->name('show-patients')->middleware('active-login')->middleware('permission:patient_index');
