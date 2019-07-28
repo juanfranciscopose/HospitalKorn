@@ -49764,6 +49764,64 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/config.js":
+/*!********************************!*\
+  !*** ./resources/js/config.js ***!
+  \********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+new Vue({
+  el: '#config',
+  data: {
+    configs: [],
+    editMode: false,
+    configEdit: {
+      'name': '',
+      'value': '',
+      'description': ''
+    }
+  },
+  created: function created() {
+    this.getConfig();
+  },
+  methods: {
+    getConfig: function getConfig() {
+      var _this = this;
+
+      axios.get('/admin/config/all').then(function (response) {
+        _this.configs = response.data;
+      });
+    },
+    editConfig: function editConfig() {
+      this.editMode = true;
+    },
+    updateConfig: function updateConfig() {
+      var _this2 = this;
+
+      axios.put('/admin/config/update', this.configs).then(function (response) {
+        _this2.getConfig();
+
+        _this2.editMode = false;
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/login.js":
 /*!*******************************!*\
   !*** ./resources/js/login.js ***!
@@ -49985,9 +50043,12 @@ __webpack_require__.r(__webpack_exports__);
 
 new Vue({
   el: '#user-crud',
-  //form model data
   data: {
-    users: []
+    users: [],
+    userShow: {
+      'email': '',
+      'state': ''
+    }
   },
   created: function created() {
     this.getUsers();
@@ -49997,8 +50058,19 @@ new Vue({
       var _this = this;
 
       axios.get('/admin/users/all').then(function (response) {
-        _this.users = response.data; //console.log(response.data);
+        _this.users = response.data;
       });
+    },
+    detailsUser: function detailsUser(user) {
+      this.userShow.email = user.email;
+
+      if (user.active == 1) {
+        this.userShow.state = 'activo';
+      } else {
+        this.userShow.state = 'inactivo';
+      }
+
+      $('#details').modal('show');
     }
   }
 });
@@ -50006,9 +50078,9 @@ new Vue({
 /***/ }),
 
 /***/ 0:
-/*!****************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ***!
-  \****************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ***!
+  \*****************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50016,7 +50088,8 @@ __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/app.js
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/login.js */"./resources/js/login.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patient.js */"./resources/js/patient.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attention.js */"./resources/js/attention.js");
-module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/user.js */"./resources/js/user.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/user.js */"./resources/js/user.js");
+module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/config.js */"./resources/js/config.js");
 
 
 /***/ })

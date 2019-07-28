@@ -9,7 +9,11 @@ class TablesPermissionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
+     *index -> lista
+     *new -> crear
+     *destroy -> borrar
+     *update -> editar
+     *show -> mostrar detalles de uno
      * @return void
      */
     public function run()
@@ -22,6 +26,9 @@ class TablesPermissionSeeder extends Seeder
         Permission::create(['name' => 'patient_destroy']);
         Permission::create(['name' => 'patient_update']);
         Permission::create(['name' => 'patient_show']);
+
+        Permission::create(['name' => 'config_index']);
+        Permission::create(['name' => 'config_update']);
 
         Permission::create(['name' => 'attention_index']);
         Permission::create(['name' => 'attention_new']);

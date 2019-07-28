@@ -19,12 +19,14 @@ class DatabaseSeeder extends Seeder
             'model_has_roles',
             'permissions',
             'roles',
-            'role_has_permissions'
+            'role_has_permissions',
+            'configurations'
         ]);
         $this->call(TableUsersSeeder::class);
         $this->call(TablePatientsSeeder::class);
         $this->call(TableAttentionsSeeder::class);
         $this->call(TablesPermissionSeeder::class);
+        $this->call(TableConfigurationsSeeder::class);
     }
     protected function truncateTables(array $tables)
     {

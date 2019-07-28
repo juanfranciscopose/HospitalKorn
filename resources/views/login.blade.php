@@ -1,5 +1,13 @@
 @extends("layout.layout")
 
+@section('title_system')
+{{$customConfig['title_system']['title_system']}}
+@endsection
+
+@section('title_nav')
+{{$customConfig['title_nav']['title_nav']}}
+@endsection
+
 @section('content')
 <div class="col-md-4 offset-md-4 mt-4" id="login-form">
     <h1 class="my-3 text-center">Iniciar Sesión</h1>

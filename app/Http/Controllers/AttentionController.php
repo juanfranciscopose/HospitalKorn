@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Configuration;
 use Illuminate\Http\Request;
 use App\Patient;
 use App\Attention;
@@ -10,9 +11,9 @@ class AttentionController extends Controller
 {
     public function show()
     {
-        //refactoring -> getConfig()
+        $customConfig = Configuration::getCustomConfig();
         $email = session()->get('email', 'error');
-        return view('guardTeamUser.attention.show', compact('email'));
+        return view('guardTeamUser.attention.show', compact('email', 'customConfig'));
     }
     public function getAll()
     {

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\admin;
+use App\Configuration;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -9,9 +10,9 @@ class UserController extends Controller
 {
     public function show()
     {
-        //refactoring -> getConfig()
+        $customConfig = Configuration::getCustomConfig();
         $email = session()->get('email', 'error');
-        return view('admin.user.show', compact('email'));
+        return view('admin.user.show', compact('email', 'customConfig'));
     }
 
     public function getAll()

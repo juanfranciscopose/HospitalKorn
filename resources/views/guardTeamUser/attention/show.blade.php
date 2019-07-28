@@ -1,5 +1,13 @@
 @extends("layout.layout")
 
+@section('title_system')
+{{$customConfig['title_system']['title_system']}}
+@endsection
+
+@section('title_nav')
+{{$customConfig['title_nav']['title_nav']}}
+@endsection
+
 @section('content')
 <div id="attention-crud" class="row mt-4">
 	<div class="col-sm-12">

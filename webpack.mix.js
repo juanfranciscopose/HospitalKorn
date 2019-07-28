@@ -5,7 +5,8 @@ mix.js([
     'resources/js/login.js',
     'resources/js/patient.js',
     'resources/js/attention.js',
-    'resources/js/user.js' 
+    'resources/js/user.js',
+    'resources/js/config.js' 
     ], 'public/js/app.js')
     .styles([
     'resources/css/bootstrap.css',
