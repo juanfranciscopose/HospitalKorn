@@ -7,6 +7,8 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class User extends Authenticatable
 {
@@ -21,4 +23,16 @@ class User extends Authenticatable
     protected $fillable = [
         'email', 'active', 'password', 'remember_token'
     ];
+
+    public static function deleteUser($id)
+    {
+        $user = User::find($id);
+        $roles = Role::all();
+        foreach ($roles as $r) {
+            if ($user->hasRole($r)){
+                $user->removeRole($r);
+            }
+        }
+        User::where('id', '=', $id)->delete();
+    }
 }

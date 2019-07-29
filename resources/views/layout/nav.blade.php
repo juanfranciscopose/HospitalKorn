@@ -59,7 +59,7 @@
               @hasrole('GuardTeam')
                 <a class="dropdown-item" href="#">Mensaje Administrador</a>
               @endhasrole
-              <a class="dropdown-item" href="#">Editar Perfil</a>
+              <a class="dropdown-item" href="#">Cambiar Contraseña</a>
               <a class="dropdown-item" href="{{ route('logout') }}">Cerrar Sesión</a>
             </div>
           </li>

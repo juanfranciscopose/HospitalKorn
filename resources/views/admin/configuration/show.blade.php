@@ -14,7 +14,6 @@
         <div class="col-sm-12">
             <h1 class="page-header mb-4">Configuración del Sistema</h1>
             @can('config_update')
-                @include('admin.configuration.edit')
                 <a href="#" v-if="editMode" class="btn btn-primary float-right" v-on:click.prevent="updateConfig()">Guardar Cambios</a>
                 <a href="#" v-else class="btn btn-warning float-right" v-on:click.prevent="editConfig()">Editar</a>  
             @endcan
@@ -63,8 +62,8 @@
             <div class="form-group">
                 <label for="text">Paginación</label>
                 <div class="container">
-                    <input v-if="editMode" type="text" pattern="[0-9]" class="form-control" v-model="configs.pagination.pagination">
-                    <input v-else type="text" pattern="[0-9]" class="form-control" v-model="configs.pagination.pagination" disabled>
+                    <input v-if="editMode" type="number"class="form-control" v-model="configs.pagination.pagination">
+                    <input v-else type="number" class="form-control" v-model="configs.pagination.pagination" disabled>
                     <small class="text-muted">
                         @{{ configs.pagination.descrip }}
                     </small>

@@ -49786,12 +49786,7 @@ new Vue({
   el: '#config',
   data: {
     configs: [],
-    editMode: false,
-    configEdit: {
-      'name': '',
-      'value': '',
-      'description': ''
-    }
+    editMode: false
   },
   created: function created() {
     this.getConfig();
@@ -50040,6 +50035,12 @@ new Vue({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
+
+
 
 new Vue({
   el: '#user-crud',
@@ -50048,6 +50049,11 @@ new Vue({
     userShow: {
       'email': '',
       'state': ''
+    },
+    userEdit: {
+      'id': '',
+      'email': '',
+      'active': ''
     }
   },
   created: function created() {
@@ -50071,6 +50077,80 @@ new Vue({
       }
 
       $('#details').modal('show');
+    },
+    deleteUser: function deleteUser(user) {
+      var _this2 = this;
+
+      axios.post('/admin/users/delete', {
+        'id': user.id
+      }).then(function (response) {
+        _this2.getUsers();
+
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Eliminado correctamente');
+      })["catch"](function (error) {
+        var err = error.response.data.errors;
+        var message = 'error no identificado';
+
+        if (err.hasOwnProperty('delete')) {
+          message = err["delete"][0];
+        }
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+          title: 'Error',
+          text: message,
+          icono: 'error',
+          closeOnClickOutside: false
+        });
+      });
+    },
+    editUser: function editUser(user) {
+      //show
+      this.userEdit.id = user.id;
+      this.userEdit.email = user.email;
+
+      if (user.active == 1) {
+        $("input[id=state]").prop("checked", true);
+      } else {
+        $("input[id=state]").prop("checked", false);
+      }
+
+      $('#edit').modal('show');
+    },
+    updateUser: function updateUser() {
+      var _this3 = this;
+
+      if ($("input[id=state]").is(':checked')) {
+        this.userEdit.active = 1;
+      } else {
+        this.userEdit.active = 0;
+      }
+
+      axios.put('/admin/users/update', this.userEdit).then(function (response) {
+        //console.log(response.data);
+        _this3.getUsers();
+
+        _this3.userEdit = {
+          'id': '',
+          'email': '',
+          'active': ''
+        };
+        $('#edit').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
+      })["catch"](function (error) {
+        var err = error.response.data.errors;
+        var message = 'error no identificado';
+
+        if (err.hasOwnProperty('active')) {
+          message = err.active[0];
+        }
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+          title: 'Error',
+          text: message,
+          icono: 'error',
+          closeOnClickOutside: false
+        });
+      });
     }
   }
 });

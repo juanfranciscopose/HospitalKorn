@@ -6,11 +6,6 @@ new Vue({
     data: {
         configs: [],
         editMode: false,
-        configEdit:{
-            'name': '',
-            'value': '',
-            'description': ''
-        },
     },
     created: function() {
         this.getConfig();
