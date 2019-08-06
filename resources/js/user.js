@@ -5,6 +5,9 @@ import swal from "sweetalert";
 new Vue({
     el: '#user-crud',
     data: {
+        email: '',
+        password: '',
+        repeat_password: '',
         users: [],
         userShow: {
             'email': '',
@@ -101,5 +104,51 @@ new Vue({
                 });
             });
         },
+        createUser: function(){
+            if (this.password == this.repeat_password){
+                axios.post('/admin/users/create', {
+                    email : this.email,
+                    repeat_password: this.repeat_password,
+                    password: this.password,
+                    active: 1
+                }).then(response =>{
+                    //console.log(response.data);
+                    this.getUsers();
+                    this.email =  '';
+                    this.password = '';
+                    this.repeat_password = ''; 
+                    $('#create').modal('hide');
+                    toastr.success('Creado correctamente');
+                }).catch(error => {
+                    //refactoring
+                    let err = error.response.data.errors;
+                    let message = 'error no identificado';
+                    
+                    if(err.hasOwnProperty('email')){
+                        message = err.email[0];
+                    }else if (err.hasOwnProperty('password')){
+                        message = err.password[0];
+                    }else if(err.hasOwnProperty('active')){
+                        message = err.active[0];
+                    }else if(err.hasOwnProperty('store')){
+                        message = err.store[0];
+                    }
+                    swal({
+                        title: 'Error',
+                        text: message,
+                        icono: 'error',
+                        closeOnClickOutside: false
+                    });
+                });
+            }else{
+                swal({
+                    title: 'Error',
+                    text: 'error en las contraseñas',
+                    icono: 'error',
+                    closeOnClickOutside: false
+                });
+            }
+            
+        }
     }
 });

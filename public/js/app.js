@@ -50045,6 +50045,9 @@ __webpack_require__.r(__webpack_exports__);
 new Vue({
   el: '#user-crud',
   data: {
+    email: '',
+    password: '',
+    repeat_password: '',
     users: [],
     userShow: {
       'email': '',
@@ -50151,6 +50154,55 @@ new Vue({
           closeOnClickOutside: false
         });
       });
+    },
+    createUser: function createUser() {
+      var _this4 = this;
+
+      if (this.password == this.repeat_password) {
+        axios.post('/admin/users/create', {
+          email: this.email,
+          repeat_password: this.repeat_password,
+          password: this.password,
+          active: 1
+        }).then(function (response) {
+          //console.log(response.data);
+          _this4.getUsers();
+
+          _this4.email = '';
+          _this4.password = '';
+          _this4.repeat_password = '';
+          $('#create').modal('hide');
+          toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Creado correctamente');
+        })["catch"](function (error) {
+          //refactoring
+          var err = error.response.data.errors;
+          var message = 'error no identificado';
+
+          if (err.hasOwnProperty('email')) {
+            message = err.email[0];
+          } else if (err.hasOwnProperty('password')) {
+            message = err.password[0];
+          } else if (err.hasOwnProperty('active')) {
+            message = err.active[0];
+          } else if (err.hasOwnProperty('store')) {
+            message = err.store[0];
+          }
+
+          sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+            title: 'Error',
+            text: message,
+            icono: 'error',
+            closeOnClickOutside: false
+          });
+        });
+      } else {
+        sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+          title: 'Error',
+          text: 'error en las contraseñas',
+          icono: 'error',
+          closeOnClickOutside: false
+        });
+      }
     }
   }
 });

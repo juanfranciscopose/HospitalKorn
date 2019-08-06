@@ -24,6 +24,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bcrypt": "^3.0.6",
+        "nan": "^2.14.0",
+        "node-pre-gyp": "^0.13.0",
         "sweetalert": "^2.1.2",
         "toastr": "^2.1.4"
     }

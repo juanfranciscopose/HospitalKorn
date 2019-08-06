@@ -2,6 +2,7 @@
 
 namespace App;
 
+use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -34,5 +35,14 @@ class User extends Authenticatable
             }
         }
         User::where('id', '=', $id)->delete();
+    }
+    public static function createUser($email, $pass)
+    {
+        $password = bcrypt($pass);
+        DB::table('users')->insert([
+            'email' => $email,
+            'password' => $password,
+            'active' => 1
+        ]);
     }
 }

@@ -35,13 +35,20 @@ class UserController extends Controller
 
     }
 
-    public function store()
+    public function store(UserRequest $request)
     {
-
+        $u = User::where('email', '=', $request->email)->get()->count();
+        if ($u == 0){
+            User::createUser($request->email, $request->password);
+            return response()->json('se ha creado exitosamente', 200);
+        }else{
+            return response()->json(['errors'=>['store'=>['El correo electrónico está en uso']]], 422);
+        }
     }
 
     public function update(Request $request)
     {
+        // distinta validacion ya que el json no trae contraseña
         $this->validate($request, [
             'id' => 'required',
             'email' => 'required',

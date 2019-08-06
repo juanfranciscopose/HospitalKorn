@@ -8,7 +8,7 @@ use App\User;
 class TablesPermissionSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * 
      *index -> lista
      *new -> crear
      *destroy -> borrar
