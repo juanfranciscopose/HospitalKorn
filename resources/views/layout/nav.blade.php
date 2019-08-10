@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link text-white" href="#">Instituciones</a>
+            <a class="nav-link text-white" href="{{ route('show-institution') }}">Instituciones</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link text-white" href="{{ route('show-login') }}">Iniciar sesión</a>

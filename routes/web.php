@@ -10,6 +10,10 @@ Route::get('/logout', 'LoginController@logout')->name('logout')->middleware('che
 //--articles--
 Route::get('/articles', 'ArticlesController@show')->name('show-index');
 
+//--institutions--
+Route::get('/institutions', 'InstitutionController@show')->name('show-institution');
+Route::get('/institutions/sanitary_region/{sanitary_region_id}', 'InstitutionController@getBySanitaryRegionId')->name('get-by-sanitary-region-id');
+
 //--patients--
 Route::get('/patients', 'PatientController@show')->name('show-patients')->middleware('active-login')->middleware('permission:patient_index');
 Route::get('/patients/all', 'PatientController@getAll')->name('all-patients')->middleware('active-login')->middleware('permission:patient_index');
