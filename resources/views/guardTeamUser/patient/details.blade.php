@@ -1,28 +1,26 @@
 <div class="modal fade" id="details">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST">
             <div class="modal-header">
-                <h4>Paciente</h4> 
+                <h4>Nro Historia Clínica: @{{patientShow.clinical_history_number}} </h4> 
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>                       
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="chNumber">Nro Historia Clínica</label>
-                    <input type="number" name="chNumber" class="form-control" v-model="patientShow.clinical_history_number" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="name">Nombre</label>
-                    <input type="text" name="name" class="form-control" v-model="patientShow.name" disabled>
-                </div>
-                <div class="form-group">
-                    <label for="surname">Apellido</label>
-                    <input type="text" name="surname" class="form-control" v-model="patientShow.surname" disabled>
-                </div>
+                <ul >
+                    <li>Nombre y Apellido: @{{patientShow.name}} @{{patientShow.surname}}</li>
+                    <li>Fecha de Nacimiento: @{{ patientShow.birthdate}}</li>
+                    <li>Partido: @{{ patientShow.party}}</li>
+                    <li>Localidad: @{{ patientShow.town}}</li>
+                    <li>Dirección: @{{ patientShow.address}}</li>
+                    <li>Género: @{{ patientShow.selected_gender}}</li>
+                    <li>Tipo de Documento: @{{ patientShow.document_type}}</li>
+                    <li>Número de Documento: @{{ patientShow.document_number}}</li>
+                    <li>Obra Social: @{{ patientShow.social_work}}</li>
+                    <li>Número de Carpeta: @{{ patientShow.folder_number}}</li>
+                </ul>
             </div>  
-            </form>
         </div>
     </div>
 </div>

@@ -52,8 +52,13 @@ class PatientController extends Controller
     {
         $p = Patient::where('clinical_history_number', '=', $request->clinical_history_number)->get()->count();
         if ($p == 0){
-            Patient::create($request->all());
-            return response()->json('se ha creado exitosamente', 200);
+            $p = Patient::where('document_number', '=', $request->document_number)->get()->count();
+            if ($p == 0){
+                Patient::create($request->all());
+                return response()->json('se ha creado exitosamente', 200);
+            }else{
+                return response()->json(['errors'=>['store'=>['El número de documento está en uso']]], 422);
+            }
         }else{
             return response()->json(['errors'=>['store'=>['El número de historia clínica está en uso']]], 422);
         }

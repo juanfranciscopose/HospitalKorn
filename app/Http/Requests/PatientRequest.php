@@ -26,7 +26,14 @@ class PatientRequest extends FormRequest
         return [
            'clinical_history_number' => 'required',
            'name' => 'required',
-           'surname' => 'required'
+           'surname' => 'required',
+           'birthdate' => 'required',
+           'party' => 'required',
+           'town' => 'required',
+           'address' => 'required',
+           'gender' => 'required',
+           'document_type' => 'required',
+           'document_number' => 'required',
         ];
     }
     public function messages()
@@ -35,6 +42,13 @@ class PatientRequest extends FormRequest
             'clinical_history_number.required' => 'El número historia clínica es obligatorio',
             'name.required' => 'El nombre es obligatorio',
             'surname.required' => 'El apellido es obligatorio',
+            'birthdate.required' => 'La fecha de nacimiento es obligatoria',
+            'party.required' => 'El partido es obligatorio',
+            'town.required' => 'La localidad es obligatoria',
+            'address.required' => 'La dirección es obligatoria',
+            'gender.required' => 'El género es obligatorio',
+            'document_type.required' => 'El tipo de documento es obligatorio',
+            'document_number.required' => 'El número de documento es obligatorio'
         ];
     }
 }
