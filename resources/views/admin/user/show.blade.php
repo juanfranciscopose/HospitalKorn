@@ -1,11 +1,11 @@
 @extends("layout.layout")
 
 @section('title_system')
-{{$customConfig['title_system']['title_system']}}
+{{$custom_config['title_system']['title_system']}}
 @endsection
 
 @section('title_nav')
-{{$customConfig['title_nav']['title_nav']}}
+{{$custom_config['title_nav']['title_nav']}}
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="col-sm-12">
         @can('user_new')
             @include('admin.user.create')
-            <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#create" data-backdrop="static" data-keyboard="false">Nuevo Usuario</a>
+            <a href="#" class="btn btn-primary float-right" data-toggle="modal" v-on:click.prevent="newUser()">Nuevo Usuario</a>
         @endcan
         <table class="table table-hover table-striped mt-4">
             <thead>
@@ -45,8 +45,9 @@
                         </td>
                     @endcan
                     @can('user_destroy')
+                        @include('admin.user.delete')
                         <td width="10px">
-                            <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteUser(u)">Eliminar</a>
+                            <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyUser(u)">Eliminar</a>
                         </td>
                     @endcan
                 </tr>

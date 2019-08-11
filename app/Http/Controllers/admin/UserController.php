@@ -11,9 +11,9 @@ class UserController extends Controller
 {
     public function show()
     {
-        $customConfig = Configuration::getCustomConfig();
+        $custom_config = Configuration::getCustomConfig();
         $email = session()->get('email', 'error');
-        return view('admin.user.show', compact('email', 'customConfig'));
+        return view('admin.user.show', compact('email', 'custom_config'));
     }
 
     public function getAll()
@@ -39,7 +39,7 @@ class UserController extends Controller
     {
         $u = User::where('email', '=', $request->email)->get()->count();
         if ($u == 0){
-            User::createUser($request->email, $request->password);
+            User::createUser($request->email, $request->password, $request->name, $request->surname);
             return response()->json('se ha creado exitosamente', 200);
         }else{
             return response()->json(['errors'=>['store'=>['El correo electrónico está en uso']]], 422);
@@ -51,6 +51,8 @@ class UserController extends Controller
         // distinta validacion ya que el json no trae contraseña
         $this->validate($request, [
             'id' => 'required',
+            'name' => 'required',
+            'surname' => 'required',
             'email' => 'required',
             'active' => 'required'
         ]);  

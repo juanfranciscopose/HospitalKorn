@@ -27,9 +27,9 @@ class PatientController extends Controller
     }        
     public function show()
     {
-        $customConfig = Configuration::getCustomConfig();
+        $custom_config = Configuration::getCustomConfig();
         $email = session()->get('email', 'error');
-        return view('guardTeamUser.patient.show', compact('email', 'customConfig'));
+        return view('guardTeamUser.patient.show', compact('email', 'custom_config'));
     }
 
     public function getAll()

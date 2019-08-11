@@ -19,10 +19,10 @@ class User extends Authenticatable
     public $timestamps = false;
     protected $guarded = [];
     protected $hidden = [
-        'password', 'remember_token'
+        'password'
     ];
     protected $fillable = [
-        'email', 'active', 'password', 'remember_token'
+        'email', 'active', 'password', 'name', 'surname'
     ];
 
     public static function deleteUser($id)
@@ -36,12 +36,14 @@ class User extends Authenticatable
         }
         User::where('id', '=', $id)->delete();
     }
-    public static function createUser($email, $pass)
+    public static function createUser($email, $pass, $name, $surname)
     {
         $password = bcrypt($pass);
         DB::table('users')->insert([
             'email' => $email,
             'password' => $password,
+            'name' => $name,
+            'surname' => $surname,
             'active' => 1
         ]);
     }

@@ -26,7 +26,9 @@ class UserRequest extends FormRequest
         return [
             'email' => 'required',
             'active' => 'required',
-            'password' => 'required'
+            'password' => 'required',
+            'name' => 'required',
+            'surname' => 'required'
          ];
     }
     public function messages()
@@ -35,6 +37,8 @@ class UserRequest extends FormRequest
             'email.required' => 'El correo electrónico es obligatorio',
             'active.required' => 'El estado del usuario es obligatorio',
             'password.required' => 'La contraseña es obligatorio',
+            'name.required' => 'El nombre es obligatorio',
+            'surname.required' => 'El apellido es obligatorio',
         ];
     }
 }

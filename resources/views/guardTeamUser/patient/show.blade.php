@@ -1,11 +1,11 @@
 @extends("layout.layout")
 
 @section('title_system')
-{{$customConfig['title_system']['title_system']}}
+{{$custom_config['title_system']['title_system']}}
 @endsection
 
 @section('title_nav')
-{{$customConfig['title_nav']['title_nav']}}
+{{$custom_config['title_nav']['title_nav']}}
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="col-sm-12">
         @can('patient_new')
             @include('guardTeamUser.patient.create')
-            <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-backdrop="static" data-keyboard="false" v-on:click.prevent="createPatient()">Nuevo Paciente</a>
+            <a href="#" class="btn btn-primary float-right" data-toggle="modal" v-on:click.prevent="createPatient()">Nuevo Paciente</a>
         @endcan
         <table class="table table-hover table-striped mt-4">
             <thead>
@@ -44,7 +44,7 @@
                         </td>
                     @endcan
                     @can('patient_destroy')
-                    @include('guardTeamUser.patient.delete')
+                        @include('guardTeamUser.patient.delete')
                         <td width="10px">
                             <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deletePatient(p)">Eliminar</a>
                         </td>

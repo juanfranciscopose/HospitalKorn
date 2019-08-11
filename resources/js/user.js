@@ -5,17 +5,24 @@ import swal from "sweetalert";
 new Vue({
     el: '#user-crud',
     data: {
+        id:'',
         email: '',
         password: '',
+        name: '',
+        surname: '',
         repeat_password: '',
         users: [],
-        userShow: {
+        user_show: {
             'email': '',
+            'name': '',
+            'surname': '',
             'state': '',
         },
-        userEdit: {
+        user_edit: {
             'id': '',
             'email': '',
+            'name': '',
+            'surname': '',
             'active': ''
         }
     },
@@ -29,21 +36,40 @@ new Vue({
                 this.users = response.data;
             });
         },
+        //details
         detailsUser: function(user){
-            this.userShow.email = user.email;
+            this.user_show.email = user.email;
+            this.user_show.name = user.name;
+            this.user_show.surname = user.surname;
             if (user.active == 1){
-                this.userShow.state = 'activo';
+                this.user_show.state = 'activo';
             }else{
-                this.userShow.state = 'inactivo';
+                this.user_show.state = 'inactivo';
             }
-            $('#details').modal('show');
+            $('#details').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
         },
-        deleteUser: function(user){
+
+        //delete
+        destroyUser: function(user){
+            this.id = user.id;
+            $('#delete').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
+        },
+        deleteUser: function(){
             axios.post('/admin/users/delete', {
-                'id': user.id
+                'id': this.id
             })
             .then(response =>{
+                this.id = '';
                 this.getUsers();
+                $('#delete').modal('hide');
                 toastr.success('Eliminado correctamente');
             })
             .catch(error => {
@@ -61,31 +87,41 @@ new Vue({
                 });
             });
         },
+
+       //update 
         editUser: function(user){
             //show
-            this.userEdit.id = user.id;
-            this.userEdit.email = user.email;
+            this.user_edit.id = user.id;
+            this.user_edit.email = user.email;
+            this.user_edit.name = user.name;
+            this.user_edit.surname = user.surname;
             if (user.active == 1){
                 $("input[id=state]").prop("checked", true);
             }else{
                 $("input[id=state]").prop("checked", false);
             }
-            $('#edit').modal('show');
+            $('#edit').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
         },
         updateUser: function(){
             if ($("input[id=state]").is(':checked')) { 
-                this.userEdit.active = 1;
+                this.user_edit.active = 1;
             } else {
-                this.userEdit.active = 0;
+                this.user_edit.active = 0;
             }
-            axios.put('/admin/users/update', this.userEdit)
+            axios.put('/admin/users/update', this.user_edit)
             .then(response =>{
                 //console.log(response.data);
                 this.getUsers();
-                this.userEdit = {
+                this.user_edit = {
                     'id': '',
                     'email': '',
-                    'active': ''
+                    'active': '',
+                    'name': '',
+                    'surname': '',
                 };
                 $('#edit').modal('hide');
                 toastr.success('Actualizado correctamente');
@@ -95,6 +131,10 @@ new Vue({
                 
                 if (err.hasOwnProperty('active')){
                     message = err.active[0];
+                }else if(err.hasOwnProperty('name')){
+                    message = err.name[0];
+                }else if(err.hasOwnProperty('surname')){
+                    message = err.surname[0];
                 }
                 swal({
                     title: 'Error',
@@ -104,19 +144,37 @@ new Vue({
                 });
             });
         },
+
+        //create
+        newUser : function(){
+            this.email =  '';
+            this.password = '';
+            this.repeat_password = '';
+            this.name = '';
+            this.surname = '';
+            $('#create').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
+        },
         createUser: function(){
             if (this.password == this.repeat_password){
                 axios.post('/admin/users/create', {
                     email : this.email,
                     repeat_password: this.repeat_password,
                     password: this.password,
-                    active: 1
+                    active: 1,
+                    name : this.name,
+                    surname: this.surname
                 }).then(response =>{
                     //console.log(response.data);
                     this.getUsers();
                     this.email =  '';
                     this.password = '';
-                    this.repeat_password = ''; 
+                    this.repeat_password = '';
+                    this.name = '';
+                    this.surname = '';
                     $('#create').modal('hide');
                     toastr.success('Creado correctamente');
                 }).catch(error => {
@@ -130,6 +188,10 @@ new Vue({
                         message = err.password[0];
                     }else if(err.hasOwnProperty('active')){
                         message = err.active[0];
+                    }else if(err.hasOwnProperty('name')){
+                        message = err.name[0];
+                    }else if(err.hasOwnProperty('surname')){
+                        message = err.surname[0];
                     }else if(err.hasOwnProperty('store')){
                         message = err.store[0];
                     }

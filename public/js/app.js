@@ -50080,7 +50080,11 @@ new Vue({
       this.folder_number = '';
       this.telephone = '';
       this.selected_social_work = '';
-      $('#create').modal('show');
+      $('#create').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
     },
     setSocialWorksWithAll: function setSocialWorksWithAll() {
       var _this2 = this;
@@ -50242,12 +50246,16 @@ new Vue({
       this.setPartiesWithAll();
       this.setDocumentTypesWithAll();
       this.setSocialWorksWithAll();
-      $('#edit').modal('show');
+      $('#edit').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
     },
     updatePatient: function updatePatient() {
       var _this10 = this;
 
-      axios.put('/patients/update', this.patientEdit).then(function (response) {
+      axios.put('/patients/update', this.patient_edit).then(function (response) {
         _this10.getPatients();
 
         _this10.patient_edit = {
@@ -50313,12 +50321,17 @@ new Vue({
 
         _this11.getPatients();
 
+        $('#delete').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Eliminado correctamente');
       });
     },
     deletePatient: function deletePatient(patient) {
       this.id = patient.id;
-      $('#deleted').modal('show');
+      $('#delete').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
     },
     // Show details
     setPatientShowTownName: function setPatientShowTownName(id) {
@@ -50369,7 +50382,11 @@ new Vue({
         this.setPatientShowSocialWorkName(patient.social_work);
       }
 
-      $('#details').modal('show');
+      $('#details').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
     }
   }
 });
@@ -50397,17 +50414,24 @@ __webpack_require__.r(__webpack_exports__);
 new Vue({
   el: '#user-crud',
   data: {
+    id: '',
     email: '',
     password: '',
+    name: '',
+    surname: '',
     repeat_password: '',
     users: [],
-    userShow: {
+    user_show: {
       'email': '',
+      'name': '',
+      'surname': '',
       'state': ''
     },
-    userEdit: {
+    user_edit: {
       'id': '',
       'email': '',
+      'name': '',
+      'surname': '',
       'active': ''
     }
   },
@@ -50422,25 +50446,44 @@ new Vue({
         _this.users = response.data;
       });
     },
+    //details
     detailsUser: function detailsUser(user) {
-      this.userShow.email = user.email;
+      this.user_show.email = user.email;
+      this.user_show.name = user.name;
+      this.user_show.surname = user.surname;
 
       if (user.active == 1) {
-        this.userShow.state = 'activo';
+        this.user_show.state = 'activo';
       } else {
-        this.userShow.state = 'inactivo';
+        this.user_show.state = 'inactivo';
       }
 
-      $('#details').modal('show');
+      $('#details').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
     },
-    deleteUser: function deleteUser(user) {
+    //delete
+    destroyUser: function destroyUser(user) {
+      this.id = user.id;
+      $('#delete').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
+    },
+    deleteUser: function deleteUser() {
       var _this2 = this;
 
       axios.post('/admin/users/delete', {
-        'id': user.id
+        'id': this.id
       }).then(function (response) {
+        _this2.id = '';
+
         _this2.getUsers();
 
+        $('#delete').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Eliminado correctamente');
       })["catch"](function (error) {
         var err = error.response.data.errors;
@@ -50458,10 +50501,13 @@ new Vue({
         });
       });
     },
+    //update 
     editUser: function editUser(user) {
       //show
-      this.userEdit.id = user.id;
-      this.userEdit.email = user.email;
+      this.user_edit.id = user.id;
+      this.user_edit.email = user.email;
+      this.user_edit.name = user.name;
+      this.user_edit.surname = user.surname;
 
       if (user.active == 1) {
         $("input[id=state]").prop("checked", true);
@@ -50469,25 +50515,31 @@ new Vue({
         $("input[id=state]").prop("checked", false);
       }
 
-      $('#edit').modal('show');
+      $('#edit').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
     },
     updateUser: function updateUser() {
       var _this3 = this;
 
       if ($("input[id=state]").is(':checked')) {
-        this.userEdit.active = 1;
+        this.user_edit.active = 1;
       } else {
-        this.userEdit.active = 0;
+        this.user_edit.active = 0;
       }
 
-      axios.put('/admin/users/update', this.userEdit).then(function (response) {
+      axios.put('/admin/users/update', this.user_edit).then(function (response) {
         //console.log(response.data);
         _this3.getUsers();
 
-        _this3.userEdit = {
+        _this3.user_edit = {
           'id': '',
           'email': '',
-          'active': ''
+          'active': '',
+          'name': '',
+          'surname': ''
         };
         $('#edit').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
@@ -50497,6 +50549,10 @@ new Vue({
 
         if (err.hasOwnProperty('active')) {
           message = err.active[0];
+        } else if (err.hasOwnProperty('name')) {
+          message = err.name[0];
+        } else if (err.hasOwnProperty('surname')) {
+          message = err.surname[0];
         }
 
         sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
@@ -50507,6 +50563,19 @@ new Vue({
         });
       });
     },
+    //create
+    newUser: function newUser() {
+      this.email = '';
+      this.password = '';
+      this.repeat_password = '';
+      this.name = '';
+      this.surname = '';
+      $('#create').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
+    },
     createUser: function createUser() {
       var _this4 = this;
 
@@ -50515,7 +50584,9 @@ new Vue({
           email: this.email,
           repeat_password: this.repeat_password,
           password: this.password,
-          active: 1
+          active: 1,
+          name: this.name,
+          surname: this.surname
         }).then(function (response) {
           //console.log(response.data);
           _this4.getUsers();
@@ -50523,6 +50594,8 @@ new Vue({
           _this4.email = '';
           _this4.password = '';
           _this4.repeat_password = '';
+          _this4.name = '';
+          _this4.surname = '';
           $('#create').modal('hide');
           toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Creado correctamente');
         })["catch"](function (error) {
@@ -50536,6 +50609,10 @@ new Vue({
             message = err.password[0];
           } else if (err.hasOwnProperty('active')) {
             message = err.active[0];
+          } else if (err.hasOwnProperty('name')) {
+            message = err.name[0];
+          } else if (err.hasOwnProperty('surname')) {
+            message = err.surname[0];
           } else if (err.hasOwnProperty('store')) {
             message = err.store[0];
           }

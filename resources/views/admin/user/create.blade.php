@@ -14,6 +14,14 @@
                     <input type="email" name="email" class="form-control" v-model="email" required>
                 </div>
                 <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" class="form-control" v-model="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Apellido</label>
+                    <input type="text" name="surname" class="form-control" v-model="surname" required>
+                </div>
+                <div class="form-group">
                     <label for="pass">Contraseña</label>
                     <input type="password" name="pass" class="form-control" v-model="password" required>
                 </div>

@@ -92,7 +92,11 @@ new Vue({
             this.folder_number = '';
             this.telephone = '';
             this.selected_social_work = '';
-            $('#create').modal('show');
+            $('#create').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
         },
         setSocialWorksWithAll : function(){
             axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social')
@@ -242,10 +246,14 @@ new Vue({
             this.setPartiesWithAll();
             this.setDocumentTypesWithAll();
             this.setSocialWorksWithAll();
-            $('#edit').modal('show');
+            $('#edit').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
         },
         updatePatient: function(){
-            axios.put('/patients/update', this.patientEdit)
+            axios.put('/patients/update', this.patient_edit)
             .then(response =>{
                 this.getPatients();
                 this.patient_edit = {
@@ -308,13 +316,17 @@ new Vue({
             .then(response =>{
                 this.id = '';
                 this.getPatients();
-                $('#deleted').modal('hide');
+                $('#delete').modal('hide');
                 toastr.success('Eliminado correctamente');
             });
         },
         deletePatient: function(patient){
             this.id = patient.id;
-            $('#deleted').modal('show');
+            $('#delete').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
         },
 
         // Show details
@@ -360,7 +372,11 @@ new Vue({
             }else{
                 this.setPatientShowSocialWorkName(patient.social_work);
             }
-            $('#details').modal('show');
+            $('#details').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
         }
     }
 });

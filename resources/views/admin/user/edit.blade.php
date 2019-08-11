@@ -10,6 +10,14 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" class="form-control" v-model="user_edit.name" required>
+                </div>
+                <div class="form-group">
+                    <label for="surname">Apellido</label>
+                    <input type="text" name="surname" class="form-control" v-model="user_edit.surname" required>
+                </div>
+                <div class="form-group">
                     <label for="state">Estado</label>
                     <div class="form-group">
                         <div class="form-check">
