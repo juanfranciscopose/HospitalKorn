@@ -47,10 +47,7 @@
                 <div class="form-group">
                     <label for="geneder">Género</label>
                     <select v-model="selected_gender" name="gender">
-                        <option>MASCULINO</option>
-                        <option>FEMENINO</option>
-                        <option>TRANS</option>
-                        <option>OTRO</option>
+                        <option v-for="g in gender">@{{g}}</option>
                     </select>
                 </div>
                 <div class="form-group">

@@ -21,14 +21,14 @@
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>
-                    <th class="text-center">Nro Historia Clínica</th>
+                    <th class="text-center">Nro Documento</th>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="p in patients">
-                    <td class="text-center">@{{ p.clinical_history_number }}</td>
+                    <td class="text-center">@{{ p.document_number }}</td>
                     <td class="text-center">@{{ p.name }}</td>
                     <td class="text-center">@{{ p.surname }}</td>
                     @can('patient_show')
@@ -44,6 +44,7 @@
                         </td>
                     @endcan
                     @can('patient_destroy')
+                    @include('guardTeamUser.patient.delete')
                         <td width="10px">
                             <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deletePatient(p)">Eliminar</a>
                         </td>
