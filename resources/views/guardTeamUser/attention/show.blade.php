@@ -1,11 +1,11 @@
 @extends("layout.layout")
 
 @section('title_system')
-{{$customConfig['title_system']['title_system']}}
+{{$custom_config['title_system']['title_system']}}
 @endsection
 
 @section('title_nav')
-{{$customConfig['title_nav']['title_nav']}}
+{{$custom_config['title_nav']['title_nav']}}
 @endsection
 
 @section('content')
@@ -16,7 +16,7 @@
     <div class="col-sm-12">
         @can('attention_new')
             @include('guardTeamUser.attention.create')
-            <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#create" data-backdrop="static" data-keyboard="false">Nueva Atención</a>
+            <a href="#" class="btn btn-primary float-right" data-toggle="modal" v-on:click.prevent="newAttention()">Nueva Atención</a>
         @endcan
         <table class="table table-hover table-striped mt-4">
             <thead>
@@ -46,8 +46,9 @@
                         </td>
                     @endcan
                     @can('attention_destroy')
+                        @include('guardTeamUser.attention.delete')
                         <td width="10px">
-                            <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deleteAttention(a)">Eliminar</a>
+                            <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyAttention(a)">Eliminar</a>
                         </td>
                     @endcan
                 </tr>

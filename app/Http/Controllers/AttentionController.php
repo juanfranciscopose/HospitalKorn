@@ -11,9 +11,9 @@ class AttentionController extends Controller
 {
     public function show()
     {
-        $customConfig = Configuration::getCustomConfig();
+        $custom_config = Configuration::getCustomConfig();
         $email = session()->get('email', 'error');
-        return view('guardTeamUser.attention.show', compact('email', 'customConfig'));
+        return view('guardTeamUser.attention.show', compact('email', 'custom_config'));
     }
     public function getAll()
     {

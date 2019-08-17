@@ -17,15 +17,15 @@ class Configuration extends Model
 
     public static function getCustomConfig () 
     {
-        $allConfig = Configuration::all();
-        $customConfig = array();
-        foreach ($allConfig as $oneConfig) {
+        $all_config = Configuration::all();
+        $custom_config = array();
+        foreach ($all_config as $one_config) {
             $aux = array();
-            $aux[$oneConfig->name] = $oneConfig->value;
-            $aux['descrip'] = $oneConfig->description;
-            $customConfig[$oneConfig->name] = $aux;
+            $aux[$one_config->name] = $one_config->value;
+            $aux['descrip'] = $one_config->description;
+            $custom_config[$one_config->name] = $aux;
         }
-        return $customConfig;
+        return $custom_config;
     }
 
     public static function updateConfig (Request $request) 

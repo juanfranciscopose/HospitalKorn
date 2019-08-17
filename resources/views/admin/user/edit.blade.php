@@ -21,7 +21,7 @@
                     <label for="state">Estado</label>
                     <div class="form-group">
                         <div class="form-check">
-                            <input id="state" class="form-check-input" type="checkbox" id="gridCheck">
+                            <input id="state" v-model="state" class="form-check-input" type="checkbox" id="gridCheck" :checked="state">
                             <label class="form-check-label" for="gridCheck">Usuario Activo</label>
                         </div>
                     </div>

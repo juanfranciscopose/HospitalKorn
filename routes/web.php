@@ -13,6 +13,8 @@ Route::get('/articles', 'ArticlesController@show')->name('show-index');
 //--institutions--
 Route::get('/institutions', 'InstitutionController@show')->name('show-institution');
 Route::get('/institutions/sanitary_region/{sanitary_region_id}', 'InstitutionController@getBySanitaryRegionId')->name('get-by-sanitary-region-id');
+Route::get('/institutions/all', 'InstitutionController@getAll')->name('all-institutions');
+Route::get('/institutions/{id}', 'InstitutionController@getInstitution')->name('one-institutions');
 
 //--patients--
 Route::get('/patients', 'PatientController@show')->name('show-patients')->middleware('active-login')->middleware('permission:patient_index');

@@ -5,6 +5,7 @@ import swal from "sweetalert";
 new Vue({
     el: '#user-crud',
     data: {
+        state: false,
         id:'',
         email: '',
         password: '',
@@ -96,9 +97,11 @@ new Vue({
             this.user_edit.name = user.name;
             this.user_edit.surname = user.surname;
             if (user.active == 1){
-                $("input[id=state]").prop("checked", true);
+                this.state = true;
+                this.user_edit.active = 1;
             }else{
-                $("input[id=state]").prop("checked", false);
+                this.state = false;
+                this.user_edit.active = 0;
             }
             $('#edit').modal({
                 backdrop: 'static',
@@ -107,7 +110,7 @@ new Vue({
             });
         },
         updateUser: function(){
-            if ($("input[id=state]").is(':checked')) { 
+            if (this.state) { 
                 this.user_edit.active = 1;
             } else {
                 this.user_edit.active = 0;

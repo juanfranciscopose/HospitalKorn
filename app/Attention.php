@@ -11,6 +11,15 @@ class Attention extends Model
     protected $table = 'attentions';
     public $timestamps = false;
     protected $fillable = [
-        'patient_id', 'diagnostic', 'date'
+        'patient_id',
+        'diagnostic',
+        'date',
+        'reason',
+        'derivation',
+        'observation',
+        'articulation',
+        'internment',
+        'pharmacotherapy',
+        'accompaniment'
     ];
 }

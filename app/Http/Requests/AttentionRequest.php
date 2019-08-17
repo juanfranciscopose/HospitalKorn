@@ -26,7 +26,9 @@ class AttentionRequest extends FormRequest
         return [
             'patient_id' => 'required',
             'date' => 'required',
-            'diagnostic' => 'required'
+            'diagnostic' => 'required',
+            'reason' => 'required',
+            'internment' => 'required',
         ];
     }
     public function messages()
@@ -35,6 +37,8 @@ class AttentionRequest extends FormRequest
             'patient_id.required' => 'El ID del paciente es obligatorio',
             'date.required' => 'La fecha es obligatorio',
             'diagnostic.required' => 'El diagnostico es obligatorio',
+            'reason.required' => 'El motivo es obligatorio',
+            'internment.required' => 'Es obligatorio saber si el paciente queda internado',
         ];
     }
 }

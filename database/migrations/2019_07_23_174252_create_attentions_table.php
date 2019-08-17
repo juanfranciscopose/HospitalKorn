@@ -18,7 +18,14 @@ class CreateAttentionsTable extends Migration
             $table->unsignedBigInteger('patient_id');
             $table->foreign('patient_id', 'fk_patient_attention')->references('id')->on('patients')->onDelete('restrict')->onUpdate('restrict');
             $table->string('diagnostic');
+            $table->string('reason');
+            $table->integer('derivation')->nullable();
+            $table->string('observation')->nullable();
+            $table->string('articulation')->nullable();
+            $table->unsignedTinyInteger('internment');
+            $table->string('pharmacotherapy')->nullable();
             $table->date('date');
+            $table->string('accompaniment')->nullable();
         });
     }
 
