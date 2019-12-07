@@ -16,7 +16,7 @@
     <div class="col-sm-12">
         @can('user_new')
             @include('admin.user.create')
-            <a href="#" class="btn btn-primary float-right" data-toggle="modal" v-on:click.prevent="newUser()">Nuevo Usuario</a>
+            <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="newUser()">Nuevo Usuario</a>
         @endcan
         <table class="table table-hover table-striped mt-4">
             <thead>

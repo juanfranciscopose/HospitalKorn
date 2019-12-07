@@ -12,6 +12,18 @@ class Patient extends Model
     public $timestamps = false;
     //fillable -> campos a guardar, si decimos request->ALL() solamente guarda los especificados 
     protected $fillable = [
-        'clinical_history_number', 'name', 'surname', 'birthdate', 'party', 'town', 'address', 'gender', 'document_type', 'document_number', 'folder_number', 'telephone', 'social_work'
+        'clinical_history_number', 
+        'name', 
+        'surname', 
+        'birthdate', 
+        'party', 
+        'town', 
+        'address', 
+        'gender', 
+        'document_type', 
+        'document_number', 
+        'folder_number', 
+        'telephone', 
+        'social_work'
     ];
 }

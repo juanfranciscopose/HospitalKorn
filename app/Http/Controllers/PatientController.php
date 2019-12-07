@@ -70,4 +70,19 @@ class PatientController extends Controller
         return response()->json('se ha actualizado exitosamente', 200);
     }
 
+    public function getPatientsWithAttention()
+    {  
+        $patient_with_attention = Attention::distinct()->get(['patient_id'])->count();
+        if ($patient_with_attention == 0){
+            return response()->json(['errors'=>['load'=>['no se registran datos pacientes atendidos']]],422);
+        }else{
+            $patients = array();
+            $id_with_attentions = Attention::distinct()->get(['patient_id']);
+            foreach ($id_with_attentions as $id) {
+                $p = Patient::where('id', '=', $id->patient_id)->get();
+                array_push($patients, $p[0]);
+            }
+            return response()->json($patients, 200);
+        }    
+    }       
 }

@@ -14,8 +14,8 @@
         <div class="col-sm-12">
             <h1 class="page-header mb-4">Configuración del Sistema</h1>
             @can('config_update')
-                <a href="#" v-if="editMode" class="btn btn-primary float-right" v-on:click.prevent="updateConfig()">Guardar Cambios</a>
-                <a href="#" v-else class="btn btn-warning float-right" v-on:click.prevent="editConfig()">Editar</a>  
+                <a href="#" v-if="editMode" class="btn btn-primary float-right mb-4" v-on:click.prevent="updateConfig()">Guardar Cambios</a>
+                <a href="#" v-else class="btn btn-warning float-right mb-4" v-on:click.prevent="editConfig()">Editar</a>  
             @endcan
         </div>
         <div class="col-sm-12">

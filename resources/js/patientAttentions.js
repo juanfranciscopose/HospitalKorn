@@ -3,24 +3,18 @@ import Axios from "axios";
 import toastr from "toastr";
 
 new Vue({
-    el: '#attention',
+    el: '#patient_attentions',
+    props:['patient'],
     data: {
+        patient_id:'',
         id: '',
-        patient_data: '',
         accompaniment: ['Familiar cercano', 'Hermanos e hijos', 'Pareja', 'Referentes vinculares', 'Policía', 'SAME', 'Por sus propios medios'],
         reasons_consultation: ['Receta médica', 'Control de guardia', 'Consulta', 'Intento de suicidio', 'Interconsulta', 'Otras'],
         pharmacotherapy: ['Mañana', 'Tarde', 'Noche'],
         selected_accompaniment: '',
         selected_reason: '',
         selected_pharmacotherapy: '',
-        articulation: '',
-        internment: 0,
-        observations: '',
-        patients: [],
-        date: '',
-        diagnostic: '',
-        patient_id: '',
-        patient_chn: '',
+        attentions: [],
         derivation: [],
         selected_derivation: '',
         selected_internment: false,
@@ -53,9 +47,21 @@ new Vue({
         }
     },
     created: function() {
-        this.getPatientsWithAttentions();
+        //this.getAttentionsByIdPatient();
+        console.log(this.patient);
     },
     methods: {
+        getAttentionsByIdPatient: function(){
+            axios.post('/attentions/delete', {
+                'id': this.id
+            })
+            .then(response =>{
+                this.getAttentions();
+                this.id = '';
+                $('#delete').modal('hide');
+                toastr.success('Eliminado correctamente');
+            });
+        },
         getAllDerivation: function(){
             //getAllInstitutions
             axios.get('/institutions/all')
@@ -63,103 +69,6 @@ new Vue({
                 this.derivation = response.data;
             });
         },
-        getPatientsWithAttentions: function (){
-            axios.get('/patients/attentions/all')
-            .then(response => {
-                this.patients = response.data;
-                //console.log(response);
-            });
-        },
-        getPatientData: function(){
-            if (this.patient_id != ''){
-                axios.get('/patients/patient/'+this.patient_id)
-                .then(response => {
-                    if(response.data == 'No hay paciente con ese ID'){
-                        this.patient_data = response.data;
-                    }else{
-                        this.patient_data = response.data.name + ' ' + response.data.surname;
-                    }
-                });
-            }else{
-                this.patient_data = '';
-            }
-        },
-        newAttention: function(){
-            this.patient_data = '';
-            this.selected_accompaniment= '';
-            this.selected_reason= '';
-            this.selected_pharmacotherapy= '';
-            this.selected_internment= false;
-            this.articulation= '';
-            this.internment= 0;
-            this.observations= '';
-            this.date= '';
-            this.diagnostic= '';
-            this.patient_id= '';
-            this.selected_derivation = '';
-            this.getAllDerivation();
-            $('#create').modal({
-                backdrop: 'static',
-                keyboard: true, 
-                show: true
-            });
-        },
-        createAttention: function(){
-            if (this.selected_internment) { 
-                this.internment = 1;
-            }else{
-                this.internment = 0;
-            }
-            axios.post('/attentions/create', {
-                diagnostic : this.diagnostic,
-                date: this.date,
-                patient_id: this.patient_id,
-                internment: this.internment,
-                accompaniment: this.selected_accompaniment,
-                reason: this.selected_reason,
-                pharmacotherapy: this.selected_pharmacotherapy,
-                articulation: this.articulation,
-                observation: this.observations,
-                derivation: this.selected_derivation
-            }).then(response =>{
-                this.getPatientsWithAttentions();
-                this.patient_data = '';
-                this.selected_accompaniment= '';
-                this.selected_reason= '';
-                this.selected_pharmacotherapy= '';
-                this.articulation= '';
-                this.internment= 0;
-                this.selected_internment= false;
-                this.observations= '';
-                this.date= '';
-                this.diagnostic= '';
-                this.patient_id= '';
-                this.selected_derivation = '';
-                $('#create').modal('hide');
-                toastr.success('Creado correctamente');
-            }).catch(error => {
-                //refactoring
-                let err = error.response.data.errors;
-                let message = 'error no identificado';
-                
-                if(err.hasOwnProperty('patient_id')){
-                    message = err.patient_id[0];
-                }else if (err.hasOwnProperty('date')){
-                    message = err.date[0];
-                }else if(err.hasOwnProperty('diagnostic')){
-                    message = err.diagnostic[0];
-                }else if(err.hasOwnProperty('store')){
-                    message = err.store[0];
-                }
-                swal({
-                    title: 'Error',
-                    text: message,
-                    icono: 'error',
-                    closeOnClickOutside: false
-                });
-            });
-        },
-
         //delete
         deleteAttention: function(){
             axios.post('/attentions/delete', {

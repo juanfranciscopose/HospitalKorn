@@ -49546,7 +49546,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 new Vue({
-  el: '#attention-crud',
+  el: '#attention',
   data: {
     id: '',
     patient_data: '',
@@ -49559,7 +49559,7 @@ new Vue({
     articulation: '',
     internment: 0,
     observations: '',
-    attentions: [],
+    patients: [],
     date: '',
     diagnostic: '',
     patient_id: '',
@@ -49596,7 +49596,7 @@ new Vue({
     }
   },
   created: function created() {
-    this.getAttentions();
+    this.getPatientsWithAttentions();
   },
   methods: {
     getAllDerivation: function getAllDerivation() {
@@ -49607,11 +49607,11 @@ new Vue({
         _this.derivation = response.data;
       });
     },
-    getAttentions: function getAttentions() {
+    getPatientsWithAttentions: function getPatientsWithAttentions() {
       var _this2 = this;
 
-      axios.get('/attentions/all').then(function (response) {
-        _this2.attentions = response.data; //console.log(response.data);
+      axios.get('/patients/attentions/all').then(function (response) {
+        _this2.patients = response.data; //console.log(response);
       });
     },
     getPatientData: function getPatientData() {
@@ -49670,7 +49670,7 @@ new Vue({
         observation: this.observations,
         derivation: this.selected_derivation
       }).then(function (response) {
-        _this4.getAttentions();
+        _this4.getPatientsWithAttentions();
 
         _this4.patient_data = '';
         _this4.selected_accompaniment = '';
@@ -49731,6 +49731,7 @@ new Vue({
         show: true
       });
     },
+    //edit
     editAttention: function editAttention(attention) {
       this.attention_edit.id = attention.id;
       this.attention_edit.date = attention.date;
@@ -49806,6 +49807,7 @@ new Vue({
         });
       });
     },
+    //details
     setAttentionShowDerivationName: function setAttentionShowDerivationName(id) {
       var _this7 = this;
 
@@ -50534,6 +50536,235 @@ new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/patientAttentions.js":
+/*!*******************************************!*\
+  !*** ./resources/js/patientAttentions.js ***!
+  \*******************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+new Vue({
+  el: '#patient_attentions',
+  props: ['patient'],
+  data: {
+    patient_id: '',
+    id: '',
+    accompaniment: ['Familiar cercano', 'Hermanos e hijos', 'Pareja', 'Referentes vinculares', 'Policía', 'SAME', 'Por sus propios medios'],
+    reasons_consultation: ['Receta médica', 'Control de guardia', 'Consulta', 'Intento de suicidio', 'Interconsulta', 'Otras'],
+    pharmacotherapy: ['Mañana', 'Tarde', 'Noche'],
+    selected_accompaniment: '',
+    selected_reason: '',
+    selected_pharmacotherapy: '',
+    attentions: [],
+    derivation: [],
+    selected_derivation: '',
+    selected_internment: false,
+    attention_edit: {
+      'id': '',
+      'date': '',
+      'patient_id': '',
+      'diagnostic': '',
+      'internment': 0,
+      'accompaniment': '',
+      'reason': '',
+      'pharmacotherapy': '',
+      'articulation': '',
+      'observation': '',
+      'derivation': ''
+    },
+    attention_show: {
+      'id': '',
+      'date': '',
+      'patient_id': '',
+      'name_surname_patient': '',
+      'diagnostic': '',
+      'internment': 0,
+      'accompaniment': '',
+      'reason': '',
+      'pharmacotherapy': '',
+      'articulation': '',
+      'observation': '',
+      'derivation': ''
+    }
+  },
+  created: function created() {
+    //this.getAttentionsByIdPatient();
+    var id = window.location.href.split('/').pop();
+    console.log(id);
+  },
+  methods: {
+    getAttentionsByIdPatient: function getAttentionsByIdPatient() {
+      var _this = this;
+
+      axios.post('/attentions/delete', {
+        'id': this.id
+      }).then(function (response) {
+        _this.getAttentions();
+
+        _this.id = '';
+        $('#delete').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
+      });
+    },
+    getAllDerivation: function getAllDerivation() {
+      var _this2 = this;
+
+      //getAllInstitutions
+      axios.get('/institutions/all').then(function (response) {
+        _this2.derivation = response.data;
+      });
+    },
+    //delete
+    deleteAttention: function deleteAttention() {
+      var _this3 = this;
+
+      axios.post('/attentions/delete', {
+        'id': this.id
+      }).then(function (response) {
+        _this3.getAttentions();
+
+        _this3.id = '';
+        $('#delete').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
+      });
+    },
+    destroyAttention: function destroyAttention(Attention) {
+      this.id = Attention.id;
+      $('#delete').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
+    },
+    //edit
+    editAttention: function editAttention(attention) {
+      this.attention_edit.id = attention.id;
+      this.attention_edit.date = attention.date;
+      this.attention_edit.diagnostic = attention.diagnostic;
+      this.attention_edit.patient_id = attention.patient_id;
+      this.attention_edit.accompaniment = attention.accompaniment;
+      this.attention_edit.reason = attention.reason;
+      this.attention_edit.pharmacotherapy = attention.pharmacotherapy;
+      this.attention_edit.articulation = attention.articulation;
+      this.attention_edit.observation = attention.observation;
+      this.attention_edit.derivation = attention.derivation;
+      this.attention_edit.internment = attention.internment;
+
+      if (attention.internment == 1) {
+        this.selected_internment == true;
+      } else {
+        this.selected_internment == false;
+      }
+
+      this.getAllDerivation();
+      $('#edit').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
+    },
+    updateAttention: function updateAttention() {
+      var _this4 = this;
+
+      if (this.selected_internment) {
+        this.attention_edit.internment = 1;
+      } else {
+        this.attention_edit.internment = 0;
+      }
+
+      axios.put('/attentions/update', this.attention_edit).then(function (response) {
+        _this4.getAttentions();
+
+        _this4.attention_edit = {
+          'id': '',
+          'date': '',
+          'patient_id': '',
+          'diagnostic': '',
+          'internment': 0,
+          'accompaniment': '',
+          'reason': '',
+          'pharmacotherapy': '',
+          'articulation': '',
+          'observation': '',
+          'derivation': ''
+        };
+        $('#edit').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Actualizado correctamente');
+      })["catch"](function (error) {
+        var err = error.response.data.errors;
+        var message = 'error no identificado';
+
+        if (err.hasOwnProperty('date')) {
+          message = err.date[0];
+        } else if (err.hasOwnProperty('diagnostic')) {
+          message = err.diagnostic[0];
+        } else if (err.hasOwnProperty('id')) {
+          message = err.id[0];
+        } else if (err.hasOwnProperty('patient_id')) {
+          message = err.patient_id[0];
+        }
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+          title: 'Error',
+          text: message,
+          icono: 'error',
+          closeOnClickOutside: false
+        });
+      });
+    },
+    //details
+    setAttentionShowDerivationName: function setAttentionShowDerivationName(id) {
+      var _this5 = this;
+
+      axios.get('/institutions/' + id).then(function (response) {
+        _this5.attention_show.derivation = response.data.name;
+      });
+    },
+    detailsAttention: function detailsAttention(attention) {
+      var _this6 = this;
+
+      axios.get('/patients/patient/' + attention.patient_id).then(function (response) {
+        _this6.attention_show.name_surname_patient = response.data.name + ' ' + response.data.surname;
+      });
+      this.attention_show.id = attention.id;
+      this.attention_show.diagnostic = attention.diagnostic;
+      this.attention_show.date = attention.date;
+      this.attention_show.patient_id = attention.patient_id;
+      this.attention_show.accompaniment = attention.accompaniment;
+      this.attention_show.reason = attention.reason;
+      this.attention_show.pharmacotherapy = attention.pharmacotherapy;
+      this.attention_show.articulation = attention.articulation;
+      this.attention_show.observation = attention.observation;
+
+      if (attention.derivation == null) {
+        this.attention_show.derivation = null;
+      } else {
+        this.setAttentionShowDerivationName(attention.derivation);
+      }
+
+      this.attention_show.internment = attention.internment;
+      $('#details').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/user.js":
 /*!******************************!*\
   !*** ./resources/js/user.js ***!
@@ -50783,9 +51014,9 @@ new Vue({
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ***!
-  \***********************************************************************************************************************************************************************************************/
+/*!***********************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ./resources/js/patientAttentions.js ***!
+  \***********************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50795,7 +51026,8 @@ __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patien
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attention.js */"./resources/js/attention.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/user.js */"./resources/js/user.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/config.js */"./resources/js/config.js");
-module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/institution.js */"./resources/js/institution.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/institution.js */"./resources/js/institution.js");
+module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patientAttentions.js */"./resources/js/patientAttentions.js");
 
 
 /***/ })
