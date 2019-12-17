@@ -30,6 +30,7 @@ new Vue({
         telephone: '',
         social_works: [],
         selected_social_work: '',
+        search: '',
         patient_edit: {
             'clinical_history_number': '',
             'name': '',
@@ -63,6 +64,13 @@ new Vue({
     },
     created: function() {
         this.getPatients();
+    },
+    computed:{
+        filteredPatients: function(){
+            return this.patients.filter((p) => {
+                return p.surname.match(this.search);
+            });
+        }
     },
     methods: {
         getPatients: function (){

@@ -18,6 +18,7 @@
             @include('guardTeamUser.patient.create')
             <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="createPatient()">Nuevo Paciente</a>
         @endcan
+        <input v-model="search" class="float-right mr-4" type="text" placeholder="buscar por apellido">
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>
@@ -27,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="p in patients">
+                <tr v-for="p in filteredPatients">
                     <td class="text-center">@{{ p.document_number }}</td>
                     <td class="text-center">@{{ p.name }}</td>
                     <td class="text-center">@{{ p.surname }}</td>

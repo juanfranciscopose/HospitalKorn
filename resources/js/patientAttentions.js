@@ -46,22 +46,7 @@ new Vue({
             'derivation': ''
         }
     },
-    created: function() {
-        //this.getAttentionsByIdPatient();
-        console.log(this.patient);
-    },
     methods: {
-        getAttentionsByIdPatient: function(){
-            axios.post('/attentions/delete', {
-                'id': this.id
-            })
-            .then(response =>{
-                this.getAttentions();
-                this.id = '';
-                $('#delete').modal('hide');
-                toastr.success('Eliminado correctamente');
-            });
-        },
         getAllDerivation: function(){
             //getAllInstitutions
             axios.get('/institutions/all')

@@ -22,4 +22,16 @@ class Attention extends Model
         'pharmacotherapy',
         'accompaniment'
     ];
+    public static function getAllAttentionsById ($id) 
+    {
+        if (isset($id))
+        {
+            $attentions = Attention::where('patient_id', '=', $id)->orderBy('id', 'DESC')->get();
+            return $attentions;
+        }
+        else
+        {
+            return 'Error en el ID de paciente';
+        }
+    }
 }

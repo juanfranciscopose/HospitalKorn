@@ -31,7 +31,9 @@ Route::get('/attentions/all', 'AttentionController@getAll')->name('all-attention
 Route::post('/attentions/delete', 'AttentionController@delete')->name('delete-attentions')->middleware('active-login')->middleware('permission:attention_destroy');
 Route::post('/attentions/create', 'AttentionController@store')->name('create-attentions')->middleware('active-login')->middleware('permission:attention_new');
 Route::put('/attentions/update', 'AttentionController@update')->name('update-attentions')->middleware('active-login')->middleware('permission:attention_update');
-Route::get('/attentions/patient/{id}/{name}', 'AttentionController@showPatient')->name('patient-attentions')->middleware('active-login')->middleware('permission:attention_index');
+
+Route::get('/Attentions/patient/allAttentions/{id}', 'AttentionController@getAllAttentionsById')->middleware('active-login')->middleware('permission:attention_index');
+Route::get('/attentions/patient/{id}', 'AttentionController@showPatient')->name('patient-attentions')->middleware('active-login')->middleware('permission:attention_index');
 
 //--users--
 Route::get('/admin/users', 'admin\UserController@show')->name('show-users')->middleware('active-login')->middleware('permission:user_index');

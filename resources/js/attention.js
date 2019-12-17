@@ -24,6 +24,7 @@ new Vue({
         derivation: [],
         selected_derivation: '',
         selected_internment: false,
+        search: '',
         attention_edit: {
             'id': '',
             'date': '',
@@ -54,6 +55,13 @@ new Vue({
     },
     created: function() {
         this.getPatientsWithAttentions();
+    },
+    computed:{
+        filteredAttentions: function(){
+            return this.patients.filter((p) => {
+                return p.surname.match(this.search);
+            });
+        }
     },
     methods: {
         getAllDerivation: function(){

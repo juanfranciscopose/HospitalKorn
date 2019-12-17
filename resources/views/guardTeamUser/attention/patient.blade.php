@@ -14,8 +14,8 @@
         <h1 class="page-header">Atención al Paciente</h1>
     </div>
 	<div class="col-sm-12">
-        <div :patient="{{$id}}" class="container">
-            <h4 class="page-header">Paciente:{{ $name }}</h4>
+        <div class="container">
+            <h4 class="page-header">Paciente : {{ $patient['name'] }}</h4>
         </div>
 	</div>
     <div class="col-sm-12">
@@ -28,7 +28,14 @@
                 </tr>
             </thead>
             <tbody>
-                            </tbody>
+                @foreach ($attentions as $a)
+                    <tr>
+                        <td class="text-center">{{$a['diagnostic']}}</td>
+                        <td class="text-center">{{$a['reason']}}</td>
+                        <td class="text-center">{{$a['date']}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 </div>

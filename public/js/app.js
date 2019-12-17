@@ -49567,6 +49567,7 @@ new Vue({
     derivation: [],
     selected_derivation: '',
     selected_internment: false,
+    search: '',
     attention_edit: {
       'id': '',
       'date': '',
@@ -49598,31 +49599,40 @@ new Vue({
   created: function created() {
     this.getPatientsWithAttentions();
   },
+  computed: {
+    filteredAttentions: function filteredAttentions() {
+      var _this = this;
+
+      return this.patients.filter(function (p) {
+        return p.surname.match(_this.search);
+      });
+    }
+  },
   methods: {
     getAllDerivation: function getAllDerivation() {
-      var _this = this;
+      var _this2 = this;
 
       //getAllInstitutions
       axios.get('/institutions/all').then(function (response) {
-        _this.derivation = response.data;
+        _this2.derivation = response.data;
       });
     },
     getPatientsWithAttentions: function getPatientsWithAttentions() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/patients/attentions/all').then(function (response) {
-        _this2.patients = response.data; //console.log(response);
+        _this3.patients = response.data; //console.log(response);
       });
     },
     getPatientData: function getPatientData() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.patient_id != '') {
         axios.get('/patients/patient/' + this.patient_id).then(function (response) {
           if (response.data == 'No hay paciente con ese ID') {
-            _this3.patient_data = response.data;
+            _this4.patient_data = response.data;
           } else {
-            _this3.patient_data = response.data.name + ' ' + response.data.surname;
+            _this4.patient_data = response.data.name + ' ' + response.data.surname;
           }
         });
       } else {
@@ -49650,7 +49660,7 @@ new Vue({
       });
     },
     createAttention: function createAttention() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.selected_internment) {
         this.internment = 1;
@@ -49670,20 +49680,20 @@ new Vue({
         observation: this.observations,
         derivation: this.selected_derivation
       }).then(function (response) {
-        _this4.getPatientsWithAttentions();
+        _this5.getPatientsWithAttentions();
 
-        _this4.patient_data = '';
-        _this4.selected_accompaniment = '';
-        _this4.selected_reason = '';
-        _this4.selected_pharmacotherapy = '';
-        _this4.articulation = '';
-        _this4.internment = 0;
-        _this4.selected_internment = false;
-        _this4.observations = '';
-        _this4.date = '';
-        _this4.diagnostic = '';
-        _this4.patient_id = '';
-        _this4.selected_derivation = '';
+        _this5.patient_data = '';
+        _this5.selected_accompaniment = '';
+        _this5.selected_reason = '';
+        _this5.selected_pharmacotherapy = '';
+        _this5.articulation = '';
+        _this5.internment = 0;
+        _this5.selected_internment = false;
+        _this5.observations = '';
+        _this5.date = '';
+        _this5.diagnostic = '';
+        _this5.patient_id = '';
+        _this5.selected_derivation = '';
         $('#create').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Creado correctamente');
       })["catch"](function (error) {
@@ -49711,14 +49721,14 @@ new Vue({
     },
     //delete
     deleteAttention: function deleteAttention() {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.post('/attentions/delete', {
         'id': this.id
       }).then(function (response) {
-        _this5.getAttentions();
+        _this6.getAttentions();
 
-        _this5.id = '';
+        _this6.id = '';
         $('#delete').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
       });
@@ -49759,7 +49769,7 @@ new Vue({
       });
     },
     updateAttention: function updateAttention() {
-      var _this6 = this;
+      var _this7 = this;
 
       if (this.selected_internment) {
         this.attention_edit.internment = 1;
@@ -49768,9 +49778,9 @@ new Vue({
       }
 
       axios.put('/attentions/update', this.attention_edit).then(function (response) {
-        _this6.getAttentions();
+        _this7.getAttentions();
 
-        _this6.attention_edit = {
+        _this7.attention_edit = {
           'id': '',
           'date': '',
           'patient_id': '',
@@ -49809,17 +49819,17 @@ new Vue({
     },
     //details
     setAttentionShowDerivationName: function setAttentionShowDerivationName(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get('/institutions/' + id).then(function (response) {
-        _this7.attention_show.derivation = response.data.name;
+        _this8.attention_show.derivation = response.data.name;
       });
     },
     detailsAttention: function detailsAttention(attention) {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.get('/patients/patient/' + attention.patient_id).then(function (response) {
-        _this8.attention_show.name_surname_patient = response.data.name + ' ' + response.data.surname;
+        _this9.attention_show.name_surname_patient = response.data.name + ' ' + response.data.surname;
       });
       this.attention_show.id = attention.id;
       this.attention_show.diagnostic = attention.diagnostic;
@@ -50161,6 +50171,7 @@ new Vue({
     telephone: '',
     social_works: [],
     selected_social_work: '',
+    search: '',
     patient_edit: {
       'clinical_history_number': '',
       'name': '',
@@ -50195,12 +50206,21 @@ new Vue({
   created: function created() {
     this.getPatients();
   },
-  methods: {
-    getPatients: function getPatients() {
+  computed: {
+    filteredPatients: function filteredPatients() {
       var _this = this;
 
+      return this.patients.filter(function (p) {
+        return p.surname.match(_this.search);
+      });
+    }
+  },
+  methods: {
+    getPatients: function getPatients() {
+      var _this2 = this;
+
       axios.get('/patients/all').then(function (response) {
-        _this.patients = response.data;
+        _this2.patients = response.data;
       });
     },
     //create
@@ -50230,21 +50250,21 @@ new Vue({
       });
     },
     setSocialWorksWithAll: function setSocialWorksWithAll() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social').then(function (response) {
-        _this2.social_works = response.data;
+        _this3.social_works = response.data;
       });
     },
     setDocumentTypesWithAll: function setDocumentTypesWithAll() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento').then(function (response) {
-        _this3.document_types = response.data;
+        _this4.document_types = response.data;
       });
     },
     storePatient: function storePatient() {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post('/patients/create', {
         clinical_history_number: this.chn,
@@ -50261,26 +50281,26 @@ new Vue({
         telephone: this.telephone,
         social_work: this.selected_social_work
       }).then(function (response) {
-        _this4.getPatients();
+        _this5.getPatients();
 
-        _this4.chn = '';
-        _this4.name = '';
-        _this4.surname = '';
-        _this4.birthdate = '';
-        _this4.selected_party = [];
-        _this4.parties = [];
-        _this4.region = [];
-        _this4.towns = [];
-        _this4.selected_town = '';
-        _this4.address = '';
-        _this4.selected_gender = '';
-        _this4.document_types = [];
-        _this4.selected_document_type = '';
-        _this4.document_number = '';
-        _this4.folder_number = '';
-        _this4.telephone = '';
-        _this4.social_works = [];
-        _this4.selected_social_work = '';
+        _this5.chn = '';
+        _this5.name = '';
+        _this5.surname = '';
+        _this5.birthdate = '';
+        _this5.selected_party = [];
+        _this5.parties = [];
+        _this5.region = [];
+        _this5.towns = [];
+        _this5.selected_town = '';
+        _this5.address = '';
+        _this5.selected_gender = '';
+        _this5.document_types = [];
+        _this5.selected_document_type = '';
+        _this5.document_number = '';
+        _this5.folder_number = '';
+        _this5.telephone = '';
+        _this5.social_works = [];
+        _this5.selected_social_work = '';
         $('#create').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Creado correctamente');
       })["catch"](function (error) {
@@ -50321,53 +50341,53 @@ new Vue({
       });
     },
     regionOf: function regionOf() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (this.selected_party == '') {
         this.region = [];
       } else {
         var sr = this.parties[this.selected_party - 1].region_sanitaria_id;
         axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/region-sanitaria/' + sr).then(function (response) {
-          _this5.region = response.data;
+          _this6.region = response.data;
 
-          _this5.getAllTownsByParty(sr);
+          _this6.getAllTownsByParty(sr);
         });
       }
     },
     getAllTownsByParty: function getAllTownsByParty(id) {
-      var _this6 = this;
+      var _this7 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/localidad/partido/' + id).then(function (response) {
-        _this6.towns = response.data;
+        _this7.towns = response.data;
       });
     },
     setPartiesWithAll: function setPartiesWithAll() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/partido').then(function (response) {
-        _this7.parties = response.data;
+        _this8.parties = response.data;
       });
     },
     //edit
     EditRegionOf: function EditRegionOf() {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.patient_edit.party == '') {
         this.region = [];
       } else {
         var sr = this.parties[this.patient_edit.party - 1].region_sanitaria_id;
         axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/region-sanitaria/' + sr).then(function (response) {
-          _this8.region = response.data;
+          _this9.region = response.data;
 
-          _this8.getAllTownsByParty(sr);
+          _this9.getAllTownsByParty(sr);
         });
       }
     },
     setSanitaryRegion: function setSanitaryRegion(id) {
-      var _this9 = this;
+      var _this10 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/region-sanitaria/' + id).then(function (response) {
-        _this9.region = response.data;
+        _this10.region = response.data;
       });
     },
     editPatient: function editPatient(patient) {
@@ -50396,12 +50416,12 @@ new Vue({
       });
     },
     updatePatient: function updatePatient() {
-      var _this10 = this;
+      var _this11 = this;
 
       axios.put('/patients/update', this.patient_edit).then(function (response) {
-        _this10.getPatients();
+        _this11.getPatients();
 
-        _this10.patient_edit = {
+        _this11.patient_edit = {
           'clinical_history_number': '',
           'name': '',
           'surname': '',
@@ -50416,11 +50436,11 @@ new Vue({
           'document_type': '',
           'social_work': ''
         };
-        _this10.parties = [];
-        _this10.region = [];
-        _this10.towns = [];
-        _this10.document_types = [];
-        _this10.social_works = [];
+        _this11.parties = [];
+        _this11.region = [];
+        _this11.towns = [];
+        _this11.document_types = [];
+        _this11.social_works = [];
         $('#edit').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
       })["catch"](function (error) {
@@ -50455,14 +50475,14 @@ new Vue({
     },
     //delete
     destroyPatient: function destroyPatient() {
-      var _this11 = this;
+      var _this12 = this;
 
       axios.post('/patients/delete', {
         'id': this.id
       }).then(function (response) {
-        _this11.id = '';
+        _this12.id = '';
 
-        _this11.getPatients();
+        _this12.getPatients();
 
         $('#delete').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Eliminado correctamente');
@@ -50478,31 +50498,31 @@ new Vue({
     },
     // Show details
     setPatientShowTownName: function setPatientShowTownName(id) {
-      var _this12 = this;
+      var _this13 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/localidad/' + id).then(function (response) {
-        _this12.patient_show.town = response.data.nombre;
+        _this13.patient_show.town = response.data.nombre;
       });
     },
     setPatientShowPartyName: function setPatientShowPartyName(id) {
-      var _this13 = this;
+      var _this14 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/partido/' + id).then(function (response) {
-        _this13.patient_show.party = response.data.nombre;
+        _this14.patient_show.party = response.data.nombre;
       });
     },
     setPatientShowDocumentTypeName: function setPatientShowDocumentTypeName(id) {
-      var _this14 = this;
+      var _this15 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento/' + id).then(function (response) {
-        _this14.patient_show.document_type = response.data.nombre;
+        _this15.patient_show.document_type = response.data.nombre;
       });
     },
     setPatientShowSocialWorkName: function setPatientShowSocialWorkName(id) {
-      var _this15 = this;
+      var _this16 = this;
 
       axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social/' + id).then(function (response) {
-        _this15.patient_show.social_work = response.data.nombre;
+        _this16.patient_show.social_work = response.data.nombre;
       });
     },
     detailsPatient: function detailsPatient(patient) {
@@ -50598,23 +50618,17 @@ new Vue({
       'derivation': ''
     }
   },
-  created: function created() {
+  mounted: function mounted() {
     //this.getAttentionsByIdPatient();
-    var id = window.location.href.split('/').pop();
-    console.log(id);
+    console.log("hola");
+    console.log(this.patient);
   },
   methods: {
     getAttentionsByIdPatient: function getAttentionsByIdPatient() {
       var _this = this;
 
-      axios.post('/attentions/delete', {
-        'id': this.id
-      }).then(function (response) {
-        _this.getAttentions();
-
-        _this.id = '';
-        $('#delete').modal('hide');
-        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
+      axios.get('/Attentions/patient/allAttentions/' + this.patient_id).then(function (response) {
+        _this.attentions = response.data;
       });
     },
     getAllDerivation: function getAllDerivation() {
