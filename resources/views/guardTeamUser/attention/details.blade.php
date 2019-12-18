@@ -2,7 +2,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4>Paciente: @{{attention_show.name_surname_patient}}</h4> 
+                    <h4>Detalle de la atención</h4> 
                     <button type="button" class="close" data-dismiss="modal">
                         <span>&times;</span>
                     </button>                       
@@ -25,7 +25,7 @@
                     <li v-else>Observación: @{{ attention_show.observation}}</li>
 
                     <li v-if="attention_show.internment === 1">Internación: si</li>
-                    <li v-else>>Internación: no</li>
+                    <li v-else>Internación: no</li>
 
                     <li v-if="attention_show.accompaniment === null">Acompañante: No posee</li>
                     <li v-else>Acompañante: @{{attention_show.accompaniment}}</li>

@@ -153,11 +153,8 @@ new Vue({
                 this.attention_show.derivation = response.data.name;
             });
         },
-        detailsAttention: function(attention){
-            axios.get('/patients/patient/'+attention.patient_id)
-            .then(response => {               
-                this.attention_show.name_surname_patient = response.data.name +' '+response.data.surname;
-            });
+        detailsAttention: function(attention){       
+            this.attention_show.name_surname_patient = '';
             this.attention_show.id = attention.id;
             this.attention_show.diagnostic = attention.diagnostic;
             this.attention_show.date = attention.date;

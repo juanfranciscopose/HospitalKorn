@@ -16,6 +16,7 @@ new Vue({
         articulation: '',
         internment: 0,
         observations: '',
+        attentions: [],
         patients: [],
         date: '',
         diagnostic: '',
@@ -55,15 +56,29 @@ new Vue({
     },
     created: function() {
         this.getPatientsWithAttentions();
+        this.getAttentions();
     },
     computed:{
         filteredAttentions: function(){
-            return this.patients.filter((p) => {
-                return p.surname.match(this.search);
+            return this.attentions.filter((a) => {
+                return ((a.reason.match(this.search)) || (a.diagnostic.match(this.search)) || (a.patient.surname.match(this.search)) || (this.search.match(a.patient.clinical_history_number)));
             });
         }
     },
     methods: {
+        getAttentions: function(){
+            axios.get('/attentions/all')
+            .then(response => {
+                this.attentions = response.data;
+                for (var a of this.attentions ) {
+                    for (var p of this.patients ) {
+                        if (p.id == a.patient_id) {
+                            a.patient = p;
+                        }
+                    };
+                };                
+            });
+        },
         getAllDerivation: function(){
             //getAllInstitutions
             axios.get('/institutions/all')
@@ -92,6 +107,7 @@ new Vue({
                 this.patient_data = '';
             }
         },
+        // create attention
         newAttention: function(){
             this.patient_data = '';
             this.selected_accompaniment= '';

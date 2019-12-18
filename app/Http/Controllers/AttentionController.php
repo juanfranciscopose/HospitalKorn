@@ -9,6 +9,11 @@ use App\Attention;
 use App\Http\Requests\AttentionRequest;
 class AttentionController extends Controller
 {
+    public function getAll ()
+    {
+        $attentions = Attention::all();
+        return response()->json($attentions, 200);
+    }
     public function show()
     {
         $custom_config = Configuration::getCustomConfig();
@@ -52,7 +57,7 @@ class AttentionController extends Controller
             $custom_config = Configuration::getCustomConfig();
             $patient = Patient::where('id', '=', $id)->get()->first();
             $email = session()->get('email', 'error');
-            $attentions = Attention::getAllAttentionsById($id);
+            $attentions = Attention::getAllAttentionsByIdPatient($id);
             return view('guardTeamUser.attention.patient', compact('attentions', 'id','email', 'custom_config', 'patient'));
         }
         else

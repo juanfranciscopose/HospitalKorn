@@ -18,25 +18,24 @@
             @include('guardTeamUser.attention.create')
             <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="newAttention()">Nueva Atención</a>
         @endcan
-        <input v-model="search" class="float-right mr-4" type="text" placeholder="buscar por apellido">
+        <input v-model="search" class="float-right mr-4" type="text" placeholder="buscar">
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>
-                    <th class="text-center">Nro Documento</th>
-                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Nro Historia Clinica</th>
                     <th class="text-center">Apellido</th>
+                    <th class="text-center">Motivo</th>
+                    <th class="text-center">Diagnostico</th>
+                    <th class="text-center">Fecha</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="p in filteredAttentions">
-                    <td class="text-center">@{{ p.document_number }}</td>
-                    <td class="text-center">@{{ p.name }}</td>
-                    <td class="text-center">@{{ p.surname }}</td>
-                    @can('attention_index') 
-                        <td width="10px">
-                            <a :href="'/attentions/patient/' + p.id " class="btn btn-info btn-sm">Atenciones</a>
-                        </td>
-                    @endcan
+                <tr v-for="a in filteredAttentions">
+                    <td class="text-center">@{{ a.patient.clinical_history_number}}</td>
+                    <td class="text-center">@{{ a.patient.surname }}</td>
+                    <td class="text-center">@{{ a.reason }}</td>
+                    <td class="text-center">@{{ a.diagnostic }}</td>
+                    <td class="text-center">@{{ a.date }}</td>
                 </tr>
             </tbody>
         </table>

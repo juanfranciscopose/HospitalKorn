@@ -22,7 +22,7 @@ class Attention extends Model
         'pharmacotherapy',
         'accompaniment'
     ];
-    public static function getAllAttentionsById ($id) 
+    public static function getAllAttentionsByIdPatient ($id) 
     {
         if (isset($id))
         {

@@ -15,7 +15,7 @@
     </div>
 	<div class="col-sm-12">
         <div class="container">
-            <h4 class="page-header">Paciente : {{ $patient['name'] }}</h4>
+            <h4 class="page-header">Paciente: {{ $patient['name'] }} {{ $patient['surname']}}</h4>
         </div>
 	</div>
     <div class="col-sm-12">
@@ -33,6 +33,18 @@
                         <td class="text-center">{{$a['diagnostic']}}</td>
                         <td class="text-center">{{$a['reason']}}</td>
                         <td class="text-center">{{$a['date']}}</td>
+                        @can('attention_show')
+                            @include('guardTeamUser.attention.details')
+                            <td width="10px">
+                                <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsAttention({{$a}})">Detalles</a>
+                            </td>
+                        @endcan
+                        @can('attention_destroy')
+                            @include('guardTeamUser.attention.delete')
+                            <td width="10px">
+                                <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyAttention({{$a}})">Eliminar</a>
+                            </td>
+                        @endcan
                     </tr>
                 @endforeach
             </tbody>
