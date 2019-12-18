@@ -74,6 +74,7 @@ new Vue({
                     for (var p of this.patients ) {
                         if (p.id == a.patient_id) {
                             a.patient = p;
+                            break;
                         }
                     };
                 };                
@@ -147,6 +148,7 @@ new Vue({
                 derivation: this.selected_derivation
             }).then(response =>{
                 this.getPatientsWithAttentions();
+                this.getAttentions();
                 this.patient_data = '';
                 this.selected_accompaniment= '';
                 this.selected_reason= '';
@@ -190,6 +192,7 @@ new Vue({
                 'id': this.id
             })
             .then(response =>{
+                this.getPatientsWithAttentions();
                 this.getAttentions();
                 this.id = '';
                 $('#delete').modal('hide');
@@ -238,6 +241,7 @@ new Vue({
             }
             axios.put('/attentions/update', this.attention_edit)
             .then(response => {
+                this.getPatientsWithAttentions();
                 this.getAttentions();
                 this.attention_edit = {
                     'id': '',

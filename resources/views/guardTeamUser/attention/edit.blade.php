@@ -3,7 +3,7 @@
         <div class="modal-content">
             <form>
             <div class="modal-header">
-                <h4>Editar Atención</h4> 
+                <h4>Editar Atención </h4> 
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
                 </button>                       

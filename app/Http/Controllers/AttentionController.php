@@ -49,22 +49,4 @@ class AttentionController extends Controller
         Attention::where('id', '=', $request->id)->update($request->all());
         return response()->json('se ha actualizado exitosamente', 200);
     }
-
-    public function showPatient($id)
-    {
-        if ( isset($id) )
-        {
-            $custom_config = Configuration::getCustomConfig();
-            $patient = Patient::where('id', '=', $id)->get()->first();
-            $email = session()->get('email', 'error');
-            $attentions = Attention::getAllAttentionsByIdPatient($id);
-            return view('guardTeamUser.attention.patient', compact('attentions', 'id','email', 'custom_config', 'patient'));
-        }
-        else
-        {
-            return redirect('/attentions');
-        }
-
-    }
-
 }

@@ -36,6 +36,24 @@
                     <td class="text-center">@{{ a.reason }}</td>
                     <td class="text-center">@{{ a.diagnostic }}</td>
                     <td class="text-center">@{{ a.date }}</td>
+                    @can('attention_show')
+                        @include('guardTeamUser.attention.details')
+                        <td width="10px">
+                            <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsAttention(a)">Detalles</a>
+                        </td>
+                    @endcan
+                    @can('attention_update')
+                        @include('guardTeamUser.attention.edit')
+                        <td width="10px">
+                            <a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editAttention(a)">Editar</a>
+                        </td>
+                    @endcan
+                    @can('attention_destroy')
+                        @include('guardTeamUser.attention.delete')
+                        <td width="10px">
+                            <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyAttention(a)">Eliminar</a>
+                        </td>
+                @endcan
                 </tr>
             </tbody>
         </table>

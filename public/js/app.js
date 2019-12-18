@@ -49633,6 +49633,7 @@ new Vue({
 
                 if (p.id == a.patient_id) {
                   a.patient = p;
+                  break;
                 }
               }
             } catch (err) {
@@ -49744,6 +49745,8 @@ new Vue({
       }).then(function (response) {
         _this6.getPatientsWithAttentions();
 
+        _this6.getAttentions();
+
         _this6.patient_data = '';
         _this6.selected_accompaniment = '';
         _this6.selected_reason = '';
@@ -49788,6 +49791,8 @@ new Vue({
       axios.post('/attentions/delete', {
         'id': this.id
       }).then(function (response) {
+        _this7.getPatientsWithAttentions();
+
         _this7.getAttentions();
 
         _this7.id = '';
@@ -49840,6 +49845,8 @@ new Vue({
       }
 
       axios.put('/attentions/update', this.attention_edit).then(function (response) {
+        _this8.getPatientsWithAttentions();
+
         _this8.getAttentions();
 
         _this8.attention_edit = {
