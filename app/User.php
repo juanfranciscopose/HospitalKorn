@@ -18,12 +18,11 @@ class User extends Authenticatable
     protected $table = 'users';
     public $timestamps = false;
     protected $guarded = [];
-    protected $hidden = [
-        'password'
-    ];
+    protected $hidden = [];
     protected $fillable = [
         'email', 'active', 'password', 'name', 'surname'
     ];
+    
 
     public static function deleteUser($id)
     {
@@ -47,4 +46,12 @@ class User extends Authenticatable
             'active' => 1
         ]);
     }
+    
+    public static function changePass($id, $new_pass)
+    {
+        $u = User::find($id);
+        $u->password = bcrypt($new_pass);
+        $u->save();
+    }
+
 }

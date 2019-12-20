@@ -26,4 +26,18 @@ class Patient extends Model
         'telephone', 
         'social_work'
     ];
+
+    public static function getPatient ($id)
+    {
+        $p = Patient::where('id', '=', $id)->count();
+        if ($p == 0){
+            $result = 'No hay paciente con ese ID';
+        }
+        else
+        {
+            $p = Patient::where('id', '=', $id)->get();
+            $result = $p[0];
+        }
+        return $result;
+    }
 }

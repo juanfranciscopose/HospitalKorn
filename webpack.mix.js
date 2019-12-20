@@ -8,6 +8,7 @@ mix.js([
     'resources/js/user.js',
     'resources/js/config.js' ,
     'resources/js/institution.js',
+    'resources/js/password.js',
     ], 'public/js/app.js')
     .styles([
     'resources/css/bootstrap.css',

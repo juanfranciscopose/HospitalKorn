@@ -12,16 +12,13 @@ class PatientController extends Controller
 {
     public function getPatient($patient_id)
     {  
-        if (isset($patient_id)){
-            $p = Patient::where('id', '=', $patient_id)->count();
-            if ($p == 0){
-                $result = 'No hay paciente con ese ID';
-            }else{
-                $p = Patient::where('id', '=', $patient_id)->get();
-                $result = $p[0];
-            }
-            return response()->json($result, 200);
-        }else{
+        if (isset($patient_id))
+        {
+            $p = Patient::getPatient($patient_id);
+            return response()->json($p, 200);
+        }
+        else
+        {
             return response()->json('error en id paciente', 422);
         }
     }        

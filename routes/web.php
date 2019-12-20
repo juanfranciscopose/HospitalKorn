@@ -38,8 +38,12 @@ Route::get('/admin/users/all', 'admin\UserController@getAll')->name('all-users')
 Route::post('/admin/users/delete', 'admin\UserController@delete')->name('delete-users')->middleware('active-login')->middleware('permission:user_destroy');
 Route::post('/admin/users/create', 'admin\UserController@store')->name('create-users')->middleware('active-login')->middleware('permission:user_new');
 Route::put('/admin/users/update', 'admin\UserController@update')->name('update-users')->middleware('active-login')->middleware('permission:user_update');
+//--change password--
+Route::get('/users/password', 'PasswordController@show')->name('show-pass')->middleware('active-login')->middleware('permission:user_index');
+Route::put('/users/password/update', 'PasswordController@update')->name('update-pass')->middleware('active-login')->middleware('permission:user_update');
 
 //--Config--
 Route::get('/admin/config', 'admin\ConfigurationController@show')->name('show-config')->middleware('active-login')->middleware('permission:config_index');
 Route::get('/admin/config/all', 'admin\ConfigurationController@getAll')->name('all-config')->middleware('active-login')->middleware('permission:config_index');
 Route::put('/admin/config/update', 'admin\ConfigurationController@update')->name('update-config')->middleware('active-login')->middleware('permission:config_update');
+

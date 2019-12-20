@@ -50195,6 +50195,46 @@ new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/password.js":
+/*!**********************************!*\
+  !*** ./resources/js/password.js ***!
+  \**********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+
+
+new Vue({
+  el: '#change-pass',
+  data: {
+    repeat_password: '',
+    change: {
+      'password': ''
+    }
+  },
+  methods: {
+    savePass: function savePass() {
+      var _this = this;
+
+      if (this.repeat_password == this.change.password) {
+        axios.put('/users/password/update', this.change).then(function (response) {
+          _this.repeat_password = '';
+          _this.change.password = '';
+          toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
+        });
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/patient.js":
 /*!*********************************!*\
   !*** ./resources/js/patient.js ***!
@@ -50625,213 +50665,6 @@ new Vue({
 
 /***/ }),
 
-/***/ "./resources/js/patientAttentions.js":
-/*!*******************************************!*\
-  !*** ./resources/js/patientAttentions.js ***!
-  \*******************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
-/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_2__);
-
-
-
-new Vue({
-  el: '#patient_attentions',
-  props: ['patient'],
-  data: {
-    patient_id: '',
-    id: '',
-    accompaniment: ['Familiar cercano', 'Hermanos e hijos', 'Pareja', 'Referentes vinculares', 'Policía', 'SAME', 'Por sus propios medios'],
-    reasons_consultation: ['Receta médica', 'Control de guardia', 'Consulta', 'Intento de suicidio', 'Interconsulta', 'Otras'],
-    pharmacotherapy: ['Mañana', 'Tarde', 'Noche'],
-    selected_accompaniment: '',
-    selected_reason: '',
-    selected_pharmacotherapy: '',
-    attentions: [],
-    derivation: [],
-    selected_derivation: '',
-    selected_internment: false,
-    attention_edit: {
-      'id': '',
-      'date': '',
-      'patient_id': '',
-      'diagnostic': '',
-      'internment': 0,
-      'accompaniment': '',
-      'reason': '',
-      'pharmacotherapy': '',
-      'articulation': '',
-      'observation': '',
-      'derivation': ''
-    },
-    attention_show: {
-      'id': '',
-      'date': '',
-      'patient_id': '',
-      'name_surname_patient': '',
-      'diagnostic': '',
-      'internment': 0,
-      'accompaniment': '',
-      'reason': '',
-      'pharmacotherapy': '',
-      'articulation': '',
-      'observation': '',
-      'derivation': ''
-    }
-  },
-  methods: {
-    getAllDerivation: function getAllDerivation() {
-      var _this = this;
-
-      //getAllInstitutions
-      axios.get('/institutions/all').then(function (response) {
-        _this.derivation = response.data;
-      });
-    },
-    //delete
-    deleteAttention: function deleteAttention() {
-      var _this2 = this;
-
-      axios.post('/attentions/delete', {
-        'id': this.id
-      }).then(function (response) {
-        _this2.getAttentions();
-
-        _this2.id = '';
-        $('#delete').modal('hide');
-        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
-      });
-    },
-    destroyAttention: function destroyAttention(Attention) {
-      this.id = Attention.id;
-      $('#delete').modal({
-        backdrop: 'static',
-        keyboard: true,
-        show: true
-      });
-    },
-    //edit
-    editAttention: function editAttention(attention) {
-      this.attention_edit.id = attention.id;
-      this.attention_edit.date = attention.date;
-      this.attention_edit.diagnostic = attention.diagnostic;
-      this.attention_edit.patient_id = attention.patient_id;
-      this.attention_edit.accompaniment = attention.accompaniment;
-      this.attention_edit.reason = attention.reason;
-      this.attention_edit.pharmacotherapy = attention.pharmacotherapy;
-      this.attention_edit.articulation = attention.articulation;
-      this.attention_edit.observation = attention.observation;
-      this.attention_edit.derivation = attention.derivation;
-      this.attention_edit.internment = attention.internment;
-
-      if (attention.internment == 1) {
-        this.selected_internment == true;
-      } else {
-        this.selected_internment == false;
-      }
-
-      this.getAllDerivation();
-      $('#edit').modal({
-        backdrop: 'static',
-        keyboard: true,
-        show: true
-      });
-    },
-    updateAttention: function updateAttention() {
-      var _this3 = this;
-
-      if (this.selected_internment) {
-        this.attention_edit.internment = 1;
-      } else {
-        this.attention_edit.internment = 0;
-      }
-
-      axios.put('/attentions/update', this.attention_edit).then(function (response) {
-        _this3.getAttentions();
-
-        _this3.attention_edit = {
-          'id': '',
-          'date': '',
-          'patient_id': '',
-          'diagnostic': '',
-          'internment': 0,
-          'accompaniment': '',
-          'reason': '',
-          'pharmacotherapy': '',
-          'articulation': '',
-          'observation': '',
-          'derivation': ''
-        };
-        $('#edit').modal('hide');
-        toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Actualizado correctamente');
-      })["catch"](function (error) {
-        var err = error.response.data.errors;
-        var message = 'error no identificado';
-
-        if (err.hasOwnProperty('date')) {
-          message = err.date[0];
-        } else if (err.hasOwnProperty('diagnostic')) {
-          message = err.diagnostic[0];
-        } else if (err.hasOwnProperty('id')) {
-          message = err.id[0];
-        } else if (err.hasOwnProperty('patient_id')) {
-          message = err.patient_id[0];
-        }
-
-        sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
-          title: 'Error',
-          text: message,
-          icono: 'error',
-          closeOnClickOutside: false
-        });
-      });
-    },
-    //details
-    setAttentionShowDerivationName: function setAttentionShowDerivationName(id) {
-      var _this4 = this;
-
-      axios.get('/institutions/' + id).then(function (response) {
-        _this4.attention_show.derivation = response.data.name;
-      });
-    },
-    detailsAttention: function detailsAttention(attention) {
-      this.attention_show.name_surname_patient = '';
-      this.attention_show.id = attention.id;
-      this.attention_show.diagnostic = attention.diagnostic;
-      this.attention_show.date = attention.date;
-      this.attention_show.patient_id = attention.patient_id;
-      this.attention_show.accompaniment = attention.accompaniment;
-      this.attention_show.reason = attention.reason;
-      this.attention_show.pharmacotherapy = attention.pharmacotherapy;
-      this.attention_show.articulation = attention.articulation;
-      this.attention_show.observation = attention.observation;
-
-      if (attention.derivation == null) {
-        this.attention_show.derivation = null;
-      } else {
-        this.setAttentionShowDerivationName(attention.derivation);
-      }
-
-      this.attention_show.internment = attention.internment;
-      $('#details').modal({
-        backdrop: 'static',
-        keyboard: true,
-        show: true
-      });
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/user.js":
 /*!******************************!*\
   !*** ./resources/js/user.js ***!
@@ -51081,9 +50914,9 @@ new Vue({
 /***/ }),
 
 /***/ 0:
-/*!***********************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ./resources/js/patientAttentions.js ***!
-  \***********************************************************************************************************************************************************************************************************************************/
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ./resources/js/password.js ***!
+  \**************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -51094,7 +50927,7 @@ __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attent
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/user.js */"./resources/js/user.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/config.js */"./resources/js/config.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/institution.js */"./resources/js/institution.js");
-module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patientAttentions.js */"./resources/js/patientAttentions.js");
+module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/password.js */"./resources/js/password.js");
 
 
 /***/ })
