@@ -18,6 +18,7 @@
             @include('admin.user.create')
             <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="newUser()">Nuevo Usuario</a>
         @endcan
+        <a href="{{ route('show-role') }}" class="btn btn-primary float-right mr-4 mb-4">Asignar Roles</a>
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>

@@ -33,9 +33,6 @@
               <a class="nav-link text-white" href="{{ route('show-attentions') }}">Atención</a>
             </li>
           @endcan
-          <li class="nav-item active">
-            <a class="nav-link text-white" href="#">Internación</a>
-          </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Administración
@@ -46,7 +43,6 @@
               @endcan
               @hasrole('Admin')
                 <a class="dropdown-item" href="{{ route('show-config') }}">Configuración</a>
-                <a class="dropdown-item" href="#">División del Trabajo</a>
               @endhasrole
               <a class="dropdown-item" href="#">Reportes</a>
             </div>
@@ -56,9 +52,6 @@
               {{$email}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              @hasrole('GuardTeam')
-                <a class="dropdown-item" href="#">Mensaje Administrador</a>
-              @endhasrole
               <a class="dropdown-item" href="{{ route('show-pass') }}">Cambiar Contraseña</a>
               <a class="dropdown-item" href="{{ route('logout') }}">Cerrar Sesión</a>
             </div>

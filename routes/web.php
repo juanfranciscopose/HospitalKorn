@@ -47,3 +47,8 @@ Route::get('/admin/config', 'admin\ConfigurationController@show')->name('show-co
 Route::get('/admin/config/all', 'admin\ConfigurationController@getAll')->name('all-config')->middleware('active-login')->middleware('permission:config_index');
 Route::put('/admin/config/update', 'admin\ConfigurationController@update')->name('update-config')->middleware('active-login')->middleware('permission:config_update');
 
+//--role assignment--
+Route::get('/admin/role', 'admin\RoleAssignmentController@show')->name('show-role')->middleware('active-login')->middleware('permission:user_index');
+Route::get('/admin/role/all', 'admin\RoleAssignmentController@getAll')->name('all-role')->middleware('active-login')->middleware('permission:user_index');
+Route::get('/admin/role/users/all', 'admin\RoleAssignmentController@getAllUsersWithRole')->name('all-role')->middleware('active-login')->middleware('permission:user_index');
+Route::put('/admin/role/update', 'admin\RoleAssignmentController@update')->name('update-role')->middleware('active-login')->middleware('permission:user_update');

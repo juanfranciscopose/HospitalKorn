@@ -90,6 +90,7 @@ new Vue({
         },
 
        //update 
+       //refactoring!!
         editUser: function(user){
             //show
             this.user_edit.id = user.id;

@@ -35,6 +35,11 @@ class User extends Authenticatable
         }
         User::where('id', '=', $id)->delete();
     }
+    public static function giveRole($email)
+    {
+        $user = User::where('email', '=', $email)->first();
+        $user->assignRole('GuardTeam');
+    }
     public static function createUser($email, $pass, $name, $surname)
     {
         $password = bcrypt($pass);

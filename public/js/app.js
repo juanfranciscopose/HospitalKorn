@@ -50665,6 +50665,102 @@ new Vue({
 
 /***/ }),
 
+/***/ "./resources/js/role.js":
+/*!******************************!*\
+  !*** ./resources/js/role.js ***!
+  \******************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+new Vue({
+  el: '#role',
+  data: {
+    roles: [],
+    users: [],
+    user_edit: {
+      'user_id': '',
+      'email': '',
+      'roles': '',
+      'roles_names': ''
+    }
+  },
+  created: function created() {
+    this.getRoles();
+    this.getUsersWithRoles();
+  },
+  methods: {
+    getUsersWithRoles: function getUsersWithRoles() {
+      var _this = this;
+
+      axios.get('/admin/role/users/all').then(function (response) {
+        _this.users = response.data;
+      });
+    },
+    getRoles: function getRoles() {
+      var _this2 = this;
+
+      axios.get('/admin/role/all').then(function (response) {
+        _this2.roles = response.data;
+      });
+    },
+    cancelUpdateRole: function cancelUpdateRole() {
+      this.user_edit.email = '';
+      this.user_edit.user_id = '';
+      this.user_edit.roles = '';
+      this.user_edit.roles_names = '';
+      $('#edit').modal('hide');
+    },
+    //refactoring!!!
+    editRole: function editRole(user) {
+      this.user_edit.email = user.email;
+      this.user_edit.user_id = user.user_id;
+
+      for (var i = 0; i < this.roles.length; i++) {
+        if (this.roles[i].id == user.role_id) {
+          this.user_edit.roles = this.roles[i];
+        }
+      }
+
+      $('#edit').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
+    },
+    updateRole: function updateRole() {
+      var _this3 = this;
+
+      this.user_edit.roles_names = this.user_edit.roles.name;
+      axios.put('/admin/role/update', this.user_edit).then(function (response) {
+        _this3.user_edit.email = '';
+        _this3.user_edit.user_id = '';
+        _this3.user_edit.roles = '';
+        _this3.user_edit.roles_names = '';
+
+        _this3.getRoles();
+
+        _this3.getUsersWithRoles();
+
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
+        $('#edit').modal('hide');
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/user.js":
 /*!******************************!*\
   !*** ./resources/js/user.js ***!
@@ -50775,6 +50871,7 @@ new Vue({
       });
     },
     //update 
+    //refactoring!!
     editUser: function editUser(user) {
       //show
       this.user_edit.id = user.id;
@@ -50914,9 +51011,9 @@ new Vue({
 /***/ }),
 
 /***/ 0:
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ./resources/js/password.js ***!
-  \**************************************************************************************************************************************************************************************************************************/
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ./resources/js/password.js ./resources/js/role.js ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -50927,7 +51024,8 @@ __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attent
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/user.js */"./resources/js/user.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/config.js */"./resources/js/config.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/institution.js */"./resources/js/institution.js");
-module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/password.js */"./resources/js/password.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/password.js */"./resources/js/password.js");
+module.exports = __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/role.js */"./resources/js/role.js");
 
 
 /***/ })

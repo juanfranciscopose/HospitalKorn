@@ -6,6 +6,8 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -40,6 +42,7 @@ class UserController extends Controller
         $u = User::where('email', '=', $request->email)->get()->count();
         if ($u == 0){
             User::createUser($request->email, $request->password, $request->name, $request->surname);
+            $user = User::giveRole($request->email);
             return response()->json('se ha creado exitosamente', 200);
         }else{
             return response()->json(['errors'=>['store'=>['El correo electrónico está en uso']]], 422);
