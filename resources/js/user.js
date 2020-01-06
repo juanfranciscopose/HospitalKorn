@@ -25,16 +25,54 @@ new Vue({
             'name': '',
             'surname': '',
             'active': ''
-        }
+        },
+        pagination: {
+            'total': 0,
+            'current_page': 0,
+            'per_page': 0,
+            'last_page': 0,
+            'from': 0,
+            'to': 0
+        },
+        offset: 3
     },
     created: function() {
         this.getUsers();
     },
+    computed: {
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function (){
+            if (!this.pagination.to){
+                return [];
+            }
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1){
+                from = 1;
+            }
+            var to = from + (this.offset * 2);
+            if (to >= this.pagination.last_page){
+                to = this.pagination.last_page;
+            }
+            var pagesArray = [];
+            while (from <= to){
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        }
+    },
     methods: {
-        getUsers: function (){
-            axios.get('/admin/users/all')
+        changePage: function (page){
+            this.pagination.current_page = page;
+            this.getUsers(page);
+        },
+        getUsers: function (page){
+            axios.get('/admin/users/all?page='+page)
             .then(response => {
-                this.users = response.data;
+                this.users = response.data.users.data;
+                this.pagination = response.data.pagination;
             });
         },
         //details

@@ -50070,8 +50070,6 @@ new Vue({
       sanitary_region_id: '',
       director: '',
       telephone: '',
-      lat: '',
-      "long": '',
       id: ''
     }
   },
@@ -50128,8 +50126,6 @@ new Vue({
       this.showInstitution.sanitary_region_id = inst.sanitary_region_id;
       this.showInstitution.director = inst.director;
       this.showInstitution.telephone = inst.telephone;
-      this.showInstitution.lat = inst.lat;
-      this.showInstitution["long"] = inst["long"];
       this.showInstitution.id = inst.id; //aca mapa
 
       $('#details').modal('show');
@@ -50802,17 +50798,62 @@ new Vue({
       'name': '',
       'surname': '',
       'active': ''
-    }
+    },
+    pagination: {
+      'total': 0,
+      'current_page': 0,
+      'per_page': 0,
+      'last_page': 0,
+      'from': 0,
+      'to': 0
+    },
+    offset: 3
   },
   created: function created() {
     this.getUsers();
   },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    }
+  },
   methods: {
-    getUsers: function getUsers() {
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+      this.getUsers(page);
+    },
+    getUsers: function getUsers(page) {
       var _this = this;
 
-      axios.get('/admin/users/all').then(function (response) {
-        _this.users = response.data;
+      axios.get('/admin/users/all?page=' + page).then(function (response) {
+        _this.users = response.data.users.data;
+        _this.pagination = response.data.pagination;
       });
     },
     //details

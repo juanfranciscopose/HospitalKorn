@@ -9,7 +9,7 @@ mix.js([
     'resources/js/config.js' ,
     'resources/js/institution.js',
     'resources/js/password.js',
-    'resources/js/role.js'
+    'resources/js/role.js',
     ], 'public/js/app.js')
     .styles([
     'resources/css/bootstrap.css',

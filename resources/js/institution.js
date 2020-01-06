@@ -15,8 +15,6 @@ new Vue({
           sanitary_region_id: '',
           director: '',
           telephone: '',
-          lat: '',
-          long: '',
           id: ''
         }
     },
@@ -70,8 +68,6 @@ new Vue({
           this.showInstitution.sanitary_region_id = inst.sanitary_region_id;
           this.showInstitution.director = inst.director;
           this.showInstitution.telephone = inst.telephone;
-          this.showInstitution.lat = inst.lat;
-          this.showInstitution.long = inst.long;
           this.showInstitution.id = inst.id;
           //aca mapa
           $('#details').modal('show');

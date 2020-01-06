@@ -44,7 +44,9 @@
               @hasrole('Admin')
                 <a class="dropdown-item" href="{{ route('show-config') }}">Configuración</a>
               @endhasrole
-              <a class="dropdown-item" href="#">Reportes</a>
+              @can('report_index')
+                <a class="dropdown-item" href="{{ route('show-report') }}">Reportes</a>
+              @endcan
             </div>
           </li>
           <li class="nav-item dropdown">

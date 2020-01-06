@@ -6,6 +6,7 @@
         <title>@yield('title_system')</title>
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        @yield('scripts')
     </head>
     <body>
         @include('layout.nav')        

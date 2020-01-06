@@ -14,7 +14,7 @@ Route::get('/articles', 'ArticlesController@show')->name('show-index');
 Route::get('/institutions', 'InstitutionController@show')->name('show-institution');
 Route::get('/institutions/sanitary_region/{sanitary_region_id}', 'InstitutionController@getBySanitaryRegionId')->name('get-by-sanitary-region-id');
 Route::get('/institutions/all', 'InstitutionController@getAll')->name('all-institutions');
-Route::get('/institutions/{id}', 'InstitutionController@getInstitution')->name('one-institutions');
+//Route::get('/institutions/{id}', 'InstitutionController@getInstitution')->name('one-institutions');
 
 //--patients--
 Route::get('/patients', 'PatientController@show')->name('show-patients')->middleware('active-login')->middleware('permission:patient_index');
@@ -52,3 +52,7 @@ Route::get('/admin/role', 'admin\RoleAssignmentController@show')->name('show-rol
 Route::get('/admin/role/all', 'admin\RoleAssignmentController@getAll')->name('all-role')->middleware('active-login')->middleware('permission:user_index');
 Route::get('/admin/role/users/all', 'admin\RoleAssignmentController@getAllUsersWithRole')->name('all-role')->middleware('active-login')->middleware('permission:user_index');
 Route::put('/admin/role/update', 'admin\RoleAssignmentController@update')->name('update-role')->middleware('active-login')->middleware('permission:user_update');
+
+//-- reports --
+Route::get('/report', 'ReportController@show')->name('show-report')->middleware('active-login')->middleware('permission:report_index');
+Route::get('/report/reason', 'ReportController@reason')->name('report-reason-show')->middleware('active-login')->middleware('permission:report_index');

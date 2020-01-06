@@ -30,6 +30,8 @@ class TablesPermissionSeeder extends Seeder
         Permission::create(['name' => 'config_index']);
         Permission::create(['name' => 'config_update']);
 
+        Permission::create(['name' => 'report_index']);
+
         Permission::create(['name' => 'attention_index']);
         Permission::create(['name' => 'attention_new']);
         Permission::create(['name' => 'attention_destroy']);
@@ -55,6 +57,8 @@ class TablesPermissionSeeder extends Seeder
         $role->givePermissionTo(Permission::findByName('attention_show'));
         $role->givePermissionTo(Permission::findByName('attention_update'));
         $role->givePermissionTo(Permission::findByName('attention_new'));
+
+        $role->givePermissionTo(Permission::findByName('report_index'));
 
         $user = User::find(1);//root
         $user->assignRole('Admin');

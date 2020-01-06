@@ -18,10 +18,22 @@ class UserController extends Controller
         return view('admin.user.show', compact('email', 'custom_config'));
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $user = User::all();
-        return response()->json($user, 200);
+        $custom_config = Configuration::getCustomConfig();
+        $u = User::paginate($custom_config['pagination']['pagination']);
+        $answer = [
+            'pagination' => [
+                'total' => $u->total(),
+                'current_page' => $u->currentPage(),
+                'per_page' => $u->perPage(),
+                'last_page' => $u->lastPage(),
+                'from' => $u->firstItem(),
+                'to' => $u->lastItem()
+            ],
+            'users' => $u
+        ];
+        return response()->json($answer, 200);
     }
 
     public function delete(Request $request)

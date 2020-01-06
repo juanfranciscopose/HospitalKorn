@@ -19,8 +19,6 @@ class CreateInstitutionsTable extends Migration
             $table->string('director');
             $table->string('telephone');
             $table->string('address');
-            $table->string('lat');
-            $table->string('long');
             $table->unsignedBigInteger('sanitary_region_id');
         });
     }

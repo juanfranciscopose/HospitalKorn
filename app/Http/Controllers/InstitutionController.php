@@ -30,13 +30,14 @@ class InstitutionController extends Controller
         return response()->json($institutions, 200);
     }
     
-    public function getInstitution($id)
+   /* public function getInstitution($id)
     {
         if (isset($id)){
-            $institutions = Institution::where('id', '=', $id)->get();
-            return response()->json($institutions[0], 200);
+            $institutions = Institution::where('id', '=', $id)->get()->first();
+            return response()->json($institutions, 200);
         }else{
             return response()->json('error en id', 422);
         }
-    }
+    }*/
+   
 }
