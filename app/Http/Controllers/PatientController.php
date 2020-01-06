@@ -29,10 +29,22 @@ class PatientController extends Controller
         return view('guardTeamUser.patient.show', compact('email', 'custom_config'));
     }
 
-    public function getAll()
+    public function getAll(Request $request)
     {
-        $patients = Patient::orderBy('id', 'DESC')->get();
-        return response()->json($patients, 200);
+        $custom_config = Configuration::getCustomConfig();
+        $p = Patient::orderBy('document_number', 'DESC')->paginate($custom_config['pagination']['pagination']);
+        $answer = [
+            'pagination' => [
+                'total' => $p->total(),
+                'current_page' => $p->currentPage(),
+                'per_page' => $p->perPage(),
+                'last_page' => $p->lastPage(),
+                'from' => $p->firstItem(),
+                'to' => $p->lastItem()
+            ],
+            'patients' => $p
+        ];
+        return response()->json($answer, 200);
     }
 
     public function delete (Request $request)

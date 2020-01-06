@@ -60,23 +60,54 @@ new Vue({
             'selected_gender': '',
             'document_type': [],
             'social_work': [],
-        }
+        },
+        pagination: {
+            'total': 0,
+            'current_page': 0,
+            'per_page': 0,
+            'last_page': 0,
+            'from': 0,
+            'to': 0
+        },
+        offset: 3
     },
     created: function() {
         this.getPatients();
     },
     computed:{
-        filteredPatients: function(){
-            return this.patients.filter((p) => {
-                return p.surname.match(this.search);
-            });
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function (){
+            if (!this.pagination.to){
+                return [];
+            }
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1){
+                from = 1;
+            }
+            var to = from + (this.offset * 2);
+            if (to >= this.pagination.last_page){
+                to = this.pagination.last_page;
+            }
+            var pagesArray = [];
+            while (from <= to){
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
         }
     },
     methods: {
-        getPatients: function (){
-            axios.get('/patients/all')
+        changePage: function (page){
+            this.pagination.current_page = page;
+            this.getPatients(page);
+        },
+        getPatients: function (page){
+            axios.get('/patients/all?page='+page)
             .then(response => {
-                this.patients = response.data;
+                this.patients = response.data.patients.data;
+                this.pagination = response.data.pagination;
             });
         },
 
