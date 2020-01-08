@@ -11,7 +11,8 @@ class TableAttentionsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('attentions')->insert([
+        factory(App\Attention::class, 300)->create(); 
+        /*DB::table('attentions')->insert([
             'patient_id' => 1,
             'diagnostic' => 'resfrio',
             'date' => date("Y-m-d"),
@@ -46,6 +47,6 @@ class TableAttentionsSeeder extends Seeder
             'internment' => 1,
             'pharmacotherapy' => null,
             'accompaniment' => 'Hermanos e hijos'
-        ]);
+        ]);*/
     }
 }

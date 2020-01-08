@@ -30,7 +30,7 @@ class InstitutionController extends Controller
         return response()->json($institutions, 200);
     }
     
-   /* public function getInstitution($id)
+    public function getInstitution($id)
     {
         if (isset($id)){
             $institutions = Institution::where('id', '=', $id)->get()->first();
@@ -38,6 +38,6 @@ class InstitutionController extends Controller
         }else{
             return response()->json('error en id', 422);
         }
-    }*/
+    }
    
 }

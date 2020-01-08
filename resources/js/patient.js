@@ -30,7 +30,6 @@ new Vue({
         telephone: '',
         social_works: [],
         selected_social_work: '',
-        search: '',
         patient_edit: {
             'clinical_history_number': '',
             'name': '',
@@ -69,7 +68,7 @@ new Vue({
             'from': 0,
             'to': 0
         },
-        offset: 3
+        offset: 3,
     },
     created: function() {
         this.getPatients();

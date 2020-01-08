@@ -11,6 +11,8 @@ class TablePatientsSeeder extends Seeder
      */
     public function run()
     {
+        factory(App\Patient::class, 100)->create(); 
+        /*
         DB::table('patients')->insert([
             'name' => 'dieguito',
             'surname' => 'santili',
@@ -85,6 +87,6 @@ class TablePatientsSeeder extends Seeder
             'folder_number' => 3,
             'telephone' => '11-2434543',
             'social_work' => 1
-        ]);
+        ]);*/
     }
 }
