@@ -26,6 +26,7 @@ new Vue({
         selected_derivation: '',
         selected_internment: false,
         search: '',
+        status_search: false,
         attention_edit: {
             'id': '',
             'date': '',
@@ -52,24 +53,83 @@ new Vue({
             'articulation': '',
             'observation': '',
             'derivation': ''
-        }
+        },
+        pagination: {
+            'total': 0,
+            'current_page': 0,
+            'per_page': 0,
+            'last_page': 0,
+            'from': 0,
+            'to': 0
+        },
+        offset: 3,
     },
     created: function() {
         this.getPatientsWithAttentions();
         this.getAttentions();
     },
     computed:{
-        filteredAttentions: function(){
-            return this.attentions.filter((a) => {
-                return ((a.reason.match(this.search)) || (a.diagnostic.match(this.search)) || (a.patient.surname.match(this.search)) || (this.search.match(a.patient.clinical_history_number)));
-            });
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function (){
+            if (!this.pagination.to){
+                return [];
+            }
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1){
+                from = 1;
+            }
+            var to = from + (this.offset * 2);
+            if (to >= this.pagination.last_page){
+                to = this.pagination.last_page;
+            }
+            var pagesArray = [];
+            while (from <= to){
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
         }
     },
     methods: {
-        getAttentions: function(){
-            axios.get('/attentions/all')
+        searchAttention: function (page){
+            if (this.search == ''){
+                this.getPatientsWithAttentions();
+                this.getAttentions();
+            }else{
+                this.status_search = true;
+                axios.get('/attentions/search?search='+this.search+'&page='+page)
+                .then(response => {
+                    this.attentions = response.data.attentions.data;
+                    for (var a of this.attentions ) {
+                        for (var p of this.patients ) {
+                            if (p.id == a.patient_id) {
+                                a.patient = p;
+                                break;
+                            }
+                        };
+                    }; 
+                    this.pagination = response.data.pagination;
+                });
+            }
+        },
+        //pagination
+        changePage: function (page){
+            this.pagination.current_page = page;
+            if (this.status_search == false){
+                this.getAttentions(page);
+            }
+            else{
+                this.searchAttention(page);
+            }
+            
+        },
+        getAttentions: function(page){
+            this.status_search= false;
+            axios.get('/attentions/all?page='+page)
             .then(response => {
-                this.attentions = response.data;
+                this.attentions = response.data.attentions.data;
                 for (var a of this.attentions ) {
                     for (var p of this.patients ) {
                         if (p.id == a.patient_id) {
@@ -77,7 +137,8 @@ new Vue({
                             break;
                         }
                     };
-                };                
+                }; 
+                this.pagination = response.data.pagination;               
             });
         },
         getAllDerivation: function(){

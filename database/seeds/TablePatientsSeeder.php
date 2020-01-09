@@ -11,7 +11,7 @@ class TablePatientsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Patient::class, 100)->create(); 
+        factory(App\Patient::class, 500)->create(); 
         /*
         DB::table('patients')->insert([
             'name' => 'dieguito',

@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Patient::class, function (Faker $faker) {
     $party_town = $faker->numberBetween(1, 12);
     return [
-        'clinical_history_number' => $faker->unique()->numberBetween(1, 100),
+        'clinical_history_number' => $faker->unique()->numberBetween(1, 500),
         'name' => $faker->firstName,
         'surname' => $faker->lastName ,
         'birthdate' => date('Y-m-d'),

@@ -11,7 +11,7 @@ class TableAttentionsSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Attention::class, 300)->create(); 
+        factory(App\Attention::class, 1200)->create(); 
         /*DB::table('attentions')->insert([
             'patient_id' => 1,
             'diagnostic' => 'resfrio',

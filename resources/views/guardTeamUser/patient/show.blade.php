@@ -12,12 +12,16 @@
 <div id="patient-crud" class="row mt-4">
 	<div class="col-sm-12">
 		<h1 class="page-header">Gestión de Pacientes</h1>
-	</div>
+    </div>
     <div class="col-sm-12">
         @can('patient_new')
             @include('guardTeamUser.patient.create')
             <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="createPatient()">Nuevo Paciente</a>
         @endcan
+        <form class="form-inline mr-4 float-right" >
+            <input class="form-control mr-sm-2" type="text" v-model="search">
+            <button class="btn btn-primary" v-on:click.prevent="searchPatient()" type="button">Buscar</button>
+        </form>
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>

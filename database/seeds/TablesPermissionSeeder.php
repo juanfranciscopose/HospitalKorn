@@ -60,16 +60,21 @@ class TablesPermissionSeeder extends Seeder
 
         $role->givePermissionTo(Permission::findByName('report_index'));
 
-        $user = User::find(1);//root
+        $user = User::find(41);//root
         $user->assignRole('Admin');
+
+        for ($i=1; $i <= 40; $i++) { 
+            $user = User::find($i);//root
+            $user->assignRole('GuardTeam');
+        }
         
-        $user = User::find(2);//jhondoe
+        /*$user = User::find(2);//jhondoe
         $user->assignRole('Admin');
 
         $user = User::find(3);//carla
         $user->assignRole('GuardTeam');
 
         $user = User::find(4);//seba
-        $user->assignRole('GuardTeam');
+        $user->assignRole('GuardTeam');*/
     }
 }

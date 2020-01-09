@@ -30,6 +30,8 @@ new Vue({
         telephone: '',
         social_works: [],
         selected_social_work: '',
+        search: '',
+        status_search: false,
         patient_edit: {
             'clinical_history_number': '',
             'name': '',
@@ -98,11 +100,32 @@ new Vue({
         }
     },
     methods: {
+        searchPatient: function (page){
+            if (this.search == ''){
+                this.getPatients();
+            }else{
+                this.status_search = true;
+                axios.get('/patients/search?search='+this.search+'&page='+page)
+                .then(response => {
+                    this.patients = response.data.patients.data;
+                    this.pagination = response.data.pagination;
+                });
+            }
+        },
+
+        //pagination
         changePage: function (page){
             this.pagination.current_page = page;
-            this.getPatients(page);
+            if (this.status_search == false){
+                this.getPatients(page);
+            }
+            else{
+                this.searchPatient(page);
+            }
+            
         },
         getPatients: function (page){
+            this.status_search= false;
             axios.get('/patients/all?page='+page)
             .then(response => {
                 this.patients = response.data.patients.data;

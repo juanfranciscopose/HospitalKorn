@@ -18,7 +18,10 @@
             @include('guardTeamUser.attention.create')
             <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="newAttention()">Nueva Atención</a>
         @endcan
-        <input v-model="search" class="float-right mr-4" type="text" placeholder="buscar">
+        <form class="form-inline mr-4 float-right" >
+            <input class="form-control mr-sm-2" type="text" v-model="search">
+            <button class="btn btn-primary" v-on:click.prevent="searchAttention()" type="button">Buscar</button>
+        </form>
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>
@@ -30,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="a in filteredAttentions">
+                <tr v-for="a in attentions">
                     <td class="text-center">@{{ a.patient.clinical_history_number}}</td>
                     <td class="text-center">@{{ a.patient.surname }}</td>
                     <td class="text-center">@{{ a.reason }}</td>
@@ -57,6 +60,7 @@
                 </tr>
             </tbody>
         </table>
+        @include('pagination')
     </div>
 </div>
 @endsection

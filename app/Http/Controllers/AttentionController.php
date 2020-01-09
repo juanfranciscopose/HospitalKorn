@@ -9,10 +9,43 @@ use App\Attention;
 use App\Http\Requests\AttentionRequest;
 class AttentionController extends Controller
 {
+    public function getSearch (Request $request) 
+    {
+        $s = \Request::get('search');
+        $custom_config = Configuration::getCustomConfig();
+        $a = Attention::where('reason', 'LIKE', "%$s%")
+            ->paginate($custom_config['pagination']['pagination']);
+        $answer = [
+            'pagination' => [
+                'total' => $a->total(),
+                'current_page' => $a->currentPage(),
+                'per_page' => $a->perPage(),
+                'last_page' => $a->lastPage(),
+                'from' => $a->firstItem(),
+                'to' => $a->lastItem()
+            ],
+            'attentions' => $a
+        ];
+        return response()->json($answer, 200);
+    }
     public function getAll ()
     {
         $attentions = Attention::all();
-        return response()->json($attentions, 200);
+  
+        $custom_config = Configuration::getCustomConfig();
+        $a = Attention::paginate($custom_config['pagination']['pagination']);
+        $answer = [
+            'pagination' => [
+                'total' => $a->total(),
+                'current_page' => $a->currentPage(),
+                'per_page' => $a->perPage(),
+                'last_page' => $a->lastPage(),
+                'from' => $a->firstItem(),
+                'to' => $a->lastItem()
+            ],
+            'attentions' => $a
+        ];
+        return response()->json($answer, 200);
     }
     public function show()
     {

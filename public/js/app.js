@@ -49569,6 +49569,7 @@ new Vue({
     selected_derivation: '',
     selected_internment: false,
     search: '',
+    status_search: false,
     attention_edit: {
       'id': '',
       'date': '',
@@ -49595,41 +49596,150 @@ new Vue({
       'articulation': '',
       'observation': '',
       'derivation': ''
-    }
+    },
+    pagination: {
+      'total': 0,
+      'current_page': 0,
+      'per_page': 0,
+      'last_page': 0,
+      'from': 0,
+      'to': 0
+    },
+    offset: 3
   },
   created: function created() {
     this.getPatientsWithAttentions();
     this.getAttentions();
   },
   computed: {
-    filteredAttentions: function filteredAttentions() {
-      var _this = this;
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
 
-      return this.attentions.filter(function (a) {
-        return a.reason.match(_this.search) || a.diagnostic.match(_this.search) || a.patient.surname.match(_this.search) || _this.search.match(a.patient.clinical_history_number);
-      });
+      var from = this.pagination.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
     }
   },
   methods: {
-    getAttentions: function getAttentions() {
+    searchAttention: function searchAttention(page) {
+      var _this = this;
+
+      if (this.search == '') {
+        this.getPatientsWithAttentions();
+        this.getAttentions();
+      } else {
+        this.status_search = true;
+        axios.get('/attentions/search?search=' + this.search + '&page=' + page).then(function (response) {
+          _this.attentions = response.data.attentions.data;
+          var _iteratorNormalCompletion = true;
+          var _didIteratorError = false;
+          var _iteratorError = undefined;
+
+          try {
+            for (var _iterator = _this.attentions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              var a = _step.value;
+              var _iteratorNormalCompletion2 = true;
+              var _didIteratorError2 = false;
+              var _iteratorError2 = undefined;
+
+              try {
+                for (var _iterator2 = _this.patients[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                  var p = _step2.value;
+
+                  if (p.id == a.patient_id) {
+                    a.patient = p;
+                    break;
+                  }
+                }
+              } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+              } finally {
+                try {
+                  if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
+                    _iterator2["return"]();
+                  }
+                } finally {
+                  if (_didIteratorError2) {
+                    throw _iteratorError2;
+                  }
+                }
+              }
+
+              ;
+            }
+          } catch (err) {
+            _didIteratorError = true;
+            _iteratorError = err;
+          } finally {
+            try {
+              if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                _iterator["return"]();
+              }
+            } finally {
+              if (_didIteratorError) {
+                throw _iteratorError;
+              }
+            }
+          }
+
+          ;
+          _this.pagination = response.data.pagination;
+        });
+      }
+    },
+    //pagination
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+
+      if (this.status_search == false) {
+        this.getAttentions(page);
+      } else {
+        this.searchAttention(page);
+      }
+    },
+    getAttentions: function getAttentions(page) {
       var _this2 = this;
 
-      axios.get('/attentions/all').then(function (response) {
-        _this2.attentions = response.data;
-        var _iteratorNormalCompletion = true;
-        var _didIteratorError = false;
-        var _iteratorError = undefined;
+      this.status_search = false;
+      axios.get('/attentions/all?page=' + page).then(function (response) {
+        _this2.attentions = response.data.attentions.data;
+        var _iteratorNormalCompletion3 = true;
+        var _didIteratorError3 = false;
+        var _iteratorError3 = undefined;
 
         try {
-          for (var _iterator = _this2.attentions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-            var a = _step.value;
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
+          for (var _iterator3 = _this2.attentions[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+            var a = _step3.value;
+            var _iteratorNormalCompletion4 = true;
+            var _didIteratorError4 = false;
+            var _iteratorError4 = undefined;
 
             try {
-              for (var _iterator2 = _this2.patients[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                var p = _step2.value;
+              for (var _iterator4 = _this2.patients[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                var p = _step4.value;
 
                 if (p.id == a.patient_id) {
                   a.patient = p;
@@ -49637,16 +49747,16 @@ new Vue({
                 }
               }
             } catch (err) {
-              _didIteratorError2 = true;
-              _iteratorError2 = err;
+              _didIteratorError4 = true;
+              _iteratorError4 = err;
             } finally {
               try {
-                if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-                  _iterator2["return"]();
+                if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
+                  _iterator4["return"]();
                 }
               } finally {
-                if (_didIteratorError2) {
-                  throw _iteratorError2;
+                if (_didIteratorError4) {
+                  throw _iteratorError4;
                 }
               }
             }
@@ -49654,21 +49764,22 @@ new Vue({
             ;
           }
         } catch (err) {
-          _didIteratorError = true;
-          _iteratorError = err;
+          _didIteratorError3 = true;
+          _iteratorError3 = err;
         } finally {
           try {
-            if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-              _iterator["return"]();
+            if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
+              _iterator3["return"]();
             }
           } finally {
-            if (_didIteratorError) {
-              throw _iteratorError;
+            if (_didIteratorError3) {
+              throw _iteratorError3;
             }
           }
         }
 
         ;
+        _this2.pagination = response.data.pagination;
       });
     },
     getAllDerivation: function getAllDerivation() {
@@ -50277,6 +50388,7 @@ new Vue({
     social_works: [],
     selected_social_work: '',
     search: '',
+    status_search: false,
     patient_edit: {
       'clinical_history_number': '',
       'name': '',
@@ -50321,13 +50433,6 @@ new Vue({
     this.getPatients();
   },
   computed: {
-    filteredPatient: function filteredPatient() {
-      var _this = this;
-
-      return this.patients.filter(function (p) {
-        return _this.search.match(p.clinical_history_number);
-      });
-    },
     isActived: function isActived() {
       return this.pagination.current_page;
     },
@@ -50359,13 +50464,33 @@ new Vue({
     }
   },
   methods: {
+    searchPatient: function searchPatient(page) {
+      var _this = this;
+
+      if (this.search == '') {
+        this.getPatients();
+      } else {
+        this.status_search = true;
+        axios.get('/patients/search?search=' + this.search + '&page=' + page).then(function (response) {
+          _this.patients = response.data.patients.data;
+          _this.pagination = response.data.pagination;
+        });
+      }
+    },
+    //pagination
     changePage: function changePage(page) {
       this.pagination.current_page = page;
-      this.getPatients(page);
+
+      if (this.status_search == false) {
+        this.getPatients(page);
+      } else {
+        this.searchPatient(page);
+      }
     },
     getPatients: function getPatients(page) {
       var _this2 = this;
 
+      this.status_search = false;
       axios.get('/patients/all?page=' + page).then(function (response) {
         _this2.patients = response.data.patients.data;
         _this2.pagination = response.data.pagination;

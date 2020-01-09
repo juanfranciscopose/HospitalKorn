@@ -10,6 +10,28 @@ use App\Http\Requests\PatientRequest;
 
 class PatientController extends Controller
 {
+    public function getSearch (Request $request) 
+    {
+        $s = \Request::get('search');
+        $custom_config = Configuration::getCustomConfig();
+        $p = Patient::where('document_number', 'LIKE', "%$s%")
+            ->orWhere('name', 'LIKE', "%$s%")
+            ->orWhere('surname', 'LIKE', "%$s%")
+            ->orderBy('document_number', 'DESC')
+            ->paginate($custom_config['pagination']['pagination']);
+        $answer = [
+            'pagination' => [
+                'total' => $p->total(),
+                'current_page' => $p->currentPage(),
+                'per_page' => $p->perPage(),
+                'last_page' => $p->lastPage(),
+                'from' => $p->firstItem(),
+                'to' => $p->lastItem()
+            ],
+            'patients' => $p
+        ];
+        return response()->json($answer, 200);
+    }
     public function getPatient($patient_id)
     {  
         if (isset($patient_id))

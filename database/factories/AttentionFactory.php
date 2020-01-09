@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 $factory->define(App\Attention::class, function (Faker $faker) {
     return [
         'date' => date("Y-m-d"),
-        'patient_id' => $faker->numberBetween(1, 100),
+        'patient_id' => $faker->numberBetween(1, 500),
         'diagnostic' => $faker->text(20),
         'internment' => $faker->numberBetween(0,1),
         'accompaniment' => $faker->randomElement(['Familiar cercano', 'Hermanos e hijos', 'Pareja', 'Referentes vinculares', 'Policía', 'SAME', 'Por sus propios medios']),
