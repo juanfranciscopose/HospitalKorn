@@ -11,7 +11,8 @@ class TableInstitutionsSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('institutions')->insert([
+        factory(App\Institution::class, 30)->create(); 
+        /*DB::table('institutions')->insert([
             'name' => 'HIGA San Martin',
             'director' => 'Campos Maria',
             'telephone' => '221-5567543',
@@ -31,6 +32,6 @@ class TableInstitutionsSeeder extends Seeder
             'telephone' => '221-5567543',
             'address' => 'Di Claudio y Pose',
             'sanitary_region_id' => 10,
-        ]);
+        ]);*/
     }
 }
