@@ -99,7 +99,7 @@ new Vue({
                 this.status_search = true;
                 axios.get('/attentions/search?search='+this.search+'&page='+page)
                 .then(response => {
-                    this.attentions = response.data.attentions.data;
+                    this.attentions = response.data.list.data;
                     this.pagination = response.data.pagination;
                 });
             }
@@ -119,7 +119,7 @@ new Vue({
             this.status_search= false;
             axios.get('/attentions/all?page='+page)
             .then(response => {
-                this.attentions = response.data.attentions.data;
+                this.attentions = response.data.list.data;
                 this.pagination = response.data.pagination;               
             });
         },

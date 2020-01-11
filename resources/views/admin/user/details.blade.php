@@ -8,8 +8,8 @@
                 </button>                       
             </div>
             <div class="modal-body">
-                <li>Nombre y Apellido: @{{user_show.name}} @{{user_show.surname}}</li>
-                <li>estado: @{{ user_show.state}}</li>
+                <li class="list-group">Nombre y Apellido: @{{user_show.name}} @{{user_show.surname}}</li>
+                <li class="list-group">estado: @{{ user_show.state}}</li>
             </div>  
         </div>
     </div>

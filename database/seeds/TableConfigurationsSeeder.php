@@ -33,7 +33,7 @@ class TableConfigurationsSeeder extends Seeder
         ]);
         DB::table('configurations')->insert([
             'name' => 'pagination',
-            'value' => '5',
+            'value' => '10',
             'description' => 'Es la cantidad de elementos por pagina que apareceran en las listas'
         ]);
         DB::table('configurations')->insert([

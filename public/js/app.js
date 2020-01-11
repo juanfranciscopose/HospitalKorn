@@ -49650,7 +49650,7 @@ new Vue({
       } else {
         this.status_search = true;
         axios.get('/attentions/search?search=' + this.search + '&page=' + page).then(function (response) {
-          _this.attentions = response.data.attentions.data;
+          _this.attentions = response.data.list.data;
           _this.pagination = response.data.pagination;
         });
       }
@@ -49670,7 +49670,7 @@ new Vue({
 
       this.status_search = false;
       axios.get('/attentions/all?page=' + page).then(function (response) {
-        _this2.attentions = response.data.attentions.data;
+        _this2.attentions = response.data.list.data;
         _this2.pagination = response.data.pagination;
       });
     },
@@ -50825,6 +50825,8 @@ __webpack_require__.r(__webpack_exports__);
 new Vue({
   el: '#user-crud',
   data: {
+    status_search: false,
+    search: '',
     state: false,
     id: '',
     email: '',
@@ -50891,17 +50893,37 @@ new Vue({
     }
   },
   methods: {
-    changePage: function changePage(page) {
-      this.pagination.current_page = page;
-      this.getUsers(page);
-    },
     getUsers: function getUsers(page) {
       var _this = this;
 
+      this.status_search = false;
       axios.get('/admin/users/all?page=' + page).then(function (response) {
-        _this.users = response.data.users.data;
+        _this.users = response.data.list.data;
         _this.pagination = response.data.pagination;
       });
+    },
+    searchUser: function searchUser(page) {
+      var _this2 = this;
+
+      if (this.search == '') {
+        this.getUsers();
+      } else {
+        this.status_search = true;
+        axios.get('/admin/users/search?search=' + this.search + '&page=' + page).then(function (response) {
+          _this2.users = response.data.list.data;
+          _this2.pagination = response.data.pagination;
+        });
+      }
+    },
+    //pagination
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+
+      if (this.status_search == false) {
+        this.getUsers(page);
+      } else {
+        this.searchUser(page);
+      }
     },
     //details
     detailsUser: function detailsUser(user) {
@@ -50931,14 +50953,14 @@ new Vue({
       });
     },
     deleteUser: function deleteUser() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post('/admin/users/delete', {
         'id': this.id
       }).then(function (response) {
-        _this2.id = '';
+        _this3.id = '';
 
-        _this2.getUsers();
+        _this3.getUsers();
 
         $('#delete').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Eliminado correctamente');
@@ -50982,7 +51004,7 @@ new Vue({
       });
     },
     updateUser: function updateUser() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.state) {
         this.user_edit.active = 1;
@@ -50992,9 +51014,9 @@ new Vue({
 
       axios.put('/admin/users/update', this.user_edit).then(function (response) {
         //console.log(response.data);
-        _this3.getUsers();
+        _this4.getUsers();
 
-        _this3.user_edit = {
+        _this4.user_edit = {
           'id': '',
           'email': '',
           'active': '',
@@ -51037,7 +51059,7 @@ new Vue({
       });
     },
     createUser: function createUser() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.password == this.repeat_password) {
         axios.post('/admin/users/create', {
@@ -51049,13 +51071,13 @@ new Vue({
           surname: this.surname
         }).then(function (response) {
           //console.log(response.data);
-          _this4.getUsers();
+          _this5.getUsers();
 
-          _this4.email = '';
-          _this4.password = '';
-          _this4.repeat_password = '';
-          _this4.name = '';
-          _this4.surname = '';
+          _this5.email = '';
+          _this5.password = '';
+          _this5.repeat_password = '';
+          _this5.name = '';
+          _this5.surname = '';
           $('#create').modal('hide');
           toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Creado correctamente');
         })["catch"](function (error) {

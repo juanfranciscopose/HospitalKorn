@@ -49,7 +49,7 @@ class Configuration extends Model
                 'from' => $a->firstItem(),
                 'to' => $a->lastItem()
             ],
-            'attentions' => $a
+            'list' => $a
         ];
         return $answer;
     }

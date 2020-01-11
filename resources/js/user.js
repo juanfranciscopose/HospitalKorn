@@ -66,6 +66,14 @@ new Vue({
         }
     },
     methods: {
+        getUsers: function (page){
+            this.status_search= false;
+            axios.get('/admin/users/all?page='+page)
+            .then(response => {
+                this.users = response.data.list.data;
+                this.pagination = response.data.pagination;
+            });
+        },
         searchUser: function (page){
             if (this.search == ''){
                 this.getUsers();
@@ -73,7 +81,7 @@ new Vue({
                 this.status_search = true;
                 axios.get('/admin/users/search?search='+this.search+'&page='+page)
                 .then(response => {
-                    this.users = response.data.users.data;
+                    this.users = response.data.list.data;
                     this.pagination = response.data.pagination;
                 });
             }
@@ -86,15 +94,6 @@ new Vue({
             }else{
                 this.searchUser(page);
             }
-            
-        },
-        getUsers: function (page){
-            this.status_search= false;
-            axios.get('/admin/users/all?page='+page)
-            .then(response => {
-                this.users = response.data.users.data;
-                this.pagination = response.data.pagination;
-            });
         },
         //details
         detailsUser: function(user){

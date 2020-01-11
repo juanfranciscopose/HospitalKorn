@@ -10,6 +10,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Configuration;
 
 class User extends Authenticatable
 {
@@ -17,8 +18,6 @@ class User extends Authenticatable
     //users table
     protected $table = 'users';
     public $timestamps = false;
-    protected $guarded = [];
-    protected $hidden = [];
     protected $fillable = [
         'email', 'active', 'password', 'name', 'surname'
     ];
@@ -35,7 +34,7 @@ class User extends Authenticatable
         }
         User::where('id', '=', $id)->delete();
     }
-    public static function giveRole($email)
+    public static function giveRoleDefault($email)
     {
         $user = User::where('email', '=', $email)->first();
         $user->assignRole('GuardTeam');
@@ -59,4 +58,48 @@ class User extends Authenticatable
         $u->save();
     }
 
+    public static function searchPagination ($search, $number)
+    {
+        try 
+        {
+            $a = User::where('email', 'LIKE', "%$search%")
+                ->orderBy('id', 'desc')
+                ->paginate($number);
+            $answer = Configuration::generatePagination($a);
+            return $answer;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessaje());
+        }
+    }
+
+    public static function getAllPagination ($number)
+    {
+        try 
+        {
+            $a =  User::orderBy('id', 'desc')
+                ->paginate($number);
+            $answer = Configuration::generatePagination($a);
+            return $answer;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessaje());
+        }
+    }
+
+    public static function notExist ($email)
+    {
+        try 
+        {
+            $u = User::where('email', '=', $email)->get()->count();
+            return ($u == 0);
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessaje());
+        }
+
+    }
 }

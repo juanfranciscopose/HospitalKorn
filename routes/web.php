@@ -33,9 +33,11 @@ Route::post('/attentions/delete', 'AttentionController@delete')->name('delete-at
 Route::post('/attentions/create', 'AttentionController@store')->name('create-attentions')->middleware('active-login')->middleware('permission:attention_new');
 Route::put('/attentions/update', 'AttentionController@update')->name('update-attentions')->middleware('active-login')->middleware('permission:attention_update');
 Route::get('/attentions/search', 'AttentionController@getSearch')->name('search-attentions')->middleware('active-login')->middleware('permission:attention_index');
+
 //--users--
 Route::get('/admin/users', 'admin\UserController@show')->name('show-users')->middleware('active-login')->middleware('permission:user_index');
 Route::get('/admin/users/all', 'admin\UserController@getAll')->name('all-users')->middleware('active-login')->middleware('permission:user_index');
+Route::get('/admin/users/search', 'admin\UserController@getSearch')->name('search-users')->middleware('active-login')->middleware('permission:user_index');
 Route::post('/admin/users/delete', 'admin\UserController@delete')->name('delete-users')->middleware('active-login')->middleware('permission:user_destroy');
 Route::post('/admin/users/create', 'admin\UserController@store')->name('create-users')->middleware('active-login')->middleware('permission:user_new');
 Route::put('/admin/users/update', 'admin\UserController@update')->name('update-users')->middleware('active-login')->middleware('permission:user_update');

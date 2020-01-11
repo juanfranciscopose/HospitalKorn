@@ -39,7 +39,14 @@ class Attention extends Model
 
     public static function deleteAttention ($id)
     {
-        Attention::where('id', '=', $id)->delete();
+        try 
+        {
+            Attention::where('id', '=', $id)->delete();
+        }
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessaje());
+        }
     }
     
     public static function getAllPagination ($number)

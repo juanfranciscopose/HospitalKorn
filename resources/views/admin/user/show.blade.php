@@ -21,7 +21,7 @@
         <a href="{{ route('show-role') }}" class="btn btn-primary float-right mr-4 mb-4">Asignar Roles</a>
         <div class="form-inline mr-4 float-right" >
             <input class="form-control mr-sm-2" type="text" v-model="search">
-            <button class="btn btn-primary" v-on:click.prevent="searchAttention()" type="button">Buscar</button>
+            <button class="btn btn-primary" v-on:click.prevent="searchUser()" type="button">Buscar</button>
         </div>
         <table class="table table-hover table-striped mt-4">
             <thead>
