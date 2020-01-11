@@ -10,11 +10,11 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="date">Fecha</label>
+                    <label for="date">Fecha<b class="text-danger">*</b></label>
                     <input type="date" name="date" class="form-control" v-model="attention_edit.date" required>
                 </div>
                 <div class="form-group">
-                    <label for="reason">Motivo</label>
+                    <label for="reason">Motivo<b class="text-danger">*</b></label>
                     <select v-model="attention_edit.reason" name="reason">
                         <option v-for="rc in reasons_consultation" :selected="attention_edit.reason === rc">@{{rc}}</option>
                     </select>
@@ -41,7 +41,7 @@
                     </div>
                 </div>    
                 <div class="form-group">
-                    <label for="name">Diagnóstico</label>
+                    <label for="name">Diagnóstico<b class="text-danger">*</b></label>
                     <input type="text" name="diagnostic" class="form-control" v-model="attention_edit.diagnostic" required>
                 </div>
                 <div class="form-group">
@@ -52,7 +52,7 @@
                 </div>
                 <div class="form-group">
                     <label for="observations">Observaciones</label>
-                    <input type="text" name="observations" class="form-control" v-model="attention_edit.observations">
+                    <input type="text" name="observations" class="form-control" v-model="attention_edit.observation">
                 </div>
                 <div class="form-group">
                     <label for="accompaniment">Acompañamiento</label>
@@ -62,6 +62,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <small>Nota: los campos que tienen (*) son obligatorios.</small> 
                 <button type="button" class="btn btn-primary" v-on:click="updateAttention()">Actualizar</button>
             </div>
             </form>

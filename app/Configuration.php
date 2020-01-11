@@ -37,4 +37,20 @@ class Configuration extends Model
         Configuration::where('name', '=', 'description')->update(array('value' => $request->description['description']));
         //Configuration::where('name', '=', 'enable')->update(array('value' => $request->enable['enable']));
     }
+    
+    public static function generatePagination ($a)
+    {
+        $answer = [
+            'pagination' => [
+                'total' => $a->total(),
+                'current_page' => $a->currentPage(),
+                'per_page' => $a->perPage(),
+                'last_page' => $a->lastPage(),
+                'from' => $a->firstItem(),
+                'to' => $a->lastItem()
+            ],
+            'attentions' => $a
+        ];
+        return $answer;
+    }
 }

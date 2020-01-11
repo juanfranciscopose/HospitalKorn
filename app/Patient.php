@@ -40,4 +40,10 @@ class Patient extends Model
         }
         return $result;
     }
+
+    public static function isExists ($patient_id)
+    {
+        $p = Patient::where('id', '=', $patient_id)->count();
+        return ($p == 1);
+    }
 }

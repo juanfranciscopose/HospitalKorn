@@ -18,10 +18,10 @@
             @include('guardTeamUser.attention.create')
             <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="newAttention()">Nueva Atención</a>
         @endcan
-        <form class="form-inline mr-4 float-right" >
+        <div class="form-inline mr-4 float-right" >
             <input class="form-control mr-sm-2" type="text" v-model="search">
             <button class="btn btn-primary" v-on:click.prevent="searchAttention()" type="button">Buscar</button>
-        </form>
+        </div>
         <table class="table table-hover table-striped mt-4">
             <thead>
                 <tr>
@@ -34,8 +34,8 @@
             </thead>
             <tbody>
                 <tr v-for="a in attentions">
-                    <td class="text-center">@{{ a.patient.clinical_history_number}}</td>
-                    <td class="text-center">@{{ a.patient.surname }}</td>
+                    <td class="text-center">@{{ a.patient_chn}}</td>
+                    <td class="text-center">@{{ a.patient_surname }}</td>
                     <td class="text-center">@{{ a.reason }}</td>
                     <td class="text-center">@{{ a.diagnostic }}</td>
                     <td class="text-center">@{{ a.date }}</td>

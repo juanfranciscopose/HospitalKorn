@@ -5,6 +5,8 @@ import swal from "sweetalert";
 new Vue({
     el: '#user-crud',
     data: {
+        status_search: false,
+        search: '', 
         state: false,
         id:'',
         email: '',
@@ -64,11 +66,30 @@ new Vue({
         }
     },
     methods: {
+        searchUser: function (page){
+            if (this.search == ''){
+                this.getUsers();
+            }else{
+                this.status_search = true;
+                axios.get('/admin/users/search?search='+this.search+'&page='+page)
+                .then(response => {
+                    this.users = response.data.users.data;
+                    this.pagination = response.data.pagination;
+                });
+            }
+        },
+        //pagination
         changePage: function (page){
             this.pagination.current_page = page;
-            this.getUsers(page);
+            if (this.status_search == false){
+                this.getUsers(page);
+            }else{
+                this.searchUser(page);
+            }
+            
         },
         getUsers: function (page){
+            this.status_search= false;
             axios.get('/admin/users/all?page='+page)
             .then(response => {
                 this.users = response.data.users.data;

@@ -62,6 +62,8 @@ class TablesPermissionSeeder extends Seeder
 
         $user = User::find(41);//root
         $user->assignRole('Admin');
+        $user = User::find(42);//root
+        $user->assignRole('GuardTeam');
 
         for ($i=1; $i <= 40; $i++) { 
             $user = User::find($i);//root

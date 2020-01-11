@@ -65,7 +65,6 @@ new Vue({
         offset: 3,
     },
     created: function() {
-        this.getPatientsWithAttentions();
         this.getAttentions();
     },
     computed:{
@@ -95,21 +94,12 @@ new Vue({
     methods: {
         searchAttention: function (page){
             if (this.search == ''){
-                this.getPatientsWithAttentions();
                 this.getAttentions();
             }else{
                 this.status_search = true;
                 axios.get('/attentions/search?search='+this.search+'&page='+page)
                 .then(response => {
                     this.attentions = response.data.attentions.data;
-                    for (var a of this.attentions ) {
-                        for (var p of this.patients ) {
-                            if (p.id == a.patient_id) {
-                                a.patient = p;
-                                break;
-                            }
-                        };
-                    }; 
                     this.pagination = response.data.pagination;
                 });
             }
@@ -130,14 +120,6 @@ new Vue({
             axios.get('/attentions/all?page='+page)
             .then(response => {
                 this.attentions = response.data.attentions.data;
-                for (var a of this.attentions ) {
-                    for (var p of this.patients ) {
-                        if (p.id == a.patient_id) {
-                            a.patient = p;
-                            break;
-                        }
-                    };
-                }; 
                 this.pagination = response.data.pagination;               
             });
         },
@@ -146,13 +128,6 @@ new Vue({
             axios.get('/institutions/all')
             .then(response => {
                 this.derivation = response.data;
-            });
-        },
-        getPatientsWithAttentions: function (){
-            axios.get('/patients/attentions/all')
-            .then(response => {
-                this.patients = response.data;
-                //console.log(response);
             });
         },
         getPatientData: function(){
@@ -208,7 +183,6 @@ new Vue({
                 observation: this.observations,
                 derivation: this.selected_derivation
             }).then(response =>{
-                this.getPatientsWithAttentions();
                 this.getAttentions();
                 this.patient_data = '';
                 this.selected_accompaniment= '';
@@ -253,7 +227,6 @@ new Vue({
                 'id': this.id
             })
             .then(response =>{
-                this.getPatientsWithAttentions();
                 this.getAttentions();
                 this.id = '';
                 $('#delete').modal('hide');
@@ -302,7 +275,6 @@ new Vue({
             }
             axios.put('/attentions/update', this.attention_edit)
             .then(response => {
-                this.getPatientsWithAttentions();
                 this.getAttentions();
                 this.attention_edit = {
                     'id': '',

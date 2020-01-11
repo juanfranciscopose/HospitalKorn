@@ -6,11 +6,11 @@
                 <h4>Nueva Atención</h4> 
                 <button type="button" class="close" data-dismiss="modal">
                     <span>&times;</span>
-                </button>                       
+                </button>  
             </div>
-            <div class="modal-body">
+            <div class="modal-body"> 
                 <div class="form-group">
-                    <label for="idPatient">ID paciente</label>
+                    <label for="idPatient">ID paciente<b class="text-danger">*</b></label>
                     <input type="number" name="idPatient" id= "idPatient" class="form-control" v-model="patient_id" v-on:change.prevent="getPatientData()" required>
                     <div class="container">
                         <label for="p">Nombre del paciente</label>
@@ -18,11 +18,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="date">Fecha</label>
+                    <label for="date">Fecha<b class="text-danger">*</b></label>
                     <input type="date" name="date" class="form-control" v-model="date" required>
                 </div>
                 <div class="form-group">
-                    <label for="reason">Motivo</label>
+                    <label for="reason">Motivo<b class="text-danger">*</b></label>
                     <select v-model="selected_reason" name="reason">
                         <option v-for="rc in reasons_consultation">@{{rc}}</option>
                     </select>
@@ -49,7 +49,7 @@
                     </div>
                 </div>    
                 <div class="form-group">
-                    <label for="name">Diagnóstico</label>
+                    <label for="name">Diagnóstico<b class="text-danger">*</b></label>
                     <input type="text" name="diagnostic" class="form-control" v-model="diagnostic" required>
                 </div>
                 <div class="form-group">
@@ -70,6 +70,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <small>Nota: los campos que tienen (*) son obligatorios.</small> 
                 <button type="button" class="btn btn-primary" v-on:click="createAttention()">Guardar</button>
             </div>
             </form>

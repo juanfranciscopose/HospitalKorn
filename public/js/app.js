@@ -49608,7 +49608,6 @@ new Vue({
     offset: 3
   },
   created: function created() {
-    this.getPatientsWithAttentions();
     this.getAttentions();
   },
   computed: {
@@ -49647,65 +49646,11 @@ new Vue({
       var _this = this;
 
       if (this.search == '') {
-        this.getPatientsWithAttentions();
         this.getAttentions();
       } else {
         this.status_search = true;
         axios.get('/attentions/search?search=' + this.search + '&page=' + page).then(function (response) {
           _this.attentions = response.data.attentions.data;
-          var _iteratorNormalCompletion = true;
-          var _didIteratorError = false;
-          var _iteratorError = undefined;
-
-          try {
-            for (var _iterator = _this.attentions[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-              var a = _step.value;
-              var _iteratorNormalCompletion2 = true;
-              var _didIteratorError2 = false;
-              var _iteratorError2 = undefined;
-
-              try {
-                for (var _iterator2 = _this.patients[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                  var p = _step2.value;
-
-                  if (p.id == a.patient_id) {
-                    a.patient = p;
-                    break;
-                  }
-                }
-              } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
-              } finally {
-                try {
-                  if (!_iteratorNormalCompletion2 && _iterator2["return"] != null) {
-                    _iterator2["return"]();
-                  }
-                } finally {
-                  if (_didIteratorError2) {
-                    throw _iteratorError2;
-                  }
-                }
-              }
-
-              ;
-            }
-          } catch (err) {
-            _didIteratorError = true;
-            _iteratorError = err;
-          } finally {
-            try {
-              if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                _iterator["return"]();
-              }
-            } finally {
-              if (_didIteratorError) {
-                throw _iteratorError;
-              }
-            }
-          }
-
-          ;
           _this.pagination = response.data.pagination;
         });
       }
@@ -49726,59 +49671,6 @@ new Vue({
       this.status_search = false;
       axios.get('/attentions/all?page=' + page).then(function (response) {
         _this2.attentions = response.data.attentions.data;
-        var _iteratorNormalCompletion3 = true;
-        var _didIteratorError3 = false;
-        var _iteratorError3 = undefined;
-
-        try {
-          for (var _iterator3 = _this2.attentions[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-            var a = _step3.value;
-            var _iteratorNormalCompletion4 = true;
-            var _didIteratorError4 = false;
-            var _iteratorError4 = undefined;
-
-            try {
-              for (var _iterator4 = _this2.patients[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                var p = _step4.value;
-
-                if (p.id == a.patient_id) {
-                  a.patient = p;
-                  break;
-                }
-              }
-            } catch (err) {
-              _didIteratorError4 = true;
-              _iteratorError4 = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion4 && _iterator4["return"] != null) {
-                  _iterator4["return"]();
-                }
-              } finally {
-                if (_didIteratorError4) {
-                  throw _iteratorError4;
-                }
-              }
-            }
-
-            ;
-          }
-        } catch (err) {
-          _didIteratorError3 = true;
-          _iteratorError3 = err;
-        } finally {
-          try {
-            if (!_iteratorNormalCompletion3 && _iterator3["return"] != null) {
-              _iterator3["return"]();
-            }
-          } finally {
-            if (_didIteratorError3) {
-              throw _iteratorError3;
-            }
-          }
-        }
-
-        ;
         _this2.pagination = response.data.pagination;
       });
     },
@@ -49790,22 +49682,15 @@ new Vue({
         _this3.derivation = response.data;
       });
     },
-    getPatientsWithAttentions: function getPatientsWithAttentions() {
-      var _this4 = this;
-
-      axios.get('/patients/attentions/all').then(function (response) {
-        _this4.patients = response.data; //console.log(response);
-      });
-    },
     getPatientData: function getPatientData() {
-      var _this5 = this;
+      var _this4 = this;
 
       if (this.patient_id != '') {
         axios.get('/patients/patient/' + this.patient_id).then(function (response) {
           if (response.data == 'No hay paciente con ese ID') {
-            _this5.patient_data = response.data;
+            _this4.patient_data = response.data;
           } else {
-            _this5.patient_data = response.data.name + ' ' + response.data.surname;
+            _this4.patient_data = response.data.name + ' ' + response.data.surname;
           }
         });
       } else {
@@ -49834,7 +49719,7 @@ new Vue({
       });
     },
     createAttention: function createAttention() {
-      var _this6 = this;
+      var _this5 = this;
 
       if (this.selected_internment) {
         this.internment = 1;
@@ -49854,22 +49739,20 @@ new Vue({
         observation: this.observations,
         derivation: this.selected_derivation
       }).then(function (response) {
-        _this6.getPatientsWithAttentions();
+        _this5.getAttentions();
 
-        _this6.getAttentions();
-
-        _this6.patient_data = '';
-        _this6.selected_accompaniment = '';
-        _this6.selected_reason = '';
-        _this6.selected_pharmacotherapy = '';
-        _this6.articulation = '';
-        _this6.internment = 0;
-        _this6.selected_internment = false;
-        _this6.observations = '';
-        _this6.date = '';
-        _this6.diagnostic = '';
-        _this6.patient_id = '';
-        _this6.selected_derivation = '';
+        _this5.patient_data = '';
+        _this5.selected_accompaniment = '';
+        _this5.selected_reason = '';
+        _this5.selected_pharmacotherapy = '';
+        _this5.articulation = '';
+        _this5.internment = 0;
+        _this5.selected_internment = false;
+        _this5.observations = '';
+        _this5.date = '';
+        _this5.diagnostic = '';
+        _this5.patient_id = '';
+        _this5.selected_derivation = '';
         $('#create').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Creado correctamente');
       })["catch"](function (error) {
@@ -49897,16 +49780,14 @@ new Vue({
     },
     //delete
     deleteAttention: function deleteAttention() {
-      var _this7 = this;
+      var _this6 = this;
 
       axios.post('/attentions/delete', {
         'id': this.id
       }).then(function (response) {
-        _this7.getPatientsWithAttentions();
+        _this6.getAttentions();
 
-        _this7.getAttentions();
-
-        _this7.id = '';
+        _this6.id = '';
         $('#delete').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_2___default.a.success('Eliminado correctamente');
       });
@@ -49947,7 +49828,7 @@ new Vue({
       });
     },
     updateAttention: function updateAttention() {
-      var _this8 = this;
+      var _this7 = this;
 
       if (this.selected_internment) {
         this.attention_edit.internment = 1;
@@ -49956,11 +49837,9 @@ new Vue({
       }
 
       axios.put('/attentions/update', this.attention_edit).then(function (response) {
-        _this8.getPatientsWithAttentions();
+        _this7.getAttentions();
 
-        _this8.getAttentions();
-
-        _this8.attention_edit = {
+        _this7.attention_edit = {
           'id': '',
           'date': '',
           'patient_id': '',
@@ -49999,17 +49878,17 @@ new Vue({
     },
     //details
     setAttentionShowDerivationName: function setAttentionShowDerivationName(id) {
-      var _this9 = this;
+      var _this8 = this;
 
       axios.get('/institutions/' + id).then(function (response) {
-        _this9.attention_show.derivation = response.data.name;
+        _this8.attention_show.derivation = response.data.name;
       });
     },
     detailsAttention: function detailsAttention(attention) {
-      var _this10 = this;
+      var _this9 = this;
 
       axios.get('/patients/patient/' + attention.patient_id).then(function (response) {
-        _this10.attention_show.name_surname_patient = response.data.name + ' ' + response.data.surname;
+        _this9.attention_show.name_surname_patient = response.data.name + ' ' + response.data.surname;
       });
       this.attention_show.id = attention.id;
       this.attention_show.diagnostic = attention.diagnostic;
