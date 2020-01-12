@@ -26,6 +26,7 @@
             <thead>
                 <tr>
                     <th class="text-center">Nro Documento</th>
+                    <th class="text-center">Nro de Historia Clínica</th>
                     <th class="text-center">Nombre</th>
                     <th class="text-center">Apellido</th>
                 </tr>
@@ -33,6 +34,7 @@
             <tbody>
                 <tr v-for="p in patients">
                     <td class="text-center">@{{ p.document_number }}</td>
+                    <td class="text-center">@{{ p.clinical_history_number }}</td>
                     <td class="text-center">@{{ p.name }}</td>
                     <td class="text-center">@{{ p.surname }}</td>
                     @can('patient_show')

@@ -15,6 +15,7 @@ class PatientController extends Controller
         $s = \Request::get('search');
         $custom_config = Configuration::getCustomConfig();
         $p = Patient::where('document_number', 'LIKE', "%$s%")
+            ->orWhere('clinical_history_number', 'LIKE', "%$s%")
             ->orWhere('name', 'LIKE', "%$s%")
             ->orWhere('surname', 'LIKE', "%$s%")
             ->orderBy('document_number', 'DESC')
