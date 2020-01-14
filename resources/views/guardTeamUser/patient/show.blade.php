@@ -18,7 +18,7 @@
             @include('guardTeamUser.patient.create')
             <a href="#" class="btn btn-primary float-right mb-4" data-toggle="modal" v-on:click.prevent="createPatient()">Nuevo Paciente</a>
         @endcan
-        <form class="form-inline mr-4 float-right" >
+        <form class="form-inline mr-4 float-right mb-4" >
             <input class="form-control mr-sm-2" type="text" v-model="search">
             <button class="btn btn-primary" v-on:click.prevent="searchPatient()" type="button">Buscar</button>
         </form>

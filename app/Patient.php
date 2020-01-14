@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use App\Configuration;
 
 class Patient extends Model
 {
@@ -27,23 +28,72 @@ class Patient extends Model
         'social_work'
     ];
 
-    public static function getPatient ($id)
+    public static function getAllPagination ($number)
     {
-        $p = Patient::where('id', '=', $id)->count();
-        if ($p == 0){
-            $result = 'No hay paciente con ese ID';
-        }
-        else
+        try 
         {
-            $p = Patient::where('id', '=', $id)->get();
-            $result = $p[0];
+            $p = Patient::orderBy('document_number', 'DESC')->paginate($number);
+            $answer = Configuration::generatePagination($p);
+            return $answer;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
         }
-        return $result;
     }
 
+    public static function searchPagination ($search, $number)
+    {
+        try 
+        {
+            $p = Patient::where('document_number', 'LIKE', "%$search%")
+                ->orWhere('clinical_history_number', 'LIKE', "%$search%")
+                ->orWhere('name', 'LIKE', "%$search%")
+                ->orWhere('surname', 'LIKE', "%$search%")
+                ->orderBy('document_number', 'DESC')
+                ->paginate($number);
+            $answer = Configuration::generatePagination($p);
+            return $answer;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+    }
+    
     public static function isExists ($patient_id)
     {
-        $p = Patient::where('id', '=', $patient_id)->count();
-        return ($p == 1);
+        try 
+        {
+            $p = Patient::where('id', '=', $patient_id)->count();
+            return ($p == 1);
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
     }
+
+    public static function getPatient ($id)
+    {
+        try 
+        {
+            $p = Patient::where('id', '=', $id)->count();
+            if ($p == 0)
+            {
+                $result = 'No hay paciente con ese ID';
+            }
+            else
+            {
+                $p = Patient::where('id', '=', $id)->get();
+                $result = $p[0];
+            }
+            return $result;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+    }
+
 }

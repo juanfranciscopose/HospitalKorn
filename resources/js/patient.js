@@ -107,7 +107,7 @@ new Vue({
                 this.status_search = true;
                 axios.get('/patients/search?search='+this.search+'&page='+page)
                 .then(response => {
-                    this.patients = response.data.patients.data;
+                    this.patients = response.data.list.data;
                     this.pagination = response.data.pagination;
                 });
             }
@@ -128,7 +128,7 @@ new Vue({
             this.status_search= false;
             axios.get('/patients/all?page='+page)
             .then(response => {
-                this.patients = response.data.patients.data;
+                this.patients = response.data.list.data;
                 this.pagination = response.data.pagination;
             });
         },

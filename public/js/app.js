@@ -49665,6 +49665,7 @@ new Vue({
         this.searchAttention(page);
       }
     },
+    //called in creation
     getAttentions: function getAttentions(page) {
       var _this2 = this;
 
@@ -49686,7 +49687,7 @@ new Vue({
       var _this4 = this;
 
       if (this.patient_id != '') {
-        axios.get('/patients/patient/' + this.patient_id).then(function (response) {
+        axios.get('/patients/' + this.patient_id).then(function (response) {
           if (response.data == 'No hay paciente con ese ID') {
             _this4.patient_data = response.data;
           } else {
@@ -50351,7 +50352,7 @@ new Vue({
       } else {
         this.status_search = true;
         axios.get('/patients/search?search=' + this.search + '&page=' + page).then(function (response) {
-          _this.patients = response.data.patients.data;
+          _this.patients = response.data.list.data;
           _this.pagination = response.data.pagination;
         });
       }
@@ -50371,7 +50372,7 @@ new Vue({
 
       this.status_search = false;
       axios.get('/patients/all?page=' + page).then(function (response) {
-        _this2.patients = response.data.patients.data;
+        _this2.patients = response.data.list.data;
         _this2.pagination = response.data.pagination;
       });
     },

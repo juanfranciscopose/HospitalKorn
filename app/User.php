@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Configuration;
+use App\Rol;
 
 class User extends Authenticatable
 {
@@ -25,30 +26,43 @@ class User extends Authenticatable
 
     public static function deleteUser($id)
     {
-        $user = User::find($id);
-        $roles = Role::all();
-        foreach ($roles as $r) {
-            if ($user->hasRole($r)){
-                $user->removeRole($r);
+        try 
+        {
+            $user = User::find($id);
+            $roles = Rol::getAll();
+            foreach ($roles as $r) 
+            {
+                if ($user->hasRole($r))
+                {
+                    $user->removeRole($r);
+                }
             }
+            User::where('id', '=', $id)->delete();
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
         }
-        User::where('id', '=', $id)->delete();
     }
-    public static function giveRoleDefault($email)
-    {
-        $user = User::where('email', '=', $email)->first();
-        $user->assignRole('GuardTeam');
-    }
+
     public static function createUser($email, $pass, $name, $surname)
     {
-        $password = bcrypt($pass);
-        DB::table('users')->insert([
-            'email' => $email,
-            'password' => $password,
-            'name' => $name,
-            'surname' => $surname,
-            'active' => 1
-        ]);
+        try 
+        {
+            $password = bcrypt($pass);
+            DB::table('users')->insert([
+                'email' => $email,
+                'password' => $password,
+                'name' => $name,
+                'surname' => $surname,
+                'active' => 1
+            ]);
+            Rol::giveRoleDefault($email);
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
     }
     
     public static function changePass($id, $new_pass)
@@ -70,7 +84,7 @@ class User extends Authenticatable
         } 
         catch (Exception $e)
         {
-            throw new Exception($e->getMessaje());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -78,14 +92,14 @@ class User extends Authenticatable
     {
         try 
         {
-            $a =  User::orderBy('id', 'desc')
+            $a = User::orderBy('id', 'desc')
                 ->paginate($number);
             $answer = Configuration::generatePagination($a);
             return $answer;
         } 
         catch (Exception $e)
         {
-            throw new Exception($e->getMessaje());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -98,7 +112,7 @@ class User extends Authenticatable
         } 
         catch (Exception $e)
         {
-            throw new Exception($e->getMessaje());
+            throw new Exception($e->getMessage());
         }
 
     }

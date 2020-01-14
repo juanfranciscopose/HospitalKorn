@@ -45,7 +45,7 @@ class Attention extends Model
         }
         catch (Exception $e)
         {
-            throw new Exception($e->getMessaje());
+            throw new Exception($e->getMessage());
         }
     }
     
@@ -62,11 +62,11 @@ class Attention extends Model
                 ->orderBy('attentions.id', 'desc')
                 ->paginate($number);
             $answer = Configuration::generatePagination($a);
-        return $answer;
+            return $answer;
         } 
         catch (Exception $e)
         {
-            throw new Exception($e->getMessaje());
+            throw new Exception($e->getMessage());
         }
     }
 
@@ -91,7 +91,7 @@ class Attention extends Model
         } 
         catch (Exception $e)
         {
-            throw new Exception($e->getMessaje());
+            throw new Exception($e->getMessage());
         }
     }
 }

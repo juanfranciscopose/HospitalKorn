@@ -6,8 +6,6 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 use App\Http\Requests\DeleteRequest;
 use App\Http\Requests\UpdateUserRequest;
 
@@ -52,7 +50,8 @@ class UserController extends Controller
     {
         try
         {
-            if ($request->id != session()->get('id', 'error')){
+            if ($request->id != session()->get('id', 'error'))
+            {
                 User::deleteUser($request->id);
                 return response()->json('se ha borrado exitosamente', 200);
             }  
@@ -68,11 +67,13 @@ class UserController extends Controller
     {
         try
         {
-            if (User::notExist($request->email)){
+            if (User::notExist($request->email))
+            {
                 User::createUser($request->email, $request->password, $request->name, $request->surname);
-                $user = User::giveRoleDefault($request->email);
                 return response()->json('se ha creado exitosamente', 200);
-            }else{
+            }
+            else
+            {
                 return response()->json(['errors'=>['store'=>['El correo electrónico está en uso']]], 422);
             }
         }

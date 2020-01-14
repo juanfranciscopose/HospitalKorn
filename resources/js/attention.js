@@ -115,6 +115,7 @@ new Vue({
             }
             
         },
+        //called in creation
         getAttentions: function(page){
             this.status_search= false;
             axios.get('/attentions/all?page='+page)
@@ -132,7 +133,7 @@ new Vue({
         },
         getPatientData: function(){
             if (this.patient_id != ''){
-                axios.get('/patients/patient/'+this.patient_id)
+                axios.get('/patients/'+this.patient_id)
                 .then(response => {
                     if(response.data == 'No hay paciente con ese ID'){
                         this.patient_data = response.data;

@@ -47,6 +47,7 @@ class TablesPermissionSeeder extends Seeder
         $role = Role::findByName('Admin');
         $role->givePermissionTo(Permission::all());
         $role->revokePermissionTo('patient_new');
+        $role->revokePermissionTo('attention_new');
 
         $role = Role::findByName('GuardTeam');
         $role->givePermissionTo(Permission::findByName('patient_index'));
