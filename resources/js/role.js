@@ -1,6 +1,6 @@
 import Axios from "axios";
 import toastr from "toastr";
-import swal from "sweetalert";
+
 new Vue({
     el: '#role',
     data: {
@@ -12,17 +12,75 @@ new Vue({
             'roles': '',
             'roles_names': ''
         },
+        search: '',
+        status_search: false,
+        offset: 3,
+        pagination: {
+            'total': 0,
+            'current_page': 0,
+            'per_page': 0,
+            'last_page': 0,
+            'from': 0,
+            'to': 0
+        }
     },
     created: function() {
         this.getRoles();
         this.getUsersWithRoles();
     },
+    computed: {
+        isActived: function () {
+            return this.pagination.current_page;
+        },
+        pagesNumber: function (){
+            if (!this.pagination.to){
+                return [];
+            }
+            var from = this.pagination.current_page - this.offset;
+            if (from < 1){
+                from = 1;
+            }
+            var to = from + (this.offset * 2);
+            if (to >= this.pagination.last_page){
+                to = this.pagination.last_page;
+            }
+            var pagesArray = [];
+            while (from <= to){
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;
+        }
+    },
     methods: {
-        getUsersWithRoles: function (){
-            axios.get('/admin/role/users/all')
+        getUsersWithRoles: function (page){
+            this.status_search= false;
+            axios.get('/admin/role/users/all?page='+page)
             .then(response => {
-                this.users = response.data;
+                this.users = response.data.list.data;
+                this.pagination = response.data.pagination;
             });
+        },
+        searchUserRole: function (page){
+            if (this.search == ''){
+                this.getUsersWithRoles();
+            }else{
+                this.status_search = true;
+                axios.get('/admin/role/users/search?search='+this.search+'&page='+page)
+                .then(response => {
+                    this.users = response.data.list.data;
+                    this.pagination = response.data.pagination;
+                });
+            }
+        },
+        //pagination
+        changePage: function (page){
+            this.pagination.current_page = page;
+            if (this.status_search == false){
+                this.getUsersWithRoles(page);
+            }else{
+                this.searchUserRole(page);
+            }
         },
         getRoles: function (){
             axios.get('/admin/role/all')

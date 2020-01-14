@@ -55,6 +55,7 @@ Route::get('/admin/role', 'admin\RoleAssignmentController@show')->name('show-rol
 Route::get('/admin/role/all', 'admin\RoleAssignmentController@getAll')->name('all-role')->middleware('active-login')->middleware('permission:user_index');
 Route::get('/admin/role/users/all', 'admin\RoleAssignmentController@getAllUsersWithRole')->name('all-role')->middleware('active-login')->middleware('permission:user_index');
 Route::put('/admin/role/update', 'admin\RoleAssignmentController@update')->name('update-role')->middleware('active-login')->middleware('permission:user_update');
+Route::get('/admin/role/users/search', 'admin\RoleAssignmentController@getSearch')->name('search-role')->middleware('active-login')->middleware('permission:user_index');
 
 //-- reports --
 Route::get('/report', 'ReportController@show')->name('show-report')->middleware('active-login')->middleware('permission:report_index');

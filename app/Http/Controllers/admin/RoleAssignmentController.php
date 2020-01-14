@@ -9,7 +9,22 @@ use App\Http\Requests\UpdateRolRequest;
 
 class RoleAssignmentController extends Controller
 {
-    
+
+    public function getSearch (Request $request)
+    {
+        try
+        {
+            $search = \Request::get('search');
+            $custom_config = Configuration::getCustomConfig();
+            $answer =  Rol::searchPagination($search, $custom_config['pagination']['pagination']);
+            return response()->json($answer, 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
+        }
+    } 
+
     public function show () 
     {
         $custom_config = Configuration::getCustomConfig();
@@ -34,7 +49,8 @@ class RoleAssignmentController extends Controller
     {
         try
         {
-            $users = Rol::getAllUsersWithRole();
+            $custom_config = Configuration::getCustomConfig();
+            $users = Rol::getAllUsersWithRole($custom_config['pagination']['pagination']);
             return response()->json($users, 200);
         }
         catch (Exception $e)

@@ -50722,9 +50722,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
 /* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
-/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
-
 
 
 new Vue({
@@ -50737,25 +50734,92 @@ new Vue({
       'email': '',
       'roles': '',
       'roles_names': ''
+    },
+    search: '',
+    status_search: false,
+    offset: 3,
+    pagination: {
+      'total': 0,
+      'current_page': 0,
+      'per_page': 0,
+      'last_page': 0,
+      'from': 0,
+      'to': 0
     }
   },
   created: function created() {
     this.getRoles();
     this.getUsersWithRoles();
   },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    }
+  },
   methods: {
-    getUsersWithRoles: function getUsersWithRoles() {
+    getUsersWithRoles: function getUsersWithRoles(page) {
       var _this = this;
 
-      axios.get('/admin/role/users/all').then(function (response) {
-        _this.users = response.data;
+      this.status_search = false;
+      axios.get('/admin/role/users/all?page=' + page).then(function (response) {
+        _this.users = response.data.list.data;
+        _this.pagination = response.data.pagination;
       });
     },
-    getRoles: function getRoles() {
+    searchUserRole: function searchUserRole(page) {
       var _this2 = this;
 
+      if (this.search == '') {
+        this.getUsersWithRoles();
+      } else {
+        this.status_search = true;
+        axios.get('/admin/role/users/search?search=' + this.search + '&page=' + page).then(function (response) {
+          _this2.users = response.data.list.data;
+          _this2.pagination = response.data.pagination;
+        });
+      }
+    },
+    //pagination
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+
+      if (this.status_search == false) {
+        this.getUsersWithRoles(page);
+      } else {
+        this.searchUserRole(page);
+      }
+    },
+    getRoles: function getRoles() {
+      var _this3 = this;
+
       axios.get('/admin/role/all').then(function (response) {
-        _this2.roles = response.data;
+        _this3.roles = response.data;
       });
     },
     cancelUpdateRole: function cancelUpdateRole() {
@@ -50783,18 +50847,18 @@ new Vue({
       });
     },
     updateRole: function updateRole() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.user_edit.roles_names = this.user_edit.roles.name;
       axios.put('/admin/role/update', this.user_edit).then(function (response) {
-        _this3.user_edit.email = '';
-        _this3.user_edit.user_id = '';
-        _this3.user_edit.roles = '';
-        _this3.user_edit.roles_names = '';
+        _this4.user_edit.email = '';
+        _this4.user_edit.user_id = '';
+        _this4.user_edit.roles = '';
+        _this4.user_edit.roles_names = '';
 
-        _this3.getRoles();
+        _this4.getRoles();
 
-        _this3.getUsersWithRoles();
+        _this4.getUsersWithRoles();
 
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
         $('#edit').modal('hide');

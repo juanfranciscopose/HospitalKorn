@@ -9,23 +9,34 @@
 @endsection
 
 @section('content')
-<form action="">
-    <div id="role" class="row mt-4">
+<div id="role">
+
+    <div class="row mt-4" >
         <div class="col-sm-12">
             <h1 class="page-header mb-4">Asignación de Roles del Sistema</h1>
         </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-inline float-right" >
+                <input class="form-control mr-sm-2" type="text" v-model="search">
+                <button class="btn btn-primary" v-on:click.prevent="searchUserRole()" type="button">Buscar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-12">
             <table class="table table-hover table-striped mt-4">
                 <thead>
                     <tr>
-                        <th class="text-center">Id</th>
                         <th class="text-center">Email</th>
                         <th class="text-center">Rol</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="u in users">
-                        <td class="text-center">@{{ u.user_id }}</td>
                         <td class="text-center">@{{ u.email }}</td>
                         <td class="text-center">@{{ u.name }}</td>
                         @can('user_update')
@@ -39,5 +50,13 @@
             </table>
         </div>
     </div>
-</form>
+
+    <div class="row">
+        <div class="col-sm-12">
+            @include('pagination')
+        </div>
+    </div>
+    
+</div>
+
 @endsection
