@@ -9,15 +9,24 @@
 @endsection
 
 @section('content')
-<form action="">
-    <div id="config" class="row mt-4">
-        <div class="col-sm-12">
+<div id="config">
+
+    <div class="row">
+        <div class="col-sm-12 mt-4">
             <h1 class="page-header mb-4">Configuración del Sistema</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
             @can('config_update')
                 <a href="#" v-if="editMode" class="btn btn-primary float-right mb-4" v-on:click.prevent="updateConfig()">Guardar Cambios</a>
                 <a href="#" v-else class="btn btn-warning float-right mb-4" v-on:click.prevent="editConfig()">Editar</a>  
             @endcan
         </div>
+    </div>
+
+    <div class="row">
         <div class="col-sm-12">
             <div class="form-group">
                 <label for="text">Título de Barra de Navegación</label>
@@ -29,6 +38,11 @@
                     </small>
                 </div>
             </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
             <div class="form-group">
                 <label for="text">Título del Sistema</label>
                 <div class="container">
@@ -39,16 +53,26 @@
                     </small>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
             <div class="form-group">
                 <label for="text">Correo Electrónico</label>
                 <div class="container">
                     <input v-if="editMode" type="email" class="form-control" v-model="configs.email.email">
-                    <input v-else type="email" class="form-control" v-model="configs.email.email" disabled>
+                    <input v-else type="email" class="form-control" title="correo electronico institucional" v-model="configs.email.email" disabled>
                     <small class="text-muted">
                         @{{ configs.email.descrip }}
                     </small>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
             <div class="form-group">
                 <label for="text">Descripción</label>
                 <div class="container">
@@ -59,11 +83,16 @@
                     </small>
                 </div>
             </div>
+        </div>
+    </div>
+   
+    <div class="row">
+        <div class="col-sm-12">
             <div class="form-group">
                 <label for="text">Paginación</label>
                 <div class="container">
                     <input v-if="editMode" type="number"class="form-control" v-model="configs.pagination.pagination">
-                    <input v-else type="number" class="form-control" v-model="configs.pagination.pagination" disabled>
+                    <input v-else type="number" class="form-control" title="paginacion" v-model="configs.pagination.pagination" disabled>
                     <small class="text-muted">
                         @{{ configs.pagination.descrip }}
                     </small>
@@ -71,5 +100,6 @@
             </div>
         </div>
     </div>
-</form>
+
+</div>
 @endsection

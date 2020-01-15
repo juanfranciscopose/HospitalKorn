@@ -8,6 +8,14 @@
 {{$custom_config['title_nav']['title_nav']}}
 @endsection
 
+@section('email')
+{{$custom_config['email']['email']}}
+@endsection
+
+@section('description')
+{{$custom_config['description']['description']}}
+@endsection
+
 @section('content')
 <div id="change-pass" class="row mt-4">
 	<div class="col-sm-12">
