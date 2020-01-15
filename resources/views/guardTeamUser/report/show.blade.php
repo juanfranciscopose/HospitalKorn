@@ -8,6 +8,14 @@
 {{$custom_config['title_nav']['title_nav']}}
 @endsection
 
+@section('email')
+{{$custom_config['email']['email']}}
+@endsection
+
+@section('description')
+{{$custom_config['description']['description']}}
+@endsection
+
 @section('content')
 <div class="col-sm-12">
     <h1 class="page-header mt-4">Gestión de Reportes</h1>

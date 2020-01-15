@@ -8,6 +8,14 @@
 {{$customConfig['title_nav']['title_nav']}}
 @endsection
 
+@section('email')
+{{$customConfig['email']['email']}}
+@endsection
+
+@section('description')
+{{$customConfig['description']['description']}}
+@endsection
+
 @section('content')
 <div id="config">
 

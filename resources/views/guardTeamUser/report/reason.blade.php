@@ -8,6 +8,14 @@
 {{$custom_config['title_nav']['title_nav']}}
 @endsection
 
+@section('email')
+{{$custom_config['email']['email']}}
+@endsection
+
+@section('description')
+{{$custom_config['description']['description']}}
+@endsection
+
 @section('scripts')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
 @endsection

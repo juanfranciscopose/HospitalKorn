@@ -1,4 +1,5 @@
 @guest
+
   <div class="row bg-dark text-white top-navbar">
     <div class="mt-2 col-sm-6">
       <ul class="ml-2 navbar-nav navbar-expand-lg">
@@ -21,6 +22,7 @@
       </ul>
     </div>
   </div>
+
   <nav class="shadow navbar navbar-expand-lg navbar-light second-navbar">
     <a class="navbar-brand" href="{{ route('show-index') }}">
       <img src="{{ url('img/logoTransparentBlue.png') }}" class="second-navbar-img">
@@ -37,51 +39,57 @@
       </ul>
     </div>
   </nav>
+
 @else
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-      <a class="navbar-brand text-white font-weight-bold" href="{{ route('show-index') }}">@yield('title_nav')</a>
+
+    <nav class="shadow navbar navbar-expand-lg navbar-light second-navbar">
+      <a class="navbar-brand" href="{{ route('show-index') }}">
+        <img src="{{ url('img/logoTransparentBlue.png') }}" class="second-navbar-img">
+      </a>
+      <a class="navbar-brand  text-black font-weight-bold" href="{{ route('show-index') }}">@yield('title_nav')</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
+        <ul class="navbar-nav hover-nav">
           @can('patient_index')
-            <li class="nav-item active">
-              <a class="nav-link text-white" href="{{ route('show-patients') }}">Pacientes</a>
+            <li class="nav-item hover-item p-0">
+              <a class="nav-link text-black bold item pr-4 pl-4" href="{{ route('show-patients') }}">Pacientes</a>
             </li>
           @endcan
           @can('attention_index')
-            <li class="nav-item">
-              <a class="nav-link text-white" href="{{ route('show-attentions') }}">Atención</a>
+            <li class="nav-item hover-item p-0">
+              <a class="nav-link text-black bold item pr-4 pl-4" href="{{ route('show-attentions') }}">Atención</a>
             </li>
           @endcan
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <li class="nav-item dropdown hover-item p-0">
+            <a class="nav-link dropdown-toggle text-black bold item pr-4 pl-4" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Administración
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
               @can('user_index')
-                <a class="dropdown-item" href="{{ route('show-users') }}">Usuarios</a>
+                <a class="dropdown-item text-black bold item pr-4 pl-4" href="{{ route('show-users') }}">Usuarios</a>
               @endcan
               @hasrole('Admin')
-                <a class="dropdown-item" href="{{ route('show-config') }}">Configuración</a>
+                <a class="dropdown-item text-black bold item pr-4 pl-4" href="{{ route('show-config') }}">Configuración</a>
               @endhasrole
               @can('report_index')
-                <a class="dropdown-item" href="{{ route('show-report') }}">Reportes</a>
+                <a class="dropdown-item text-black bold item pr-4 pl-4" href="{{ route('show-report') }}">Reportes</a>
               @endcan
             </div>
           </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <li class="nav-item dropdown hover-item p-0">
+            <a class="nav-link dropdown-toggle  text-black bold item pr-4 pl-4" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               {{$email}}
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="{{ route('show-pass') }}">Cambiar Contraseña</a>
-              <a class="dropdown-item" href="{{ route('logout') }}">Cerrar Sesión</a>
+              <a class="dropdown-item text-black bold item pr-4 pl-4" href="{{ route('show-pass') }}">Cambiar Contraseña</a>
+              <a class="dropdown-item text-black bold item pr-4 pl-4" href="{{ route('logout') }}">Cerrar Sesión</a>
             </div>
           </li>
         </ul>
       </div>
     </nav>
+
 @endguest
 

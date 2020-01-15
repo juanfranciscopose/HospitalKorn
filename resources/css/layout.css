@@ -20,10 +20,11 @@
     margin-top: 1.4rem;
 }
 .hover-item:hover {
-    background-color: #00BDCC;;
+    background-color: #00BDCC;
 }
 .item:hover {
-    color: white;
+    background-color: #00BDCC;;
+    color: black;
 }
 .container-main {
     min-height:480px;
