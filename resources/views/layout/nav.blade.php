@@ -1,16 +1,38 @@
 @guest
-  <nav class="navbar navbar-expand-lg navbar-light bg-primary">
-    <a class="navbar-brand text-white font-weight-bold" href="{{ route('show-index') }}">@yield('title_nav')</a>
+  <div class="row bg-dark text-white top-navbar">
+    <div class="mt-2 col-sm-6">
+      <ul class="ml-2 navbar-nav navbar-expand-lg">
+        <li class="nav-item">
+          <span class="bold">Informes: (221) - 456 - 3456</span>
+        </li>
+        <li class="mr-2 ml-2 nav-item">
+          <span class="bold">|</span>
+        </li>
+        <li class="nav-item">
+          <span class="bold">Turnos: (221) - 678 - 6548</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-6">
+      <ul class="mr-4 navbar-nav navbar-expand-lg justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{{ route('show-login') }}">Iniciar sesión</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <nav class="shadow navbar navbar-expand-lg navbar-light second-navbar">
+    <a class="navbar-brand" href="{{ route('show-index') }}">
+      <img src="{{ url('img/logoTransparentBlue.png') }}" class="second-navbar-img">
+    </a>
+    <a class="navbar-brand text-black font-weight-bold" href="{{ route('show-index') }}">@yield('title_nav')</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link text-white" href="{{ route('show-institution') }}">Instituciones</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link text-white" href="{{ route('show-login') }}">Iniciar sesión</a>
+      <ul class="navbar-nav hover-nav">
+          <li class="form-inline nav-item hover-item p-0">
+            <a class="nav-link bold item pr-4 pl-4" href="{{ route('show-institution') }}">Otras Instituciones</a>
           </li>
       </ul>
     </div>

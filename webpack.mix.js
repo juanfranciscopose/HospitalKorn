@@ -13,5 +13,6 @@ mix.js([
     ], 'public/js/app.js')
     .styles([
     'resources/css/bootstrap.css',
-    'resources/css/toastr.css'
+    'resources/css/toastr.css',
+    'resources/css/layout.css',
     ], 'public/css/app.css');

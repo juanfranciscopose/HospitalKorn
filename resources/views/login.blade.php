@@ -8,10 +8,18 @@
 {{$customConfig['title_nav']['title_nav']}}
 @endsection
 
+@section('email')
+{{$customConfig['email']['email']}}
+@endsection
+
+@section('description')
+{{$customConfig['description']['description']}}
+@endsection
+
 @section('content')
-<div class="col-md-4 offset-md-4 mt-4" id="login-form">
+<div class="col-md-4 offset-md-4 mt-5" id="login-form">
     <h1 class="my-3 text-center">Iniciar Sesión</h1>
-    <div class="card">
+    <div class="shadow card">
         <div class="card-body">
             <form id="form-login">
                 <div class="form-group">
