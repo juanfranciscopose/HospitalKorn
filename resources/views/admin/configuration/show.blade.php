@@ -17,97 +17,101 @@
 @endsection
 
 @section('content')
-<div id="config">
+<div class="mt-5 mb-5">
+    <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
+        <div id="config">
 
-    <div class="row">
-        <div class="col-sm-12 mt-4">
-            <h1 class="page-header mb-4">Configuración del Sistema</h1>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            @can('config_update')
-                <a href="#" v-if="editMode" class="btn btn-primary float-right mb-4" v-on:click.prevent="updateConfig()">Guardar Cambios</a>
-                <a href="#" v-else class="btn btn-warning float-right mb-4" v-on:click.prevent="editConfig()">Editar</a>  
-            @endcan
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label for="text">Título de Barra de Navegación</label>
-                <div class="container">
-                    <input v-if="editMode" type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_nav.title_nav">
-                    <input v-else type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_nav.title_nav" disabled>
-                    <small class="text-muted">
-                        @{{ configs.title_nav.descrip }}
-                    </small>
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1 class="page-header">Configuración del Sistema</h1>
                 </div>
             </div>
-        </div>
-    </div>
-    
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label for="text">Título del Sistema</label>
-                <div class="container">
-                    <input v-if="editMode" type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_system.title_system">
-                    <input v-else type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_system.title_system" disabled>
-                    <small class="text-muted">
-                        @{{ configs.title_system.descrip }}
-                    </small>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label for="text">Correo Electrónico</label>
-                <div class="container">
-                    <input v-if="editMode" type="email" class="form-control" v-model="configs.email.email">
-                    <input v-else type="email" class="form-control" title="correo electronico institucional" v-model="configs.email.email" disabled>
-                    <small class="text-muted">
-                        @{{ configs.email.descrip }}
-                    </small>
+            <div class="row">
+                <div class="col-sm-12">
+                    @can('config_update')
+                        <a href="#" v-if="editMode" class="btn btn-primary float-right mb-4" v-on:click.prevent="updateConfig()">Guardar Cambios</a>
+                        <a href="#" v-else class="btn btn-warning float-right mb-4" v-on:click.prevent="editConfig()">Editar</a>  
+                    @endcan
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label for="text">Descripción</label>
-                <div class="container">
-                    <input v-if="editMode" type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.description.description">
-                    <input v-else type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.description.description" disabled>
-                    <small class="text-muted">
-                        @{{ configs.description.descrip }}
-                    </small>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="text">Título de Barra de Navegación</label>
+                        <div class="container">
+                            <input v-if="editMode" type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_nav.title_nav">
+                            <input v-else type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_nav.title_nav" disabled>
+                            <small class="text-muted">
+                                @{{ configs.title_nav.descrip }}
+                            </small>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-   
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-group">
-                <label for="text">Paginación</label>
-                <div class="container">
-                    <input v-if="editMode" type="number"class="form-control" v-model="configs.pagination.pagination">
-                    <input v-else type="number" class="form-control" title="paginacion" v-model="configs.pagination.pagination" disabled>
-                    <small class="text-muted">
-                        @{{ configs.pagination.descrip }}
-                    </small>
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="text">Título del Sistema</label>
+                        <div class="container">
+                            <input v-if="editMode" type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_system.title_system">
+                            <input v-else type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.title_system.title_system" disabled>
+                            <small class="text-muted">
+                                @{{ configs.title_system.descrip }}
+                            </small>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="text">Correo Electrónico</label>
+                        <div class="container">
+                            <input v-if="editMode" type="email" class="form-control" v-model="configs.email.email">
+                            <input v-else type="email" class="form-control" title="correo electronico institucional" v-model="configs.email.email" disabled>
+                            <small class="text-muted">
+                                @{{ configs.email.descrip }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="text">Descripción</label>
+                        <div class="container">
+                            <input v-if="editMode" type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.description.description">
+                            <input v-else type="text" class="form-control" minlength="5" maxlength="190" title="Tamaño mínimo: 5. Tamaño máximo: 190" v-model="configs.description.description" disabled>
+                            <small class="text-muted">
+                                @{{ configs.description.descrip }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="text">Paginación</label>
+                        <div class="container">
+                            <input v-if="editMode" type="number"class="form-control" v-model="configs.pagination.pagination">
+                            <input v-else type="number" class="form-control" title="paginacion" v-model="configs.pagination.pagination" disabled>
+                            <small class="text-muted">
+                                @{{ configs.pagination.descrip }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
 @endsection

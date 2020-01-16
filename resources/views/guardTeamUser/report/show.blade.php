@@ -16,11 +16,20 @@
 {{$custom_config['description']['description']}}
 @endsection
 
-@section('content')
-<div class="col-sm-12">
-    <h1 class="page-header mt-4">Gestión de Reportes</h1>
-</div>
-<div class="col-sm-12">
-    <a href="{{ route('report-reason-show') }}" class="btn btn-primary mt-4 ml-4">total de motivos de atención</a>
+@section('content')    
+<div class="mt-5 mb-5">
+    <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">    
+        <div class="row">
+            <div class="col-sm-12">
+                <h1 class="page-header">Gestión de Reportes</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <a href="{{ route('report-reason-show') }}" class="btn btn-primary mt-4 ml-4">total de motivos de atención</a>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
