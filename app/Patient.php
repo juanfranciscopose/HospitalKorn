@@ -27,7 +27,23 @@ class Patient extends Model
         'telephone', 
         'social_work'
     ];
-
+    public static function reportGenderCount ()
+    {
+        try
+        {
+            $gender = array(
+                'male' => Patient::where('gender', '=', 'MASCULINO')->count(),
+                'female' => Patient::where('gender', '=', 'FEMENINO')->count(),
+                'shemale' => Patient::where('gender', '=', 'TRANS')->count(),
+                'other' => Patient::where('gender', '=', 'OTROS')->count(),
+            );
+            return $gender;
+        }
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+    }
     public static function getAllPagination ($number)
     {
         try 

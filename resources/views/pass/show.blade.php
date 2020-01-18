@@ -17,7 +17,7 @@
 @endsection
 
 @section('content')
-<div class="mt-5 mb-5">
+<div class="container container-main mt-5 mb-5">
     <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
 
         <div id="change-pass" class="row">

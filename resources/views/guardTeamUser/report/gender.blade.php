@@ -25,7 +25,7 @@
     <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
         <div class="row">
             <div class="col-sm-12">
-                <h1 class="page-header">Consultas por motivo</h1>
+                <h1 class="page-header">Consultas por genero de paciente</h1>
                 <hr>
             </div>
             <hr>
@@ -35,12 +35,10 @@
             <div class="col-sm-12">
                 <h4>totales</h4>
                 <ul>
-                    <li class="list-group">Receta médica: {{ $reason['prescription'] }}</li>
-                    <li class="list-group">Control de guardia: {{ $reason['guard_control'] }}</li>
-                    <li class="list-group">Consulta: {{ $reason['consultation'] }}</li>
-                    <li class="list-group">Intento de suicidio: {{ $reason['suicide_attempt'] }}</li>
-                    <li class="list-group">Interconsulta: {{ $reason['interconsultation'] }}</li>
-                    <li class="list-group">Otras: {{ $reason['other'] }}</li>
+                    <li class="list-group">Masculino: {{ $gender['male'] }}</li>
+                    <li class="list-group">Femenino: {{ $gender['female'] }}</li>
+                    <li class="list-group">Trans: {{ $gender['shemale'] }}</li>
+                    <li class="list-group">Otros: {{ $gender['other'] }}</li>
                 </ul>
                 <canvas class="mt-4 mb-4" id="myChart"></canvas>
             </div>
@@ -56,10 +54,10 @@
     var myChart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: ['Receta médica', 'Control de guardia', 'Consulta', 'Intento de suicidio', 'Interconsulta', 'Otras'],
+        labels: ['Masculino', 'Femenino', 'Trans', 'Otros'],
         datasets: [{
-            label: 'Motivo',
-            data: [ {{ $reason['prescription'] }}, {{ $reason['guard_control'] }},  {{ $reason['consultation'] }}, {{ $reason['suicide_attempt'] }}, {{ $reason['interconsultation'] }}, {{ $reason['other'] }}],
+            label: 'Genero',
+            data: [ {{ $gender['male'] }}, {{ $gender['female'] }},  {{ $gender['shemale'] }}, {{ $gender['other'] }} ],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',

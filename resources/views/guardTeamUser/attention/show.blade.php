@@ -43,7 +43,7 @@
        </div>
     </div>
 
-    <div class="container mb-2 container-main mt-4 mb-5">
+    <div class="container container-main mt-4 mb-5">
         <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
 
             <div class="row">
@@ -94,6 +94,6 @@
         
         </div>
     </div>
-    
+
 </div>
 @endsection

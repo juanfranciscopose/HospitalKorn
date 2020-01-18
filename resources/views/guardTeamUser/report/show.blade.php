@@ -17,7 +17,7 @@
 @endsection
 
 @section('content')    
-<div class="mt-5 mb-5">
+<div class="container container-main mt-5 mb-5">
     <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">    
         <div class="row">
             <div class="col-sm-12">
@@ -26,8 +26,14 @@
         </div>
 
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-4">
                 <a href="{{ route('report-reason-show') }}" class="btn btn-primary mt-4 ml-4">total de motivos de atención</a>
+            </div>
+            <div class="col-sm-4">
+                <a href="{{ route('report-gender-show') }}" class="btn btn-primary mt-4 ml-4">generos de pacientes atendidos</a>
+            </div>
+            <div class="col-sm-4">
+                <a href="{{ route('report-reason-show') }}" class="btn btn-primary mt-4 ml-4">localidades de pacientes atendidos</a>
             </div>
         </div>
     </div>

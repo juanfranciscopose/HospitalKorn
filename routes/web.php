@@ -60,3 +60,4 @@ Route::get('/admin/role/users/search', 'admin\RoleAssignmentController@getSearch
 //-- reports --
 Route::get('/report', 'ReportController@show')->name('show-report')->middleware('active-login')->middleware('permission:report_index');
 Route::get('/report/reason', 'ReportController@reason')->name('report-reason-show')->middleware('active-login')->middleware('permission:report_index');
+Route::get('/report/gender', 'ReportController@gender')->name('report-gender-show')->middleware('active-login')->middleware('permission:report_index');
