@@ -22,9 +22,9 @@ Route::get('/patients/all', 'PatientController@getAll')->name('all-patients')->m
 Route::post('/patients/delete', 'PatientController@delete')->name('delete-patient')->middleware('active-login')->middleware('permission:patient_destroy');
 Route::post('/patients/create', 'PatientController@store')->name('create-patient')->middleware('active-login')->middleware('permission:patient_new');
 Route::put('/patients/update', 'PatientController@update')->name('update-patient')->middleware('active-login')->middleware('permission:patient_update');
+Route::get('/patients/search', 'PatientController@getSearch')->name('search-patients')->middleware('active-login')->middleware('permission:patient_index');
 Route::get('/patients/{patient_id}', 'PatientController@getPatient')->name('get-patient')->middleware('active-login')->middleware('permission:patient_show');
 //Route::get('/patients/attentions/all', 'PatientController@getPatientsWithAttention')->middleware('active-login')->middleware('permission:attention_index');
-Route::get('/patients/search', 'PatientController@getSearch')->name('search-patients')->middleware('active-login')->middleware('permission:patient_index');
 
 //--patient attentions--
 Route::get('/attentions', 'AttentionController@show')->name('show-attentions')->middleware('active-login')->middleware('permission:attention_index');
@@ -42,8 +42,8 @@ Route::post('/admin/users/delete', 'admin\UserController@delete')->name('delete-
 Route::post('/admin/users/create', 'admin\UserController@store')->name('create-users')->middleware('active-login')->middleware('permission:user_new');
 Route::put('/admin/users/update', 'admin\UserController@update')->name('update-users')->middleware('active-login')->middleware('permission:user_update');
 //--change password--
-Route::get('/users/password', 'PasswordController@show')->name('show-pass')->middleware('active-login')->middleware('permission:user_index');
-Route::put('/users/password/update', 'PasswordController@update')->name('update-pass')->middleware('active-login')->middleware('permission:user_update');
+Route::get('/users/password', 'PasswordController@show')->name('show-pass')->middleware('active-login');
+Route::put('/users/password/update', 'PasswordController@update')->name('update-pass')->middleware('active-login');
 
 //--Config--
 Route::get('/admin/config', 'admin\ConfigurationController@show')->name('show-config')->middleware('active-login')->middleware('permission:config_index');

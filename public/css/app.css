@@ -10290,7 +10290,7 @@ button.toast-close-button {
     background-color: #00BDCC;
 }
 .item:hover {
-    background-color: #00BDCC;;
+    background-color: #00BDCC;
     color: black;
 }
 .container-main {
@@ -10301,3 +10301,20 @@ body{
 	background-size: cover;
 	background-repeat: repeat; 
 }
+.section-nav {
+    height: 60px;
+}
+
+.button-dark-nav {
+    background-color: #343a40; 
+    color: white; 
+    border: 4px solid #343a40;
+    border-radius: 10px;
+  }
+  
+  .button-dark-nav:hover {
+    background-color: #00BDCC;
+    border: 4px solid #00BDCC;
+    color: white;
+  }
+  

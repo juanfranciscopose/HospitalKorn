@@ -23,7 +23,7 @@
     background-color: #00BDCC;
 }
 .item:hover {
-    background-color: #00BDCC;;
+    background-color: #00BDCC;
     color: black;
 }
 .container-main {
@@ -33,4 +33,7 @@ body{
     background-image: url("/img/bg.png");
 	background-size: cover;
 	background-repeat: repeat; 
+}
+.section-nav {
+    height: 60px;
 }

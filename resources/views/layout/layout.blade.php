@@ -10,10 +10,10 @@
         @yield('scripts')
     </head>
     <body>
-        @include('layout.nav')        
-        <div class="container mb-2 container-main">
-            @yield('content')
-        </div>
+        @include('layout.nav')   
+
+        @yield('content')
+        
         @include('layout.footer')
         <script src="{{ asset('js/app.js') }}"></script>
     </body>
