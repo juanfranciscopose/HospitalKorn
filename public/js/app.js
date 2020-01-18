@@ -50958,6 +50958,9 @@ new Vue({
     }
   },
   methods: {
+    showAssignRoles: function showAssignRoles() {
+      window.location.href = '/admin/role';
+    },
     getUsers: function getUsers(page) {
       var _this = this;
 

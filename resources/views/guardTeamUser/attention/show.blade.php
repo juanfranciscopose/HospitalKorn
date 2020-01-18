@@ -87,11 +87,16 @@
                             </tr>
                         </tbody>
                     </table>
-                    @include('pagination')
                 </div>
 
             </div>      
-        
+
+            <div class="row">
+                <div class="col-sm-12">
+                    @include('pagination')
+                </div>
+            </div>
+
         </div>
     </div>
 

@@ -17,28 +17,31 @@
 @endsection
 
 @section('content')
-<div class="mt-5 mb-5">
-    <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
-        <div id="role">
+<div id="role">
 
-            <div class="row" >
-                <div class="col-sm-12">
-                    <h1 class="page-header mb-4">Asignación de Roles del Sistema</h1>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="form-inline float-right" >
+    <div class="row bg-dark text-white section-nav">
+        <div class="col-sm-6">
+            <h3 class="ml-4 mt-2 pt-1 pb-1 page-header">Asignación de Roles</h3>
+        </div>
+        <div class="col-sm-6">
+            <ul class="mr-4 navbar-nav navbar-expand-lg justify-content-end">
+                <li class="nav-item form-inline float-right">
+                    <div class="pt-1 pb-1 mt-2 mr-4">
                         <input class="form-control mr-sm-2" type="text" v-model="search">
-                        <button class="btn btn-primary" v-on:click.prevent="searchUserRole()" type="button">Buscar</button>
+                        <button class="button-dark-nav" v-on:click.prevent="searchUserRole()" type="button">Buscar</button>        
                     </div>
-                </div>
-            </div>
+                </li>
+            </ul>
+       </div>
+    </div>
+
+    <div class="container container-main mt-4 mb-5">
+        <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
 
             <div class="row">
+                
                 <div class="col-sm-12">
-                    <table class="table table-hover table-striped mt-4">
+                    <table class="table table-hover table-striped">
                         <thead>
                             <tr>
                                 <th class="text-center">Email</th>
@@ -66,8 +69,9 @@
                     @include('pagination')
                 </div>
             </div>
-            
+
         </div>
     </div>
+
 </div>
 @endsection

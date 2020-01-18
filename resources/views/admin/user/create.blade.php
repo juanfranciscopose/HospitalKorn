@@ -1,4 +1,4 @@
-<div class="modal fade" id="create">
+<div class="modal text-dark fade" id="create">
     <div class="modal-dialog">
         <div class="modal-content">
             <form method="POST">

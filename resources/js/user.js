@@ -66,6 +66,9 @@ new Vue({
         }
     },
     methods: {
+        showAssignRoles: function (){
+            window.location.href = '/admin/role';
+        },
         getUsers: function (page){
             this.status_search= false;
             axios.get('/admin/users/all?page='+page)
