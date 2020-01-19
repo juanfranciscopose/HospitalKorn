@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" v-on:click="updateRole()">Actualizar</button>
+                <button type="button" class="btn btn-info" v-on:click="updateRole()">Actualizar</button>
                 <button type="button" class="btn btn-danger" v-on:click="cancelUpdateRole()">cancelar</button>
             </div>
             </form>

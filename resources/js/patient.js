@@ -71,6 +71,10 @@ new Vue({
             'to': 0
         },
         offset: 3,
+        status_nn: false,
+        patient_nn: {
+            'clinical_history_number': ''
+        }
     },
     created: function() {
         this.getPatients();
@@ -135,6 +139,7 @@ new Vue({
 
         //create
         createPatient: function(){
+            this.status_nn = false;
             this.setPartiesWithAll();
             this.setSocialWorksWithAll();
             this.setDocumentTypesWithAll();
@@ -268,7 +273,38 @@ new Vue({
                 this.parties = response.data;
             });
         },
-
+        createPatientNN : function (){
+            if (this.status_nn == false){
+                this.status_nn = true;
+            }else{
+                this.status_nn = false;
+                this.patient_nn.clinical_history_number = '';
+            }
+        },
+        storePatientNN : function (){
+            axios.post('/patients/createNN', this.patient_nn)
+            .then(response => {
+                this.patient_nn.clinical_history_number = '';
+                $('#create').modal('hide');
+                toastr.success('Creado correctamente');
+            }).catch(error => {
+                //refactoring
+                let err = error.response.data.errors;
+                let message = 'error no identificado';
+                
+                if(err.hasOwnProperty('clinical_history_number')){
+                    message = err.clinical_history_number[0];
+                }else if(err.hasOwnProperty('store')){
+                    message = err.store[0];
+                }
+                swal({
+                    title: 'Error',
+                    text: message,
+                    icono: 'error',
+                    closeOnClickOutside: false
+                });
+            });
+        },
         //edit
         EditRegionOf : function(){
             if (this.patient_edit.party == ''){

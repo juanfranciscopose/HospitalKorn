@@ -30,7 +30,7 @@
                     de Bioseguridad e Higiene (ex SAC). La misma estará a cargo del Licenciado Juan Aranciaga,
                     de la firma Lancef.</p>
                     <div class="text-center"> 
-                        <button class="btn btn-primary" type="button" name="button">Ver Detalles >></button> 
+                        <button class="btn btn-info" type="button" name="button">Ver Detalles >></button> 
                     </div> 
                 </div>
             </div>
@@ -46,7 +46,7 @@
                         internadas en sala de Clínica Médica y de Cirugía, el horario es de 16 a 17,30. 
                         En la Guardia es de 12,30 a 13 horas y en Terapia Intensiva, de 18,30 a 19 horas.</p>
                     <div class="text-center"> 
-                        <button class="btn btn-primary" type="button" name="button">Ver Detalles >></button> 
+                        <button class="btn btn-info" type="button" name="button">Ver Detalles >></button> 
                     </div>   
                 </div>
             </div>
@@ -63,7 +63,7 @@
                         para proponer el tema elegido y conocer cuáles son los requisitos para la presentación 
                         de los trabajos.</p>
                     <div class="text-center"> 
-                        <button class="btn btn-primary" type="button" name="button">Ver Detalles >></button> 
+                        <button class="btn btn-info" type="button" name="button">Ver Detalles >></button> 
                     </div> 
                 </div>
             </div>

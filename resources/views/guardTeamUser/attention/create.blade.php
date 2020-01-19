@@ -71,7 +71,7 @@
             </div>
             <div class="modal-footer">
                 <small>Nota: los campos que tienen (*) son obligatorios.</small> 
-                <button type="button" class="btn btn-primary" v-on:click="createAttention()">Guardar</button>
+                <button type="button" class="btn btn-info" v-on:click="createAttention()">Guardar</button>
             </div>
             </form>
         </div>

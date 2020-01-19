@@ -16,6 +16,10 @@
 {{$custom_config['description']['description']}}
 @endsection
 
+@section('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@endsection
+
 @section('content')
 <div id="user-crud" >
 
@@ -40,8 +44,8 @@
                 </li>
                 <li class="nav-item form-inline float-right">
                     <div class="pt-1 pb-1 mt-2 mr-4">
-                        <input class="form-control mr-sm-2" type="text" v-model="search">
-                        <button class="button-dark-nav" v-on:click.prevent="searchUser()" type="button">Buscar</button>
+                        <input class="form-control" placeholder="buscar..." type="text" v-model="search">
+                        <button class="button-dark-nav" v-on:click.prevent="searchUser()" type="button"><i class="fa fa-search"></i></button>
                     </div>
                 </li>
             </ul>
@@ -69,19 +73,19 @@
                                 @can('user_show')
                                     @include('admin.user.details')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsUser(u)">Detalles</a>
+                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsUser(u)"><i style="font-size:19px" class="fa fa-ellipsis-h"></i></a>
                                     </td>
                                 @endcan
                                 @can('user_update')
                                     @include('admin.user.edit')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editUser(u)">Editar</a>
+                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="editUser(u)"><i style="font-size:19px" class="fa fa-pencil"></i></a>
                                     </td>
                                 @endcan
                                 @can('user_destroy')
                                     @include('admin.user.delete')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyUser(u)">Eliminar</a>
+                                        <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyUser(u)"><i style="font-size:19px" class="fa fa-trash-o"></i></a>
                                     </td>
                                 @endcan
                             </tr>

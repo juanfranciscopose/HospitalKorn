@@ -16,6 +16,10 @@
 {{$custom_config['description']['description']}}
 @endsection
 
+@section('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@endsection
+
 @section('content')
 <div id="attention">
 
@@ -35,8 +39,8 @@
                 </li>
                 <li class="nav-item form-inline float-right">
                     <div class="pt-1 pb-1 mt-2 mr-4">
-                        <input class="form-control mr-sm-2" type="text" v-model="search">
-                        <button class="button-dark-nav" v-on:click.prevent="searchAttention()" type="button">Buscar</button>        
+                        <input placeholder="buscar..." class="form-control" type="text" v-model="search">
+                        <button class="button-dark-nav" v-on:click.prevent="searchAttention()" type="button"><i class="fa fa-search"></i></button>        
                     </div>
                 </li>
             </ul>
@@ -69,19 +73,19 @@
                                 @can('attention_show')
                                     @include('guardTeamUser.attention.details')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsAttention(a)">Detalles</a>
+                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsAttention(a)"><i style="font-size:19px" class="fa fa-ellipsis-h"></i></a>
                                     </td>
                                 @endcan
                                 @can('attention_update')
                                     @include('guardTeamUser.attention.edit')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editAttention(a)">Editar</a>
+                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="editAttention(a)"><i style="font-size:19px" class="fa fa-pencil"></i></a>
                                     </td>
                                 @endcan
                                 @can('attention_destroy')
                                     @include('guardTeamUser.attention.delete')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyAttention(a)">Eliminar</a>
+                                        <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="destroyAttention(a)"><i style="font-size:19px" class="fa fa-trash-o"></i></a>
                                     </td>
                             @endcan
                             </tr>

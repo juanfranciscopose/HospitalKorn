@@ -23,6 +23,7 @@ Route::post('/patients/delete', 'PatientController@delete')->name('delete-patien
 Route::post('/patients/create', 'PatientController@store')->name('create-patient')->middleware('active-login')->middleware('permission:patient_new');
 Route::put('/patients/update', 'PatientController@update')->name('update-patient')->middleware('active-login')->middleware('permission:patient_update');
 Route::get('/patients/search', 'PatientController@getSearch')->name('search-patients')->middleware('active-login')->middleware('permission:patient_index');
+Route::post('/patients/createNN', 'PatientController@storeNN')->name('createNN-patient')->middleware('active-login')->middleware('permission:patient_new');
 Route::get('/patients/{patient_id}', 'PatientController@getPatient')->name('get-patient')->middleware('active-login')->middleware('permission:patient_show');
 //Route::get('/patients/attentions/all', 'PatientController@getPatientsWithAttention')->middleware('active-login')->middleware('permission:attention_index');
 

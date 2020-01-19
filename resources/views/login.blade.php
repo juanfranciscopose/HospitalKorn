@@ -31,7 +31,7 @@
                         <label for="password">Contraseña</label>
                         <input type="password" v-model="password" class="form-control" id="password" placeholder="ingrese la contraseña" required>
                     </div>
-                    <button type="button" class="btn btn-primary" v-on:click.prevent="sendLogin()">Enviar</button>
+                    <button type="button" class="btn btn-info" v-on:click.prevent="sendLogin()">Enviar</button>
                 </form>
             </div>
         </div>            

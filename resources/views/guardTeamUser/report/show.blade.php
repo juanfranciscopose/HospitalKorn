@@ -27,13 +27,13 @@
 
         <div class="row">
             <div class="col-sm-4">
-                <a href="{{ route('report-reason-show') }}" class="btn btn-primary mt-4 ml-4">total de motivos de atención</a>
+                <a href="{{ route('report-reason-show') }}" class="btn btn-info mt-4 ml-4">total de motivos de atención</a>
             </div>
             <div class="col-sm-4">
-                <a href="{{ route('report-gender-show') }}" class="btn btn-primary mt-4 ml-4">generos de pacientes atendidos</a>
+                <a href="{{ route('report-gender-show') }}" class="btn btn-info mt-4 ml-4">generos de pacientes atendidos</a>
             </div>
             <div class="col-sm-4">
-                <a href="{{ route('report-reason-show') }}" class="btn btn-primary mt-4 ml-4">localidades de pacientes atendidos</a>
+                <a href="{{ route('report-reason-show') }}" class="btn btn-info mt-4 ml-4">localidades de pacientes atendidos</a>
             </div>
         </div>
     </div>

@@ -36,7 +36,7 @@
                         <input type="password" name="repeat_password" class="form-control" v-model="repeat_password">
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary" v-on:click.prevent="savePass()">Guardar</button>                      
+                        <button type="button" class="btn btn-info" v-on:click.prevent="savePass()">Guardar</button>                      
                     </div>
                 </form>
             </div>

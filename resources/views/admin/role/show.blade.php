@@ -16,6 +16,10 @@
 {{$custom_config['description']['description']}}
 @endsection
 
+@section('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@endsection
+
 @section('content')
 <div id="role">
 
@@ -27,8 +31,8 @@
             <ul class="mr-4 navbar-nav navbar-expand-lg justify-content-end">
                 <li class="nav-item form-inline float-right">
                     <div class="pt-1 pb-1 mt-2 mr-4">
-                        <input class="form-control mr-sm-2" type="text" v-model="search">
-                        <button class="button-dark-nav" v-on:click.prevent="searchUserRole()" type="button">Buscar</button>        
+                        <input class="form-control" placeholder="buscar..." type="text" v-model="search">
+                        <button class="button-dark-nav" v-on:click.prevent="searchUserRole()" type="button"><i class="fa fa-search"></i></button>        
                     </div>
                 </li>
             </ul>
@@ -55,7 +59,7 @@
                                 @can('user_update')
                                 @include('admin.role.edit')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-warning btn-sm" v-on:click.prevent="editRole(u)">Editar</a>
+                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="editRole(u)"><i style="font-size:19px" class="fa fa-pencil"></i></a>
                                     </td>
                                 @endcan
                             </tr>

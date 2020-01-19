@@ -16,6 +16,10 @@
 {{$customConfig['description']['description']}}
 @endsection
 
+@section('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@endsection
+
 @section('content')
 <div class="container container-main mt-4 mb-5">
     <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
@@ -31,7 +35,7 @@
                         <option v-for="p in parties" v-bind:value="p.id">@{{ p.nombre }}</option>
                     </select>
                     <p><strong>Región Sanitaria:</strong> @{{ region.nombre }}</p>
-                    <button class="btn-primary" v-on:click.prevent="listInstitutions()" type="button">Buscar</button>
+                    <button class="btn-info" v-on:click.prevent="listInstitutions()" type="button">Buscar</button>
                 </div>
             </div>
             <div class="row">
@@ -51,7 +55,7 @@
                             <td>@{{i.telephone}}</td>
                             @include('institution.details')
                             <td width="10px">
-                                <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsInstitution(i)">Detalles</a>
+                                <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsInstitution(i)"><i style="font-size:19px" class="fa fa-ellipsis-h"></i></a>
                             </td>
                         </tr>
                     </tbody>

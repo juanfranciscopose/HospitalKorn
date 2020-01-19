@@ -16,6 +16,10 @@
 {{$customConfig['description']['description']}}
 @endsection
 
+@section('scripts')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+@endsection
+
 @section('content')
 <div class="container container-main mt-5 mb-5">
     <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
@@ -30,8 +34,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     @can('config_update')
-                        <a href="#" v-if="editMode" class="btn btn-primary float-right mb-4" v-on:click.prevent="updateConfig()">Guardar Cambios</a>
-                        <a href="#" v-else class="btn btn-warning float-right mb-4" v-on:click.prevent="editConfig()">Editar</a>  
+                        <a href="#" v-if="editMode" class="btn btn-success float-right mb-4" v-on:click.prevent="updateConfig()"><i style="font-size:19px" class="fa fa-cloud-upload"></i> Guardar Cambios</a>
+                        <a href="#" v-else class="btn btn-info float-right mb-4" v-on:click.prevent="editConfig()"><i style="font-size:19px" class="fa fa-pencil"></i> Editar</a>  
                     @endcan
                 </div>
             </div>

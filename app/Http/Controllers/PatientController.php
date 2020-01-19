@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Configuration;
 use Illuminate\Http\Request;
 use App\Patient;
+use App\PatientNN;
 use App\Attention;
 use App\Http\Requests\PatientRequest;
+use App\Http\Requests\PatientNNRequest;
 use App\Http\Requests\DeleteRequest;
 
 class PatientController extends Controller
@@ -103,8 +105,9 @@ class PatientController extends Controller
     {
         try 
         {
+            $nn = PatientNN::where('clinical_history_number', '=', $request->clinical_history_number)->get()->count();
             $p = Patient::where('clinical_history_number', '=', $request->clinical_history_number)->get()->count();
-            if ($p == 0)
+            if  (($p == 0)&&($nn == 0))
             {
                 $p = Patient::where('document_number', '=', $request->document_number)->get()->count();
                 if ($p == 0)
@@ -139,5 +142,26 @@ class PatientController extends Controller
         {
             return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
         } 
+    }
+    public function storeNN (PatientNNRequest $request)
+    {
+        try 
+        {
+            $nn = PatientNN::where('clinical_history_number', '=', $request->clinical_history_number)->get()->count();
+            $p = Patient::where('clinical_history_number', '=', $request->clinical_history_number)->get()->count();
+            if (($p == 0)&&($nn == 0))
+            {
+                PatientNN::createPatientNN($request->clinical_history_number);
+                return response()->json('se ha creado exitosamente', 200);
+            }
+            else
+            {
+                return response()->json(['errors'=>['store'=>['El número de historia clínica está en uso']]], 422);
+            }
+        } 
+        catch (Exception $e)
+        {
+            return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
+        }
     }
 }
