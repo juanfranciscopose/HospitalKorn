@@ -24,11 +24,18 @@
 <div id="patient-crud">
 
     <div class="row bg-dark text-white section-nav">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <h3 class="ml-4 mt-2 pt-1 pb-1 page-header">Gestión de Pacientes</h3>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <ul class="mr-4 navbar-nav navbar-expand-lg justify-content-end">
+                <li class="nav-item">
+                    <div class="pt-1 pb-1 mr-4 mt-2">
+                        @can('patient_show')
+                            <button href="#" class="button-dark-nav float-right" data-toggle="modal">Ver Pacientes NN</button>
+                        @endcan
+                    </div>
+                </li>
                 <li class="nav-item">
                     <div class="pt-1 pb-1 mr-4 mt-2">
                         @can('patient_new')

@@ -424,6 +424,7 @@ class ComposerStaticInit2682d0b1970c1fdbdc312e982dcd98bf
         'App\\Http\\Requests\\UserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UserRequest.php',
         'App\\Institution' => __DIR__ . '/../..' . '/app/Institution.php',
         'App\\Patient' => __DIR__ . '/../..' . '/app/Patient.php',
+        'App\\PatientNN' => __DIR__ . '/../..' . '/app/PatientNN.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
         'App\\Providers\\BroadcastServiceProvider' => __DIR__ . '/../..' . '/app/Providers/BroadcastServiceProvider.php',
@@ -4062,6 +4063,7 @@ class ComposerStaticInit2682d0b1970c1fdbdc312e982dcd98bf
         'phpDocumentor\\Reflection\\Types\\String_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/String_.php',
         'phpDocumentor\\Reflection\\Types\\This' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/This.php',
         'phpDocumentor\\Reflection\\Types\\Void_' => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src/Types/Void_.php',
+        'tablePatientsNNSeeder' => __DIR__ . '/../..' . '/database/seeds/tablePatientsNNSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
