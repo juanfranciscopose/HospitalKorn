@@ -9,35 +9,35 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label for="name">Nombre</label>
+                    <label for="name">Nombre<b class="text-danger">*</b></label>
                     <input type="text" name="name" class="form-control" v-model="patient_edit.name" required>
                 </div>
                 <div class="form-group">
-                    <label for="surname">Apellido</label>
+                    <label for="surname">Apellido<b class="text-danger">*</b></label>
                     <input type="text" name="surname" class="form-control" v-model="patient_edit.surname" required>
                 </div>
                 <div class="form-group">
-                    <label for="document_type">Tipo de Documento</label>
+                    <label for="document_type">Tipo de Documento<b class="text-danger">*</b></label>
                     <select v-model="patient_edit.document_type" name="document_type">
                         <option v-for="dt in document_types" v-bind:value="dt.id" :selected="dt.id === patient_edit.document_type">@{{ dt.nombre }}</option>
                     </select>  
                 </div>
                 <div class="form-group">
-                    <label for="document_number">Número de Documento</label>
+                    <label for="document_number">Número de Documento<b class="text-danger">*</b></label>
                     <input type="number" name="document_number" class="form-control" v-model="patient_edit.document_number" disabled>
                 </div>
                 <div class="form-group">
-                    <label for="birthdate">Fecha de Nacimiento</label>
+                    <label for="birthdate">Fecha de Nacimiento<b class="text-danger">*</b></label>
                     <input type="date" name="birthdate" class="form-control" v-model="patient_edit.birthdate" required>
                 </div>
                 <div class="form-group">
-                    <label for="gender">Género</label>
+                    <label for="gender">Género<b class="text-danger">*</b></label>
                     <select v-model="patient_edit.gender" name="gender">
                         <option v-for="g in gender" :selected="g === patient_edit.gender">@{{g}}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="party">Partido</label>
+                    <label for="party">Partido<b class="text-danger">*</b></label>
                     <select v-model="patient_edit.party" name="party" v-on:change.prevent="EditRegionOf()">
                         <option v-for="p in parties" v-bind:value="p.id" :selected="p.id === patient_edit.party">@{{ p.nombre }}</option>
                     </select>
@@ -46,13 +46,13 @@
                     </div>    
                 </div>
                 <div class="form-group">
-                    <label for="town">Localidad</label>
+                    <label for="town">Localidad<b class="text-danger">*</b></label>
                     <select v-model="patient_edit.town" name="town">
                         <option v-for="t in towns" v-bind:value="t.id" :selected="t.id === patient_edit.town">@{{ t.nombre }}</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="address">Dirección</label>
+                    <label for="address">Dirección<b class="text-danger">*</b></label>
                     <input type="text" name="address" class="form-control" v-model="patient_edit.address" required>
                 </div>
                 <div class="form-group">
@@ -71,6 +71,7 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <small>Nota: los campos que tienen (*) son obligatorios.</small> 
                 <button type="button" class="btn btn-info" v-on:click="updatePatient()">Actualizar</button>
             </div>
         </div>

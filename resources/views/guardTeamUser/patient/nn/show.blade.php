@@ -21,29 +21,14 @@
 @endsection
 
 @section('content')
-<div id="patient-crud">
+<div id="patientNN">
 
     <div class="row bg-dark text-white section-nav">
         <div class="col-sm-4">
-            <h3 class="ml-4 mt-2 pt-1 pb-1 page-header">Gestión de Pacientes</h3>
+            <h3 class="ml-4 mt-2 pt-1 pb-1 page-header">Gestion de Pacientes NN</h3>
         </div>
         <div class="col-sm-8">
             <ul class="mr-4 navbar-nav navbar-expand-lg justify-content-end">
-                <li class="nav-item">
-                    <div class="pt-1 pb-1 mr-4 mt-2">
-                        @can('patient_show')
-                            <button href="#" class="button-dark-nav float-right" data-toggle="modal" v-on:click.prevent="showPatientsNN()">Ver Pacientes NN</button>
-                        @endcan
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <div class="pt-1 pb-1 mr-4 mt-2">
-                        @can('patient_new')
-                            @include('guardTeamUser.patient.create')
-                            <button href="#" class="button-dark-nav float-right " data-toggle="modal" v-on:click.prevent="createPatient()">Nuevo Paciente</button>
-                        @endcan
-                    </div>
-                </li>
                 <li class="nav-item form-inline float-right">
                     <div class="pt-1 pb-1 mt-2 mr-4">
                         <input placeholder="buscar..." class="form-control" type="text" v-model="search">
@@ -63,34 +48,22 @@
                     <table class="table table-hover table-striped mt-4">
                         <thead>
                             <tr>
-                                <th class="text-center">Nro Documento</th>
                                 <th class="text-center">Nro de Historia Clínica</th>
-                                <th class="text-center">Nombre</th>
-                                <th class="text-center">Apellido</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="p in patients">
-                                <td class="text-center">@{{ p.document_number }}</td>
+                            <tr v-for="p in patientsNN">
                                 <td class="text-center">@{{ p.clinical_history_number }}</td>
-                                <td class="text-center">@{{ p.name }}</td>
-                                <td class="text-center">@{{ p.surname }}</td>
-                                @can('patient_show')
-                                    @include('guardTeamUser.patient.details')
-                                    <td width="10px">
-                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="detailsPatient(p)"><i style="font-size:19px" class="fa fa-ellipsis-h"></i></a>
-                                    </td>
-                                @endcan
                                 @can('patient_update')
                                     @include('guardTeamUser.patient.edit')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="editPatient(p)"><i style="font-size:19px" class="fa fa-pencil"></i></a>
+                                        <a href="#" class="btn btn-info btn-sm" v-on:click.prevent="editPatientNN(p)"><i style="font-size:19px" class="fa fa-pencil"></i></a>
                                     </td>
                                 @endcan
                                 @can('patient_destroy')
                                     @include('guardTeamUser.patient.delete')
                                     <td width="10px">
-                                        <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deletePatient(p)"><i style="font-size:19px" class="fa fa-trash-o"></i></a>
+                                        <a href="#" class="btn btn-danger btn-sm" v-on:click.prevent="deletePatientNN(p)"><i style="font-size:19px" class="fa fa-trash-o"></i></a>
                                     </td>
                                 @endcan
                             </tr>

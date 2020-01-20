@@ -4,6 +4,7 @@ mix.js([
     'resources/js/app.js',
     'resources/js/login.js',
     'resources/js/patient.js',
+    'resources/js/patientNN.js',
     'resources/js/attention.js',
     'resources/js/user.js',
     'resources/js/config.js' ,

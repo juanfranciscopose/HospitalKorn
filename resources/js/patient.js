@@ -104,6 +104,9 @@ new Vue({
         }
     },
     methods: {
+        showPatientsNN: function (){
+            window.location.href = '/patientsNN';
+        },
         searchPatient: function (page){
             if (this.search == ''){
                 this.getPatients();
@@ -282,7 +285,7 @@ new Vue({
             }
         },
         storePatientNN : function (){
-            axios.post('/patients/createNN', this.patient_nn)
+            axios.post('/patientsNN/create', this.patient_nn)
             .then(response => {
                 this.patient_nn.clinical_history_number = '';
                 $('#create').modal('hide');

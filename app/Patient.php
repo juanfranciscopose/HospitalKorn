@@ -111,5 +111,52 @@ class Patient extends Model
             throw new Exception($e->getMessage());
         }
     }
+    public static function isDocumentNumberExists ($document_number)
+    {
+        $p = Patient::where('document_number', '=', $document_number)->get()->count();
+        return (($p == 0));
+    }
+    
+    public static function isClinicalNumberHistoryExists ($clinical_history_number)
+    {
+        try 
+        {
+            $nn = PatientNN::where('clinical_history_number', '=', $clinical_history_number)->get()->count();
+            $p = Patient::where('clinical_history_number', '=', $clinical_history_number)->get()->count();
+            return  (($p == 0)&&($nn == 0));
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+    }
+    public static function createPatient($patient)
+    {
+        if (Patient::isClinicalNumberHistoryExists($patient->clinical_history_number))
+        {
+            if (Patient::isDocumentNumberExists ($patient->document_number))
+            {
+                $answer = Patient::create($patient->all());
+                return [
+                    'message' => 'se ha creado exitosamente',
+                    'http_status' => 200,
+                ];
+            }
+            else
+            {
+                return [
+                    'message' => 'El número de documento está en uso',
+                    'http_status' => 422,
+                ];
+            }
+        }
+        else
+        {
+            return [
+                'message' => 'El número de historia clínica está en uso',
+                'http_status' => 422,
+            ];
+        }
+    }
 
 }

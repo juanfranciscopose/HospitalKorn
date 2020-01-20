@@ -2,6 +2,7 @@
 
 namespace App;
 use DB;
+use App\Configuration;
 use Illuminate\Database\Eloquent\Model;
 
 class PatientNN extends Model
@@ -19,5 +20,19 @@ class PatientNN extends Model
             'clinical_history_number' => $chn,
             'created' => date("Y-m-d"),
         ]);
+    }
+
+    public static function getAllPagination ($number)
+    {
+        try 
+        {
+            $p = PatientNN::orderBy('clinical_history_number', 'DESC')->paginate($number);
+            $answer = Configuration::generatePagination($p);
+            return $answer;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
     }
 }

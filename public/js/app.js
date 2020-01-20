@@ -50348,6 +50348,9 @@ new Vue({
     }
   },
   methods: {
+    showPatientsNN: function showPatientsNN() {
+      window.location.href = '/patientsNN';
+    },
     searchPatient: function searchPatient(page) {
       var _this = this;
 
@@ -50537,7 +50540,7 @@ new Vue({
     storePatientNN: function storePatientNN() {
       var _this9 = this;
 
-      axios.post('/patients/createNN', this.patient_nn).then(function (response) {
+      axios.post('/patientsNN/create', this.patient_nn).then(function (response) {
         _this9.patient_nn.clinical_history_number = '';
         $('#create').modal('hide');
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Creado correctamente');
@@ -50741,6 +50744,265 @@ new Vue({
         backdrop: 'static',
         keyboard: true,
         show: true
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/patientNN.js":
+/*!***********************************!*\
+  !*** ./resources/js/patientNN.js ***!
+  \***********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! toastr */ "./node_modules/toastr/toastr.js");
+/* harmony import */ var toastr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(toastr__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
+/* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_2__);
+
+
+
+new Vue({
+  el: '#patientNN',
+  data: {
+    id: '',
+    gender: ['MASCULINO', 'FEMENINO', 'TRANS', 'OTROS'],
+    chn: '',
+    name: '',
+    surname: '',
+    birthdate: '',
+    parties: [],
+    region: [],
+    selected_party: '',
+    towns: [],
+    selected_town: '',
+    address: '',
+    selected_gender: '',
+    document_types: [],
+    document_number: '',
+    selected_document_type: '',
+    folder_number: '',
+    telephone: '',
+    social_works: [],
+    selected_social_work: '',
+    search: '',
+    status_search: false,
+    patientsNN: [],
+    patient_edit: {
+      'clinical_history_number': '',
+      'name': '',
+      'surname': '',
+      'birthdate': '',
+      'address': '',
+      'document_number': 56,
+      'folder_number': '',
+      'telephone': '',
+      'town': '',
+      'party': '',
+      'gender': '',
+      'document_type': '',
+      'social_work': ''
+    },
+    pagination: {
+      'total': 0,
+      'current_page': 0,
+      'per_page': 0,
+      'last_page': 0,
+      'from': 0,
+      'to': 0
+    },
+    offset: 3
+  },
+  created: function created() {
+    this.getPatientsNN();
+  },
+  computed: {
+    isActived: function isActived() {
+      return this.pagination.current_page;
+    },
+    pagesNumber: function pagesNumber() {
+      if (!this.pagination.to) {
+        return [];
+      }
+
+      var from = this.pagination.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.pagination.last_page) {
+        to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    }
+  },
+  methods: {
+    searchPatientNN: function searchPatientNN(page) {
+      var _this = this;
+
+      if (this.search == '') {
+        this.getPatientsNN();
+      } else {
+        this.status_search = true;
+        axios.get('/patientsNN/search?search=' + this.search + '&page=' + page).then(function (response) {
+          _this.patientsNN = response.data.list.data;
+          _this.pagination = response.data.pagination;
+        });
+      }
+    },
+    //pagination
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+
+      if (this.status_search == false) {
+        this.getPatientsNN(page);
+      } else {
+        this.searchPatientNN(page);
+      }
+    },
+    getPatientsNN: function getPatientsNN(page) {
+      var _this2 = this;
+
+      this.status_search = false;
+      axios.get('/patientsNN/all?page=' + page).then(function (response) {
+        _this2.patientsNN = response.data.list.data;
+        _this2.pagination = response.data.pagination;
+      });
+    },
+    EditRegionOf: function EditRegionOf() {
+      var _this3 = this;
+
+      if (this.patient_edit.party == '') {
+        this.region = [];
+      } else {
+        var sr = this.parties[this.patient_edit.party - 1].region_sanitaria_id;
+        axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/region-sanitaria/' + sr).then(function (response) {
+          _this3.region = response.data;
+
+          _this3.getAllTownsByParty(sr);
+        });
+      }
+    },
+    editPatientNN: function editPatientNN(patient) {
+      this.patient_edit.clinical_history_number = patient.clinical_history_number;
+      this.setPartiesWithAll();
+      this.setDocumentTypesWithAll();
+      this.setSocialWorksWithAll();
+      $('#edit').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
+    },
+    setSocialWorksWithAll: function setSocialWorksWithAll() {
+      var _this4 = this;
+
+      axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/obra-social').then(function (response) {
+        _this4.social_works = response.data;
+      });
+    },
+    setDocumentTypesWithAll: function setDocumentTypesWithAll() {
+      var _this5 = this;
+
+      axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/tipo-documento').then(function (response) {
+        _this5.document_types = response.data;
+      });
+    },
+    setSanitaryRegion: function setSanitaryRegion(id) {
+      var _this6 = this;
+
+      axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/region-sanitaria/' + id).then(function (response) {
+        _this6.region = response.data;
+      });
+    },
+    getAllTownsByParty: function getAllTownsByParty(id) {
+      var _this7 = this;
+
+      axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/localidad/partido/' + id).then(function (response) {
+        _this7.towns = response.data;
+      });
+    },
+    setPartiesWithAll: function setPartiesWithAll() {
+      var _this8 = this;
+
+      axios.get('https://api-referencias.proyecto2018.linti.unlp.edu.ar/partido').then(function (response) {
+        _this8.parties = response.data;
+      });
+    },
+    updatePatient: function updatePatient(p) {
+      var _this9 = this;
+
+      axios.put('/patientsNN/update', this.patient_edit).then(function (response) {
+        _this9.getPatientsNN();
+
+        _this9.patient_edit = {
+          'clinical_history_number': '',
+          'name': '',
+          'surname': '',
+          'birthdate': '',
+          'address': '',
+          'document_number': '',
+          'folder_number': '',
+          'telephone': '',
+          'town': '',
+          'party': '',
+          'gender': '',
+          'document_type': '',
+          'social_work': ''
+        };
+        _this9.parties = [];
+        _this9.region = [];
+        _this9.towns = [];
+        _this9.document_types = [];
+        _this9.social_works = [];
+        $('#edit').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
+      })["catch"](function (error) {
+        var err = error.response.data.errors;
+        var message = 'error no identificado';
+
+        if (err.hasOwnProperty('name')) {
+          message = err.name[0];
+        } else if (err.hasOwnProperty('surname')) {
+          message = err.surname[0];
+        } else if (err.hasOwnProperty('birthdate')) {
+          message = err.birthdate[0];
+        } else if (err.hasOwnProperty('party')) {
+          message = err.party[0];
+        } else if (err.hasOwnProperty('town')) {
+          message = err.town[0];
+        } else if (err.hasOwnProperty('address')) {
+          message = err.address[0];
+        } else if (err.hasOwnProperty('gender')) {
+          message = err.gender[0];
+        } else if (err.hasOwnProperty('document_type')) {
+          message = err.document_type[0];
+        }
+
+        sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({
+          title: 'Error',
+          text: message,
+          icono: 'error',
+          closeOnClickOutside: false
+        });
       });
     }
   }
@@ -50997,6 +51259,7 @@ new Vue({
     }
   },
   methods: {
+    //refactoring!! 
     showAssignRoles: function showAssignRoles() {
       window.location.href = '/admin/role';
     },
@@ -51228,15 +51491,16 @@ new Vue({
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************************************************************************************************************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ./resources/js/password.js ./resources/js/role.js ***!
-  \*************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/login.js ./resources/js/patient.js ./resources/js/patientNN.js ./resources/js/attention.js ./resources/js/user.js ./resources/js/config.js ./resources/js/institution.js ./resources/js/password.js ./resources/js/role.js ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/app.js */"./resources/js/app.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/login.js */"./resources/js/login.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patient.js */"./resources/js/patient.js");
+__webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/patientNN.js */"./resources/js/patientNN.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/attention.js */"./resources/js/attention.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/user.js */"./resources/js/user.js");
 __webpack_require__(/*! /home/juan/hospitalKorn/HospitalKorn/resources/js/config.js */"./resources/js/config.js");
