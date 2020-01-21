@@ -1,5 +1,13 @@
 @extends("layout.layout")
 
+@section('phone_info')
+{{$customConfig['phone_info']['phone_info']}}
+@endsection
+
+@section('phone_turn')
+{{$customConfig['phone_turn']['phone_turn']}}
+@endsection
+
 @section('title_system')
 {{$customConfig['title_system']['title_system']}}
 @endsection

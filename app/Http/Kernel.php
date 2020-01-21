@@ -41,6 +41,12 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\CheckActive::class
         ],
 
+        'active-login-siteenabled' =>[
+            \App\Http\Middleware\CheckLogin::class,
+            \App\Http\Middleware\CheckActive::class,
+            \App\Http\Middleware\SiteEnabled::class
+        ],
+
         'api' => [
             'throttle:60,1',
             'bindings',
@@ -65,6 +71,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'checklogin' => \App\Http\Middleware\CheckLogin::class,
+        'siteenabled' => \App\Http\Middleware\SiteEnabled::class,
         'checknotlogin' => \App\Http\Middleware\CheckNotLogin::class,
         'checkactive' => \App\Http\Middleware\CheckActive::class,
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,

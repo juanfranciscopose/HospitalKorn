@@ -4,6 +4,14 @@
 {{$customConfig['title_system']['title_system']}}
 @endsection
 
+@section('phone_info')
+{{$customConfig['phone_info']['phone_info']}}
+@endsection
+
+@section('phone_turn')
+{{$customConfig['phone_turn']['phone_turn']}}
+@endsection
+
 @section('title_nav')
 {{$customConfig['title_nav']['title_nav']}}
 @endsection

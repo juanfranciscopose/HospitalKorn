@@ -49999,7 +49999,8 @@ new Vue({
   el: '#config',
   data: {
     configs: [],
-    editMode: false
+    editMode: false,
+    selected_enable: ''
   },
   created: function created() {
     this.getConfig();
@@ -50010,6 +50011,12 @@ new Vue({
 
       axios.get('/admin/config/all').then(function (response) {
         _this.configs = response.data;
+
+        if (_this.configs.enable.enable == 1) {
+          _this.selected_enable = true;
+        } else {
+          _this.selected_enable = false;
+        }
       });
     },
     editConfig: function editConfig() {
@@ -50017,6 +50024,12 @@ new Vue({
     },
     updateConfig: function updateConfig() {
       var _this2 = this;
+
+      if (this.selected_enable) {
+        this.configs.enable.enable = 1;
+      } else {
+        this.configs.enable.enable = 0;
+      }
 
       axios.put('/admin/config/update', this.configs).then(function (response) {
         _this2.getConfig();

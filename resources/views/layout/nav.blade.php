@@ -4,13 +4,13 @@
     <div class="mt-2 col-sm-6">
       <ul class="ml-2 navbar-nav navbar-expand-lg">
         <li class="nav-item">
-          <span class="bold">Informes: (221) - 456 - 3456</span>
+          <span class="bold">Informes: (221) - @yield('phone_info')</span>
         </li>
         <li class="mr-2 ml-2 nav-item">
           <span class="bold">|</span>
         </li>
         <li class="nav-item">
-          <span class="bold">Turnos: (221) - 678 - 6548</span>
+          <span class="bold">Turnos: (221) - @yield('phone_turn')</span>
         </li>
       </ul>
     </div>

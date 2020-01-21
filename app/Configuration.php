@@ -35,7 +35,9 @@ class Configuration extends Model
         Configuration::where('name', '=', 'pagination')->update(array('value' => $request->pagination['pagination']));
         Configuration::where('name', '=', 'email')->update(array('value' => $request->email['email']));
         Configuration::where('name', '=', 'description')->update(array('value' => $request->description['description']));
-        //Configuration::where('name', '=', 'enable')->update(array('value' => $request->enable['enable']));
+        Configuration::where('name', '=', 'enable')->update(array('value' => $request->enable['enable']));
+        Configuration::where('name', '=', 'phone_info')->update(array('value' => $request->phone_info['phone_info']));
+        Configuration::where('name', '=', 'phone_turn')->update(array('value' => $request->phone_turn['phone_turn']));
     }
     
     public static function generatePagination ($a)

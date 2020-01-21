@@ -24,6 +24,8 @@ class ConfigurationController extends Controller
     public function update(Request $request)
     {
         Configuration::updateConfig($request);
+        $customConfig = Configuration::getCustomConfig();
+        session()->put('siteenabled', $customConfig['enable']['enable']);
         return response()->json('se ha actualizado correctamente', 200);
     }
 

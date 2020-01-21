@@ -41,5 +41,15 @@ class TableConfigurationsSeeder extends Seeder
             'value' => '1',
             'description' => 'Si el sistema se encuentra habilitado esta en 1, caso contrario en cero'
         ]);
+        DB::table('configurations')->insert([
+            'name' => 'phone_info',
+            'value' => '104563456',
+            'description' => 'Telefono para brindar informacion sobre turnos, médicos y servicios'
+        ]);
+        DB::table('configurations')->insert([
+            'name' => 'phone_turn',
+            'value' => '104566784',
+            'description' => 'Telefono para brindar turnos'
+        ]);
     }
 }
