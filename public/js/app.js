@@ -51008,6 +51008,29 @@ new Vue({
           closeOnClickOutside: false
         });
       });
+    },
+    //delete
+    destroyPatient: function destroyPatient() {
+      var _this10 = this;
+
+      axios.post('/patientsNN/delete', {
+        'id': this.id
+      }).then(function (response) {
+        _this10.id = '';
+
+        _this10.getPatientsNN();
+
+        $('#delete').modal('hide');
+        toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Eliminado correctamente');
+      });
+    },
+    deletePatientNN: function deletePatientNN(patient) {
+      this.id = patient.id;
+      $('#delete').modal({
+        backdrop: 'static',
+        keyboard: true,
+        show: true
+      });
     }
   }
 });

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\PatientRequest;
 use App\Http\Requests\PatientNNRequest;
+use App\Http\Requests\DeleteRequest;
 use App\Configuration;
 use App\PatientNN;
 use App\Patient;
@@ -82,6 +83,19 @@ class PatientNNController extends Controller
             {
                 return response()->json(['errors'=>['update'=>['Numero de Documento repetido']]], 422);
             }
+        } 
+        catch (Exception $e)
+        {
+            return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
+        }
+    }
+    public function delete (DeleteRequest $request)
+    {
+        try 
+        {
+            //Attention::where('patient_id', '=', $request->id)->delete();
+            PatientNN::where('id', '=', $request->id)->delete();
+            return response()->json('se ha borrado exitosamente', 200);
         } 
         catch (Exception $e)
         {

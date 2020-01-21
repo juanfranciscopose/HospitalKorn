@@ -32,6 +32,7 @@ Route::get('/patientsNN/all', 'PatientNNController@getAll')->name('all-patientsN
 Route::put('/patientsNN/update', 'PatientNNController@update')->name('update-patientNN')->middleware('active-login')->middleware('permission:patient_update');
 Route::post('/patientsNN/create', 'PatientNNController@store')->name('create-patientNN')->middleware('active-login')->middleware('permission:patient_new');
 Route::get('/patientsNN/search', 'PatientNNController@getSearch')->name('search-patientsNN')->middleware('active-login')->middleware('permission:patient_index');
+Route::post('/patientsNN/delete', 'PatientNNController@delete')->name('delete-patientNN')->middleware('active-login')->middleware('permission:patient_destroy');
 
 //--patient attentions--
 Route::get('/attentions', 'AttentionController@show')->name('show-attentions')->middleware('active-login')->middleware('permission:attention_index');

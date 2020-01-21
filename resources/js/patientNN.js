@@ -223,6 +223,26 @@ new Vue({
                     closeOnClickOutside: false
                 });
             });
-        }
+        },
+        //delete
+        destroyPatient: function(){
+            axios.post('/patientsNN/delete', {
+                'id': this.id
+            })
+            .then(response =>{
+                this.id = '';
+                this.getPatientsNN();
+                $('#delete').modal('hide');
+                toastr.success('Eliminado correctamente');
+            });
+        },
+        deletePatientNN: function(patient){
+            this.id = patient.id;
+            $('#delete').modal({
+                backdrop: 'static',
+                keyboard: true, 
+                show: true
+            });
+        },
     }
 });
