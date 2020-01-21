@@ -35,7 +35,7 @@ new Vue({
             'surname': '',
             'birthdate': '',
             'address': '',
-            'document_number': 56,
+            'document_number': '',
             'folder_number': '',
             'telephone': '',
             'town': '',
@@ -213,6 +213,8 @@ new Vue({
                     message = err.gender[0];
                 }else if(err.hasOwnProperty('document_type')){
                     message = err.document_type[0];
+                }else if(err.hasOwnProperty('update')){
+                    message = err.update[0];
                 }
                 swal({
                     title: 'Error',

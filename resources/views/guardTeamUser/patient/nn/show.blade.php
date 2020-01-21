@@ -32,7 +32,7 @@
                 <li class="nav-item form-inline float-right">
                     <div class="pt-1 pb-1 mt-2 mr-4">
                         <input placeholder="buscar..." class="form-control" type="text" v-model="search">
-                        <button class="button-dark-nav" v-on:click.prevent="searchPatient()" type="button"><i class="fa fa-search"></i></button>
+                        <button class="button-dark-nav" v-on:click.prevent="searchPatientNN()" type="button"><i class="fa fa-search"></i></button>
                     </div>
                 </li>
             </ul>
@@ -42,9 +42,9 @@
     <div class="container container-main mt-4 mb-5">
         <div class="shadow bg-white pr-3 pl-3 pb-3 pt-3">
             
-            <div class="row">
+            <div class="row justify-content-center">
 
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <table class="table table-hover table-striped mt-4">
                         <thead>
                             <tr>

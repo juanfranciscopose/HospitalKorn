@@ -111,10 +111,25 @@ class Patient extends Model
             throw new Exception($e->getMessage());
         }
     }
+
+    public static function validateDocumentNumber ($document_number , $clinical_history_number)
+    {
+        $answer = true;
+        if (Patient::isDocumentNumberExists($document_number))
+        {
+            $p = Patient::where('document_number', '=', $document_number)->first();
+            if ($p->clinical_history_number <> $clinical_history_number)
+            {
+                $answer = false;
+            }
+        }
+        return $answer;
+    }
+
     public static function isDocumentNumberExists ($document_number)
     {
         $p = Patient::where('document_number', '=', $document_number)->get()->count();
-        return (($p == 0));
+        return (!($p == 0));
     }
     
     public static function isClinicalNumberHistoryExists ($clinical_history_number)
@@ -123,7 +138,7 @@ class Patient extends Model
         {
             $nn = PatientNN::where('clinical_history_number', '=', $clinical_history_number)->get()->count();
             $p = Patient::where('clinical_history_number', '=', $clinical_history_number)->get()->count();
-            return  (($p == 0)&&($nn == 0));
+            return  (!($p == 0)&&($nn == 0));
         } 
         catch (Exception $e)
         {
@@ -132,9 +147,9 @@ class Patient extends Model
     }
     public static function createPatient($patient)
     {
-        if (Patient::isClinicalNumberHistoryExists($patient->clinical_history_number))
+        if (!Patient::isClinicalNumberHistoryExists($patient->clinical_history_number))
         {
-            if (Patient::isDocumentNumberExists ($patient->document_number))
+            if (!Patient::isDocumentNumberExists ($patient->document_number))
             {
                 $answer = Patient::create($patient->all());
                 return [

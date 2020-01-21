@@ -32,6 +32,22 @@ class PatientNNController extends Controller
         }
     }
 
+    public function getSearch (Request $request) 
+    {
+        try 
+        {
+            $search = \Request::get('search');
+            $custom_config = Configuration::getCustomConfig();
+            $answer = PatientNN::searchPagination($search, $custom_config['pagination']['pagination']);
+            return response()->json($answer, 200);
+        } 
+        catch (Exception $e)
+        {
+            return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
+        }
+        
+    }
+
     public function store (PatientNNRequest $request)
     {
         try 
@@ -57,8 +73,15 @@ class PatientNNController extends Controller
         try 
         {
             PatientNN::where('clinical_history_number', '=', $request->clinical_history_number)->delete();
-            $answer = Patient::createPatient($request);
-            return response()->json($answer['message'], $answer['http_status']);
+            if (!Patient::isDocumentNumberExists($request->document_number))
+            {
+                $answer = Patient::createPatient($request);
+                return response()->json($answer['message'], $answer['http_status']);
+            }
+            else
+            {
+                return response()->json(['errors'=>['update'=>['Numero de Documento repetido']]], 422);
+            }
         } 
         catch (Exception $e)
         {

@@ -106,7 +106,7 @@ class PatientController extends Controller
         try 
         {
             $answer = Patient::createPatient($request);
-            return response()->json($answer['message'], $answer['http_status']);
+            return response()->json(['errors'=>['store'=>[$answer['message']]]], $answer['http_status']);
         } 
         catch (Exception $e)
         {
@@ -118,8 +118,15 @@ class PatientController extends Controller
     {
         try 
         {
-            Patient::where('clinical_history_number', '=', $request->clinical_history_number)->update($request->all());
-            return response()->json('se ha actualizado exitosamente', 200);
+            if (Patient::validateDocumentNumber($request->document_number, $request->clinical_history_number))
+            {
+                Patient::where('clinical_history_number', '=', $request->clinical_history_number)->update($request->all());
+                return response()->json('se ha actualizado exitosamente', 200);
+            }
+            else
+            {
+                return response()->json(['errors'=>['update'=>['Numero de Documento repetido']]], 422);
+            }
         } 
         catch (Exception $e)
         {

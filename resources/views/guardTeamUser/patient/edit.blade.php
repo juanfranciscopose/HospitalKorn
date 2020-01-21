@@ -24,7 +24,7 @@
                 </div>
                 <div class="form-group">
                     <label for="document_number">Número de Documento<b class="text-danger">*</b></label>
-                    <input type="number" name="document_number" class="form-control" v-model="patient_edit.document_number" disabled>
+                    <input type="number" name="document_number" class="form-control" v-model="patient_edit.document_number" required>
                 </div>
                 <div class="form-group">
                     <label for="birthdate">Fecha de Nacimiento<b class="text-danger">*</b></label>
