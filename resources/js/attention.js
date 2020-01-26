@@ -132,12 +132,13 @@ new Vue({
             });
         },
         getPatientData: function(){
-            if (this.patient_id != ''){
-                axios.get('/patients/'+this.patient_id)
+            if (this.patient_chn != ''){
+                axios.get('/patients/'+this.patient_chn)
                 .then(response => {
-                    if(response.data == 'No hay paciente con ese ID'){
+                    if(response.data == 'No hay paciente con ese Numero de Historia Clinica'){
                         this.patient_data = response.data;
                     }else{
+                        this.patient_id = response.data.id;
                         this.patient_data = response.data.name + ' ' + response.data.surname;
                     }
                 });
@@ -322,7 +323,7 @@ new Vue({
             });
         },
         detailsAttention: function(attention){
-            axios.get('/patients/patient/'+attention.patient_id)
+            axios.get('patients/patient_fullname/'+attention.patient_id)
             .then(response => {               
                 this.attention_show.name_surname_patient = response.data.name +' '+response.data.surname;
             });

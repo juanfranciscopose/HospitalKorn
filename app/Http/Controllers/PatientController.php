@@ -13,35 +13,18 @@ use App\Http\Requests\DeleteRequest;
 
 class PatientController extends Controller
 {
-    //refactoring
-    public function getPatientsWithAttention()// fuera de uso
-    {  
-        $patient_with_attention = Attention::distinct()->get(['patient_id'])->count();
-        if ($patient_with_attention == 0){
-            return response()->json(['errors'=>['load'=>['no se registran datos pacientes atendidos']]],422);
-        }else{
-            $patients = array();
-            $id_with_attentions = Attention::distinct()->get(['patient_id']);
-            foreach ($id_with_attentions as $id) {
-                $p = Patient::where('id', '=', $id->patient_id)->get();
-                array_push($patients, $p[0]);
-            }
-            return response()->json($patients, 200);
-        }    
-    }     
-
-    public function getPatient($patient_id)
+    public function getPatient($patient_chn)
     {  
         try 
         {
-            if (isset($patient_id))
+            if (isset($patient_chn))
             {
-                $p = Patient::getPatient($patient_id);
+                $p = Patient::getPatient($patient_chn);
                 return response()->json($p, 200);
             }
             else
             {
-                return response()->json('error en id paciente', 422);
+                return response()->json('error en Numero de Historia Clinica del paciente', 422);
             }
         } 
         catch (Exception $e)
@@ -63,7 +46,6 @@ class PatientController extends Controller
         {
             return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
         }
-        
     }
 
     public function show()
@@ -127,6 +109,19 @@ class PatientController extends Controller
             {
                 return response()->json(['errors'=>['update'=>['Numero de Documento repetido']]], 422);
             }
+        } 
+        catch (Exception $e)
+        {
+            return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
+        } 
+    }
+
+    public function getPatientFullname ($patient_id)
+    {
+        try 
+        {
+            $fullname = Patient::getPatientFullname($patient_id);
+            return response()->json($fullname, 200);
         } 
         catch (Exception $e)
         {

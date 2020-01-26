@@ -10,11 +10,11 @@
             </div>
             <div class="modal-body"> 
                 <div class="form-group">
-                    <label for="idPatient">ID paciente<b class="text-danger">*</b></label>
-                    <input type="number" name="idPatient" id= "idPatient" class="form-control" v-model="patient_id" v-on:change.prevent="getPatientData()" required>
+                    <label>Numero de Historia Clinica del Paciente<b class="text-danger">*</b></label>
+                    <input type="number" class="form-control" v-model="patient_chn" v-on:change.prevent="getPatientData()" required>
                     <div class="container">
                         <label for="p">Nombre del paciente</label>
-                        <b><div class="container panel" id="patientData">@{{patient_data}}</div></b>
+                        <b><div class="container panel">@{{patient_data}}</div></b>
                     </div>
                 </div>
                 <div class="form-group">

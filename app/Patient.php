@@ -90,18 +90,18 @@ class Patient extends Model
         }
     }
 
-    public static function getPatient ($id)
+    public static function getPatient ($patient_chn)
     {
         try 
         {
-            $p = Patient::where('id', '=', $id)->count();
+            $p = Patient::where('clinical_history_number', '=', $patient_chn)->count();
             if ($p == 0)
             {
-                $result = 'No hay paciente con ese ID';
+                $result = 'No hay paciente con ese Numero de Historia Clinica';
             }
             else
             {
-                $p = Patient::where('id', '=', $id)->get();
+                $p = Patient::where('clinical_history_number', '=', $patient_chn)->get();
                 $result = $p[0];
             }
             return $result;
@@ -145,32 +145,53 @@ class Patient extends Model
             throw new Exception($e->getMessage());
         }
     }
+    
     public static function createPatient($patient)
     {
-        if (!Patient::isClinicalNumberHistoryExists($patient->clinical_history_number))
+        try 
         {
-            if (!Patient::isDocumentNumberExists ($patient->document_number))
+            if (!Patient::isClinicalNumberHistoryExists($patient->clinical_history_number))
             {
-                $answer = Patient::create($patient->all());
-                return [
-                    'message' => 'se ha creado exitosamente',
-                    'http_status' => 200,
-                ];
+                if (!Patient::isDocumentNumberExists ($patient->document_number))
+                {
+                    $answer = Patient::create($patient->all());
+                    return [
+                        'message' => 'se ha creado exitosamente',
+                        'http_status' => 200,
+                    ];
+                }
+                else
+                {
+                    return [
+                        'message' => 'El número de documento está en uso',
+                        'http_status' => 422,
+                    ];
+                }
             }
             else
             {
                 return [
-                    'message' => 'El número de documento está en uso',
+                    'message' => 'El número de historia clínica está en uso',
                     'http_status' => 422,
                 ];
             }
-        }
-        else
+        } 
+        catch (Exception $e)
         {
-            return [
-                'message' => 'El número de historia clínica está en uso',
-                'http_status' => 422,
-            ];
+            throw new Exception($e->getMessage());
+        }
+    }
+// for ditails
+    public static function getPatientFullname($patient_id) 
+    {
+        try 
+        {
+            $p = Patient::select('name', 'surname')->where('id', '=', $patient_id)->first();
+            return $p;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
         }
     }
 

@@ -27,6 +27,7 @@ Route::post('/patients/create', 'PatientController@store')->name('create-patient
 Route::put('/patients/update', 'PatientController@update')->name('update-patient')->middleware('active-login-siteenabled')->middleware('permission:patient_update');
 Route::get('/patients/search', 'PatientController@getSearch')->name('search-patients')->middleware('active-login-siteenabled')->middleware('permission:patient_index');
 Route::get('/patients/{patient_id}', 'PatientController@getPatient')->name('get-patient')->middleware('active-login-siteenabled')->middleware('permission:patient_show');
+Route::get('patients/patient_fullname/{patient_id}', 'PatientController@getPatientFullname');
 
 //--patients NN--
 Route::get('/patientsNN', 'PatientNNController@show')->name('show-patientsNN')->middleware('active-login-siteenabled')->middleware('permission:patient_index');

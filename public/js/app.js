@@ -49686,11 +49686,12 @@ new Vue({
     getPatientData: function getPatientData() {
       var _this4 = this;
 
-      if (this.patient_id != '') {
-        axios.get('/patients/' + this.patient_id).then(function (response) {
-          if (response.data == 'No hay paciente con ese ID') {
+      if (this.patient_chn != '') {
+        axios.get('/patients/' + this.patient_chn).then(function (response) {
+          if (response.data == 'No hay paciente con ese Numero de Historia Clinica') {
             _this4.patient_data = response.data;
           } else {
+            _this4.patient_id = response.data.id;
             _this4.patient_data = response.data.name + ' ' + response.data.surname;
           }
         });
@@ -49888,7 +49889,7 @@ new Vue({
     detailsAttention: function detailsAttention(attention) {
       var _this9 = this;
 
-      axios.get('/patients/patient/' + attention.patient_id).then(function (response) {
+      axios.get('patients/patient_fullname/' + attention.patient_id).then(function (response) {
         _this9.attention_show.name_surname_patient = response.data.name + ' ' + response.data.surname;
       });
       this.attention_show.id = attention.id;
