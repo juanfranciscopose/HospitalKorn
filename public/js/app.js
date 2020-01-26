@@ -51203,6 +51203,20 @@ new Vue({
 
         toastr__WEBPACK_IMPORTED_MODULE_1___default.a.success('Actualizado correctamente');
         $('#edit').modal('hide');
+      })["catch"](function (error) {
+        var err = error.response.data.errors;
+        var message = 'error no identificado';
+
+        if (err.hasOwnProperty('update')) {
+          message = err.update[0];
+        }
+
+        swal({
+          title: 'Error',
+          text: message,
+          icono: 'error',
+          closeOnClickOutside: false
+        });
       });
     }
   }
@@ -51445,6 +51459,8 @@ new Vue({
           message = err.name[0];
         } else if (err.hasOwnProperty('surname')) {
           message = err.surname[0];
+        } else if (err.hasOwnProperty('update')) {
+          message = err.update[0];
         }
 
         sweetalert__WEBPACK_IMPORTED_MODULE_2___default()({

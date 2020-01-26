@@ -63,6 +63,10 @@ class RoleAssignmentController extends Controller
     { 
         try
         {
+            if ($request->user_id == session()->get('id', 'error'))
+            {
+                return response()->json(['errors'=>['update'=>['no puede cambiar su rol usted mismo siendo ADMIN']]], 422);
+            }
             Rol::updateRol($request->user_id, $request->roles_names);
             return response()->json(200);
         }

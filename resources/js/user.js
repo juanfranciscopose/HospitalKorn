@@ -201,6 +201,8 @@ new Vue({
                     message = err.name[0];
                 }else if(err.hasOwnProperty('surname')){
                     message = err.surname[0];
+                }else if(err.hasOwnProperty('update')){
+                    message = err.update[0];
                 }
                 swal({
                     title: 'Error',

@@ -87,6 +87,10 @@ class UserController extends Controller
     {
         try
         {
+            if (($request->active == 0) && ($request->id == session()->get('id', 'error')))
+            {
+                return response()->json(['errors'=>['update'=>['no se puede desactivar a uno mismo!']]], 422);
+            }
             User::where('id', '=', $request->id)->update($request->all());
             return response()->json('se ha actualizado exitosamente', 200);
         }

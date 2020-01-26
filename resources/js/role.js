@@ -123,6 +123,20 @@ new Vue({
                 this.getUsersWithRoles();
                 toastr.success('Actualizado correctamente');
                 $('#edit').modal('hide');
+            })
+            .catch(error => {
+                let err = error.response.data.errors;
+                let message = 'error no identificado';
+                
+                if(err.hasOwnProperty('update')){
+                    message = err.update[0];
+                }
+                swal({
+                    title: 'Error',
+                    text: message,
+                    icono: 'error',
+                    closeOnClickOutside: false
+                });
             });     
         }
     }

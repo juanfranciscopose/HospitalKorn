@@ -1,7 +1,7 @@
 <div class="modal text-dark fade" id="create">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form method="POST">
+            <form @submit.prevent="createUser()">
             <div class="modal-header">
                 <h4>Nuevo Usuario</h4> 
                 <button type="button" class="close" data-dismiss="modal">
@@ -9,9 +9,9 @@
                 </button>                       
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label for="email">Correo Electrónico</label>
-                    <input type="email" name="email" class="form-control" v-model="email" required>
+                <div class="form-group" >
+                    <label class="control-label" for="email">Correo Electrónico</label>
+                    <input type="email" name="email" class="form-control" v-model="email">
                 </div>
                 <div class="form-group">
                     <label for="name">Nombre</label>
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-info" v-on:click="createUser()">Guardar</button>
+                <button type="submit" class="btn btn-info" >Guardar</button>
             </div>
             </form>
         </div>

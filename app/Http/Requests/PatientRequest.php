@@ -27,7 +27,7 @@ class PatientRequest extends FormRequest
            'clinical_history_number' => 'required',
            'name' => 'required',
            'surname' => 'required',
-           'birthdate' => 'required',
+           'birthdate' => 'required|before:today',
            'party' => 'required',
            'town' => 'required',
            'address' => 'required',
