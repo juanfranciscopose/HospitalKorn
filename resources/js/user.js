@@ -6,6 +6,7 @@ new Vue({
     el: '#user-crud',
     data: {
         status_search: false,
+        status_inactive: false, 
         search: '', 
         state: false,
         id:'',
@@ -71,6 +72,7 @@ new Vue({
             window.location.href = '/admin/role';
         },
         getUsers: function (page){
+            this.status_inactive= false;
             this.status_search= false;
             axios.get('/admin/users/all?page='+page)
             .then(response => {
@@ -83,6 +85,7 @@ new Vue({
                 this.getUsers();
             }else{
                 this.status_search = true;
+                this.status_inactive = false;
                 axios.get('/admin/users/search?search='+this.search+'&page='+page)
                 .then(response => {
                     this.users = response.data.list.data;
@@ -90,14 +93,25 @@ new Vue({
                 });
             }
         },
+        searchInactiveUser: function (page){
+            this.status_search= false;
+            this.status_inactive = true;
+            axios.get('/admin/users/inactive?page='+page)
+            .then(response => {
+                this.users = response.data.list.data;
+                this.pagination = response.data.pagination;
+            });
+        },
         //pagination
         changePage: function (page){
             this.pagination.current_page = page;
-            if (this.status_search == false){
-                this.getUsers(page);
-            }else{
+            if (this.status_search == true){
                 this.searchUser(page);
-            }
+            } else if (this.status_inactive == true){
+                this.searchInactiveUser(page);
+            } else {
+                this.getUsers(page);
+            }            
         },
         //details
         detailsUser: function(user){

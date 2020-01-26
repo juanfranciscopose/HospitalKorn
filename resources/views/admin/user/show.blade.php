@@ -37,9 +37,14 @@
                         @endcan
                     </div>
                 </li>
-                <li>
+                <li class="nav-item">
                     <div class="pt-1 pb-1 mt-2 mr-4">
                         <button href="#" v-on:click="showAssignRoles()" class="button-dark-nav">Asignar Roles</button>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <div class="pt-1 pb-1 mt-2 mr-4">
+                        <button href="#" v-on:click="searchInactiveUser()" class="button-dark-nav">Inactivos</button>
                     </div>
                 </li>
                 <li class="nav-item form-inline float-right">

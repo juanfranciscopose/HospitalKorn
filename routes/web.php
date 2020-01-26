@@ -27,7 +27,7 @@ Route::post('/patients/create', 'PatientController@store')->name('create-patient
 Route::put('/patients/update', 'PatientController@update')->name('update-patient')->middleware('active-login-siteenabled')->middleware('permission:patient_update');
 Route::get('/patients/search', 'PatientController@getSearch')->name('search-patients')->middleware('active-login-siteenabled')->middleware('permission:patient_index');
 Route::get('/patients/{patient_id}', 'PatientController@getPatient')->name('get-patient')->middleware('active-login-siteenabled')->middleware('permission:patient_show');
-Route::get('patients/patient_fullname/{patient_id}', 'PatientController@getPatientFullname');
+Route::get('patients/patient_fullname/{patient_id}', 'PatientController@getPatientFullname')->middleware('active-login-siteenabled')->middleware('permission:patient_show');
 
 //--patients NN--
 Route::get('/patientsNN', 'PatientNNController@show')->name('show-patientsNN')->middleware('active-login-siteenabled')->middleware('permission:patient_index');
@@ -49,6 +49,7 @@ Route::get('/attentions/search', 'AttentionController@getSearch')->name('search-
 Route::get('/admin/users', 'admin\UserController@show')->name('show-users')->middleware('active-login-siteenabled')->middleware('permission:user_index');
 Route::get('/admin/users/all', 'admin\UserController@getAll')->name('all-users')->middleware('active-login-siteenabled')->middleware('permission:user_index');
 Route::get('/admin/users/search', 'admin\UserController@getSearch')->name('search-users')->middleware('active-login-siteenabled')->middleware('permission:user_index');
+Route::get('/admin/users/inactive', 'admin\UserController@getInactive')->middleware('active-login-siteenabled')->middleware('permission:user_index');
 Route::post('/admin/users/delete', 'admin\UserController@delete')->name('delete-users')->middleware('active-login-siteenabled')->middleware('permission:user_destroy');
 Route::post('/admin/users/create', 'admin\UserController@store')->name('create-users')->middleware('active-login-siteenabled')->middleware('permission:user_new');
 Route::put('/admin/users/update', 'admin\UserController@update')->name('update-users')->middleware('active-login-siteenabled')->middleware('permission:user_update');

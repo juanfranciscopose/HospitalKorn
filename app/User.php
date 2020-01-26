@@ -116,4 +116,19 @@ class User extends Authenticatable
         }
 
     }
+    public static function getInactivePagination ($number)
+    {
+        try 
+        {
+            $a = User::where('active', '=', '0')
+                ->orderBy('id', 'desc')
+                ->paginate($number);
+            $answer = Configuration::generatePagination($a);
+            return $answer;
+        } 
+        catch (Exception $e)
+        {
+            throw new Exception($e->getMessage());
+        }
+    }
 }

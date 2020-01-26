@@ -46,6 +46,20 @@ class UserController extends Controller
         }
     }
 
+    public function getInactive()
+    {
+        try
+        {
+            $custom_config = Configuration::getCustomConfig();
+            $answer =  User::getInactivePagination($custom_config['pagination']['pagination']);
+            return response()->json($answer, 200);
+        }
+        catch (Exception $e)
+        {
+            return response()->json("no se pudo procesar la solicitud. Error: "+$e, 409);
+        }
+    }
+
     public function delete(DeleteRequest $request)
     {
         try
