@@ -138,7 +138,7 @@ class Patient extends Model
         {
             $nn = PatientNN::where('clinical_history_number', '=', $clinical_history_number)->get()->count();
             $p = Patient::where('clinical_history_number', '=', $clinical_history_number)->get()->count();
-            return  (!($p == 0)&&($nn == 0));
+            return  !(($p == 0)&&($nn == 0));
         } 
         catch (Exception $e)
         {

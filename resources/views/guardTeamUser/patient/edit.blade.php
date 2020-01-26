@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-group">
                     <label for="telephone">Teléfono</label>
-                    <input type="text" name="telephone" class="form-control" v-model="patient_edit.telephone">
+                    <input type="number" name="telephone" class="form-control" v-model="patient_edit.telephone">
                 </div>
                 <div class="form-group">
                     <label for="folder_number">Número de Carpeta</label>

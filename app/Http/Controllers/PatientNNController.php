@@ -53,7 +53,7 @@ class PatientNNController extends Controller
     {
         try 
         {
-            if (Patient::isClinicalNumberHistoryExists($request->clinical_history_number))
+            if (!Patient::isClinicalNumberHistoryExists($request->clinical_history_number))
             {
                 PatientNN::createPatientNN($request->clinical_history_number);
                 return response()->json('se ha creado exitosamente', 200);

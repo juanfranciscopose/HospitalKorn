@@ -90,7 +90,7 @@ class Attention extends Model
                 ->where('reason', 'LIKE', "%$search%")
                 ->orWhere('diagnostic', 'LIKE', "%$search%")
                 ->orWhere('patients.surname', 'LIKE', "%$search%")
-                ->orWhere('patients.clinical_history_number', 'LIKE', "%$search%")
+                ->orWhere('patients.clinical_history_number', 'LIKE', "$search")
                 ->orderBy('attentions.id', 'desc')
                 ->paginate($number);
             $answer = Configuration::generatePagination($a);
