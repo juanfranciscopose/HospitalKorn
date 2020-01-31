@@ -24,11 +24,16 @@ class AttentionRequest extends FormRequest
     public function rules()
     {
         return [
-            'patient_id' => 'required',
-            'date' => 'required',
-            'diagnostic' => 'required',
-            'reason' => 'required',
-            'internment' => 'required',
+            'patient_id' => 'required|numeric',
+            'diagnostic' => 'required|string|max:191',
+            'reason' => 'required|string|max:191',
+            'derivation' => 'numeric|nullable',
+            'observation' => 'string|nullable|max:191', 
+            'articulation' => 'nullable|string|max:191', 
+            'internment' => 'required|numeric',
+            'pharmacotherapy' => 'string|nullable|max:191',
+            'date' => 'required|date',
+            'accompaniment' => 'nullable|string|max:191'
         ];
     }
     public function messages()

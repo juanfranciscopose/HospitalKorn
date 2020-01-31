@@ -24,16 +24,19 @@ class PatientRequest extends FormRequest
     public function rules()
     {
         return [
-           'clinical_history_number' => 'required',
-           'name' => 'required',
-           'surname' => 'required',
-           'birthdate' => 'required|before:today',
-           'party' => 'required',
-           'town' => 'required',
-           'address' => 'required',
-           'gender' => 'required',
-           'document_type' => 'required',
-           'document_number' => 'required',
+           'clinical_history_number' => 'required|numeric',
+           'name' => 'required|string|max:191',
+           'surname' => 'required|string|max:191',
+           'birthdate' => 'required|before:today|date',
+           'party' => 'required|numeric',
+           'town' => 'required|numeric',
+           'address' => 'required|string|max:191',
+           'gender' => 'required|string|max:191',
+           'document_type' => 'required|numeric',
+           'document_number' => 'required|numeric',
+           'folder_number'=>'nullable|numeric',
+           'telephone' => 'nullable|string|max:191',
+           'social_work' => 'nullable|numeric'
         ];
     }
     public function messages()

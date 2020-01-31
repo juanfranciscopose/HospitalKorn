@@ -24,8 +24,8 @@ class ConfigurationRequest extends FormRequest
     public function rules()
     {
         return [
-            'value' => 'required',
-            'description' => 'required'
+            'value' => 'required|string|max:191',
+            'description' => 'required|string|max:191'
         ];
     }
     public function messages()

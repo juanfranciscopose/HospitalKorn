@@ -24,11 +24,11 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required',
-            'name' => 'required',
-            'surname' => 'required',
-            'email' => 'required',
-            'active' => 'required'
+            'id' => 'required|numeric',
+            'name' => 'required|string|max:191',
+            'surname' => 'required|string|max:191',
+            'email' => 'required|email',
+            'active' => 'required|numeric'
          ];
     }
     public function messages()

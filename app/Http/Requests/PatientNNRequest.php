@@ -24,7 +24,7 @@ class PatientNNRequest extends FormRequest
     public function rules()
     {
         return [
-            'clinical_history_number' => 'required'
+            'clinical_history_number' => 'required|numeric'
         ];
     }
     public function messages()
