@@ -7,8 +7,8 @@ new Vue({
     el: '#login-form',
     //form model data
     data: {
-        email: 'jhondoe@gmail.com',
-        password:'asd'
+        email: '',
+        password:''
     },
     methods: {
         sendLogin: function(){
