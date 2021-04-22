@@ -1,4 +1,4 @@
-Atención de pacientes en la guardia del hospital Dr. Alejandro Korn.
+# Atención de pacientes en la guardia del hospital Dr. Alejandro Korn.
 
 La propuesta de trabajo surge de una serie de entrevistas realizadas por docentes de la cátedra de
 "Proyecto de software" al personal del servicio social del hospital. A lo largo de la cursada
